@@ -1,0 +1,27 @@
+@import "variables";
+
+#HeaderContainer{
+
+  padding: 15px;
+  line-height: 1em;
+  background: @header-color;
+  text-transform: uppercase;
+  #breadcrumbContainer{
+    display: inline-block;
+
+    .breadcrumbSlash{
+      margin: 0 3px;
+    }
+
+    a{
+      color: @primary-color;
+    }
+  }
+  #userdataContainer{
+    display:inline-block;
+    float:right;
+    .fa{
+      margin-left: 5px;
+    }
+  }
+}

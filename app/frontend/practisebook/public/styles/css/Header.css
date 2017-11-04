@@ -1,0 +1,22 @@
+#HeaderContainer {
+  padding: 15px;
+  line-height: 1em;
+  background: #dbeaee;
+  text-transform: uppercase;
+}
+#HeaderContainer #breadcrumbContainer {
+  display: inline-block;
+}
+#HeaderContainer #breadcrumbContainer .breadcrumbSlash {
+  margin: 0 3px;
+}
+#HeaderContainer #breadcrumbContainer a {
+  color: #1b325f;
+}
+#HeaderContainer #userdataContainer {
+  display: inline-block;
+  float: right;
+}
+#HeaderContainer #userdataContainer .fa {
+  margin-left: 5px;
+}
