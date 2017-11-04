@@ -7,6 +7,8 @@ class Header extends Component {
         this.renderBreadcrumbs = this.renderBreadcrumbs.bind(this);
     }
 
+    // TODO: breadcrumbs renderuje złe linki, przykładowo chce skierować pod localhost:3000/użytkownicy - należy usunąć polskie znaki
+
     renderBreadcrumbs() {
         if (this.props.url) {
             return (

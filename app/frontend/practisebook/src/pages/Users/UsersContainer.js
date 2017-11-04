@@ -11,10 +11,12 @@ export default class UsersContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: []
+            users: [],
+            filtersState: false
         };
         this.getData = this.getData.bind(this);
         this.handleClickAddNewUser = this.handleClickAddNewUser.bind(this);
+        this.handleClickEnableSearch = this.handleClickEnableSearch.bind(this);
     }
 
     componentDidMount(){
@@ -25,6 +27,10 @@ export default class UsersContainer extends Component {
         UserService.getAllUsers().then(function (response) {
             this.setState({users:response.data})
         }.bind(this))
+    }
+
+    handleClickEnableSearch(){
+        this.setState({filtersState: !this.state.filtersState});
     }
 
     handleClickAddNewUser(){
@@ -40,12 +46,14 @@ export default class UsersContainer extends Component {
                 <div id="ALL_USERS">
                     <div>
                         <UsersTop
-                            handleClick = {this.handleClickAddNewUser}
+                            handleClickAddNewUser = {this.handleClickAddNewUser}
+                            handleClickEnableSearch = {this.handleClickEnableSearch}
                         />
                     </div>
                     <div>
                        <UsersTable
                            users={this.state.users}
+                           enableFilters = {this.state.filtersState}
                        />
                     </div>
                 </div>
