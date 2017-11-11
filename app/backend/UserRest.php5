@@ -11,11 +11,10 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding");
 
+$request_method = $_SERVER["REQUEST_METHOD"];
+
 require_once "UserService.php5";
 require_once 'User.php5';
-
-
-$request_method = $_SERVER["REQUEST_METHOD"];
 
 switch ($request_method) {
     case 'GET':
@@ -53,8 +52,7 @@ switch ($request_method) {
         break;
 }
 
-function get_users($user_id = 0)
-{
+function get_users($user_id = 0){
     $response = array();
     $service = new UserService();
 
@@ -67,6 +65,28 @@ function get_users($user_id = 0)
             $response = $data;
         }
     }
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+}
+
+function insert_user(){
+    $data = json_decode(file_get_contents('php://input'));
+    $response = array();
+    $service = new UserService();
+    $newUser = new User();
+    $newUser->setLogin($data->login);
+    $newUser->setPassword($data->password);
+    $newUser->setGroupId($data->group_id);
+    $newUser->setFirstname($data->firstname);
+    $newUser->setLastname($data->lastname);
+    $newUser->setEmail($data->email);
+    $newUser->setPhone($data->phone);
+    $newUser->setStudy($data->study);
+    $newUser->setSemester($data->semester);
+    $newUser->setCompanyId($data->company_id);
+
+    $response = $service->addNewUser($newUser);
 
     header('Content-Type: application/json');
     echo json_encode($response);

@@ -43,6 +43,41 @@ class UserService
         }
     }
 
+    public function addNewUser($newUser)
+    {
+        $sql = "SELECT * from users WHERE login=:login";
+        $con = Connection::getInstance();
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':login', $newUser->getLogin(), PDO::PARAM_STR);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return [false,"user exist"];
+        }
+        else{
+            $sql = "INSERT INTO `users` (`user_id`, `login`, `password`, `group_id`, `firstname`, `lastname`, `email`, `phone`, `study`, `semester`, `company_id`)
+                VALUES (NULL, :login, :password, :group_id, :firstname, :lastname, :email, :phone, :study, :semester, :company_id)";
+
+            $stmt = $con->handle->prepare($sql);
+            $stmt->bindParam(':login', $newUser->getLogin(), PDO::PARAM_STR);
+            $stmt->bindParam(':password', $newUser->getPassword(), PDO::PARAM_STR);
+            $stmt->bindParam(':group_id', $newUser->getGroupId(), PDO::PARAM_STR);
+            $stmt->bindParam(':firstname', $newUser->getFirstname(), PDO::PARAM_STR);
+            $stmt->bindParam(':lastname', $newUser->getLastname(), PDO::PARAM_STR);
+            $stmt->bindParam(':email', $newUser->getEmail(), PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $newUser->getPhone(), PDO::PARAM_STR);
+            $stmt->bindParam(':study', $newUser->getStudy(), PDO::PARAM_STR);
+            $stmt->bindParam(':semester', $newUser->getSemester(), PDO::PARAM_STR);
+            $stmt->bindParam(':company_id', $newUser->getCompanyId(), PDO::PARAM_STR);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return [true,"user added"];
+            }
+            else{
+                return [false,"error"];
+            }
+        }
+    }
+
 /*
     public function loginOnAccount($obj){
         $sql = "select user_id, email, user_points from users where login=:login and password=:password";

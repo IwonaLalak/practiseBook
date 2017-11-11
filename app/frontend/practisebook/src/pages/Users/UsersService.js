@@ -8,5 +8,12 @@ export default{
         return axios.get(URL);
     },
 
+    addNewUser(data){
+        return axios({
+            method: 'post',
+            url: URL,
+            data: JSON.stringify(data)
+        })
+    },
 
 }
