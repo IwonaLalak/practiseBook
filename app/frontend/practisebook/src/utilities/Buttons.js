@@ -82,3 +82,64 @@ ButtonSave.defaultProps = {
     btnSize: 'small',
     btnDisabled: false
 };
+
+
+export const TableBtnDelete = (props) => {
+    return (
+        <Button onClick={props.onClick}
+                bsStyle={props.btnColor}
+                bsSize={props.btnSize}
+                disabled={props.btnDisabled}
+                title={props.title}
+        ><i className={props.iconType}></i> {props.btnText}</Button>
+    );
+};
+
+TableBtnDelete.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    btnText: PropTypes.string,
+    title: PropTypes.string,
+    btnColor: PropTypes.string,
+    btnSize: PropTypes.string,
+    iconType: PropTypes.string,
+    btnDisabled: PropTypes.bool
+};
+
+TableBtnDelete.defaultProps = {
+    btnText: '',
+    title: 'Usuń pozycję',
+    iconType: 'fa fa-times',
+    btnColor: 'danger',
+    btnSize: 'small',
+    btnDisabled: false
+};
+
+export const TableBtnEdit = (props) => {
+    return (
+        <Button onClick={props.onClick}
+                bsStyle={props.btnColor}
+                bsSize={props.btnSize}
+                disabled={props.btnDisabled}
+                title={props.title}
+        ><i className={props.iconType}></i> {props.btnText}</Button>
+    );
+};
+
+TableBtnEdit.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    btnText: PropTypes.string,
+    title: PropTypes.string,
+    btnColor: PropTypes.string,
+    btnSize: PropTypes.string,
+    iconType: PropTypes.string,
+    btnDisabled: PropTypes.bool
+};
+
+TableBtnEdit.defaultProps = {
+    btnText: '',
+    title: 'Edytuj pozycję',
+    iconType: 'fa fa-edit',
+    btnColor: 'warning',
+    btnSize: 'small',
+    btnDisabled: false
+};

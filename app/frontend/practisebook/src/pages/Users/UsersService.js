@@ -16,4 +16,16 @@ export default{
         })
     },
 
+    editUser(id, data){
+
+    },
+
+    deleteUser(id){
+        return axios({
+                url: URL+'/?user_id='+id,
+                method: 'delete'
+            }
+        )
+    }
+
 }

@@ -91,3 +91,23 @@ function insert_user(){
     header('Content-Type: application/json');
     echo json_encode($response);
 }
+
+function update_user($user_id)
+{
+    $data = json_decode(file_get_contents('php://input'));
+
+    $login = $data->name;
+
+    header('Content-Type: plain/text');
+    echo json_encode(array("zmieniono", $login));
+}
+
+function delete_user($user_id)
+{
+    $response = array();
+    $service = new UserService();
+    $response = $service->deleteUser($user_id);
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+}

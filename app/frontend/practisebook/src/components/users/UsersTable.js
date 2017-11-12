@@ -1,12 +1,24 @@
 import React, {Component} from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {ButtonToolbar} from 'react-bootstrap';
 import tabgrid from '../../utilities/TabGrid';
+import {TableBtnEdit, TableBtnDelete} from '../../utilities/Buttons';
 
 export default class UsersTable extends Component {
     constructor(props) {
         super(props);
         this.state = {};
         this.renderActionButtons = this.renderActionButtons.bind(this);
+        this.onEditClick = this.onEditClick.bind(this);
+        this.onDeleteClick = this.onDeleteClick.bind(this);
+    }
+
+    onEditClick(id) {
+        this.props.handleEditClick(id);
+    }
+
+    onDeleteClick(id) {
+        this.props.handleDeleteClick(id);
     }
 
     renderUserGroup(cell, row) {
@@ -33,7 +45,12 @@ export default class UsersTable extends Component {
     }
 
     renderActionButtons(cell, row) {
-        return 'buttons';
+        return (
+            <ButtonToolbar>
+                <TableBtnEdit onClick={() => this.onEditClick(cell)}/>
+                <TableBtnDelete onClick={() => this.onDeleteClick(cell)}/>
+            </ButtonToolbar>
+        )
     }
 
     expandComponent(row) {

@@ -78,6 +78,20 @@ class UserService
         }
     }
 
+    public function deleteUser($id){
+        $sql = "DELETE FROM users WHERE user_id=:id";
+        $con = Connection::getInstance();
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return [true,"user deleted"];
+        }
+        else{
+            return [false, "error"];
+        }
+    }
+
 /*
     public function loginOnAccount($obj){
         $sql = "select user_id, email, user_points from users where login=:login and password=:password";

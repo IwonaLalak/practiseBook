@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {Form, FormControl, FormGroup, ControlLabel, Col, Row} from 'react-bootstrap';
 import {ButtonSave} from "../../utilities/Buttons";
 import Select from 'react-select';
-
+import ReactNotify from 'react-notify';
 import If from '../../utilities/If';
 import Header from '../../components/header/Header';
 import UserService from './UsersService';
@@ -12,20 +12,18 @@ export default class UserAddContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstname: null,
-            lastname: null,
-            phone: null,
-            email: null,
-            login: null,
-            password: null,
+            firstname: '',
+            lastname: '',
+            phone: '',
+            email: '',
+            login: '',
+            password: '',
             company: null,
-            study: null,
-            semester: null,
+            study: '',
+            semester: '',
             group: null,
             groupId: null,
             addBtnClicked: false,
-            message: null,
-            userAdded: false,
         };
         this.handleAddNewUserClick = this.handleAddNewUserClick.bind(this);
         this.onChangeGroup = this.onChangeGroup.bind(this);
@@ -88,12 +86,12 @@ export default class UserAddContainer extends Component {
         let correct = true;
 
         if (!(
-                this.state.firstname &&
-                this.state.lastname &&
-                this.state.phone &&
-                this.state.email &&
-                this.state.login &&
-                this.state.password &&
+                this.state.firstname.length > 0 &&
+                this.state.lastname.length > 0 &&
+                this.state.phone.length > 0 &&
+                this.state.email.length > 0 &&
+                this.state.login.length > 0 &&
+                this.state.password.length > 0 &&
                 this.state.group
             )) correct = false;
 
@@ -116,20 +114,34 @@ export default class UserAddContainer extends Component {
             this.saveUser(data);
         }
         else {
-            this.setState({message: 'Nie uzupełniono poprawnie danych', userAdded: false});
+            this.refs.notificator.error("Błąd dodawania nowego użytkownika.", "Nie uzupełniono poprawnie danych", 3000);
         }
     }
 
     saveUser(data) {
         UserService.addNewUser(data).then(function (response) {
             if (response.data[0]) {
-                this.setState({message: 'Pomyślnie dodano użytkownika', userAdded: true});
+                this.refs.notificator.success("Pomyślnie dodano użytkownika", "", 3000);
+                // TODO: jeszcze raz czyszczenie forma
+                this.setState({
+                    firstname: '',
+                    lastname:'',
+                    phone:'',
+                    email:'',
+                    login:'',
+                    password:'',
+                    group: null,
+                    company:null,
+                    study:'',
+                    semester:'',
+                    addBtnClicked: false
+                })
             }
             else if (!response.data[0] && response.data[1] === 'user exist') {
-                this.setState({message: 'Użytkownik o podanym loginie już istnieje', userAdded: false});
+                this.refs.notificator.error("Błąd dodawania nowego użytkownika.", "Podany login jest już zajęty", 3000);
             }
             else {
-                this.setState({message: 'Wystąpił błąd', userAdded: false});
+                this.refs.notificator.error("Błąd dodawania nowego użytkownika.", "Wystąpił błąd po stronie bazy danych", 3000);
             }
         }.bind(this));
     }
@@ -140,6 +152,7 @@ export default class UserAddContainer extends Component {
 
         return (
             <div>
+                <ReactNotify ref='notificator'/>
                 <div>
                     <Header url={["użytkownicy", "dodaj"]}/>
                 </div>
@@ -151,19 +164,19 @@ export default class UserAddContainer extends Component {
                                     <FormGroup>
                                         <h5>Dane osobowe</h5>
                                         <Row>
-                                            <Col md={6} lg={6}>
+                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.firstname.length > 0)? 'has-error':''}>
                                                 <ControlLabel>Imię</ControlLabel>
                                                 <FormControl type="text" onChange={this.onChangeFirstname}/>
                                             </Col>
-                                            <Col md={6} lg={6}>
+                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.lastname.length > 0)? 'has-error':''}>
                                                 <ControlLabel>Nazwisko</ControlLabel>
                                                 <FormControl type="text" onChange={this.onChangeLastname}/>
                                             </Col>
-                                            <Col md={6} lg={6}>
+                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.phone.length > 0)? 'has-error':''}>
                                                 <ControlLabel>Telefon</ControlLabel>
                                                 <FormControl type="number" onChange={this.onChangePhone}/>
                                             </Col>
-                                            <Col md={6} lg={6}>
+                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.email.length > 0)? 'has-error':''}>
                                                 <ControlLabel>Email</ControlLabel>
                                                 <FormControl type="email" onChange={this.onChangeEmail}/>
                                             </Col>
@@ -172,15 +185,15 @@ export default class UserAddContainer extends Component {
                                     <FormGroup>
                                         <h5>Dane konta</h5>
                                         <Row>
-                                            <Col md={6} lg={6}>
+                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.login.length > 0)? 'has-error':''}>
                                                 <ControlLabel>Login</ControlLabel>
                                                 <FormControl type="text" onChange={this.onChangeLogin}/>
                                             </Col>
-                                            <Col md={6} lg={6}>
+                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.password.length > 0)? 'has-error':''}>
                                                 <ControlLabel>Hasło</ControlLabel>
                                                 <FormControl type="password" onChange={this.onChangePassword}/>
                                             </Col>
-                                            <Col md={6} lg={6}>
+                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.group)? 'has-error':''}>
                                                 <ControlLabel>Grupa</ControlLabel>
                                                 <Select
                                                     options={groups}
@@ -199,7 +212,7 @@ export default class UserAddContainer extends Component {
                                         <FormGroup>
                                             <h5>Dane pracownika firmy</h5>
                                             <Row>
-                                                <Col md={6} lg={6}>
+                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.company)? 'has-error':''}>
                                                     <ControlLabel>Firma</ControlLabel>
                                                     <FormControl onChange={this.onChangeCompany}/>
                                                 </Col>
@@ -210,11 +223,11 @@ export default class UserAddContainer extends Component {
                                         <FormGroup>
                                             <h5>Dane studenta</h5>
                                             <Row>
-                                                <Col md={6} lg={6}>
+                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.study)? 'has-error':''}>
                                                     <ControlLabel>Kierunek</ControlLabel>
                                                     <FormControl type="text" onChange={this.onChangeStudy}/>
                                                 </Col>
-                                                <Col md={6} lg={6}>
+                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.semester)? 'has-error':''}>
                                                     <ControlLabel>Semestr</ControlLabel>
                                                     <FormControl type="number" onChange={this.onChangeSemester}/>
                                                 </Col>
@@ -222,13 +235,6 @@ export default class UserAddContainer extends Component {
                                         </FormGroup>
                                     </If>
                                     <FormGroup>
-                                        <div className="pull-left">
-                                            <If isTrue={this.state.addBtnClicked}>
-                                                <div style={(this.state.userAdded) ? {color: 'green'} : {color: 'red'}}>
-                                                    {this.state.message}
-                                                </div>
-                                            </If>
-                                        </div>
                                         <div className="pull-right">
                                             <ButtonSave onClick={this.handleAddNewUserClick}/>
                                         </div>
