@@ -78,6 +78,46 @@ class UserService
         }
     }
 
+    public function updateUser($currentUser)
+    {
+        $sql = "SELECT * from users WHERE user_id=:id";
+        $con = Connection::getInstance();
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $currentUser->getUserId(), PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return [false,"user doesnt exist"];
+        }
+        else{
+            $sql = "
+                    UPDATE `users` 
+                    SET `login` = :login, `password` = :password, `firstname` = :firstname, `lastname` = :lastname, 
+                        `email` = :email, `phone` = :phone, `group_id`=:group_id, `study`=:study, `semester`=:semester, `company_id`=:company_id
+                    WHERE `users`.`user_id` =:id
+                    ";
+
+            $stmt = $con->handle->prepare($sql);
+            $stmt->bindParam(':id', $currentUser->getUserId(), PDO::PARAM_INT);
+            $stmt->bindParam(':login', $currentUser->getLogin(), PDO::PARAM_STR);
+            $stmt->bindParam(':password', $currentUser->getPassword(), PDO::PARAM_STR);
+            $stmt->bindParam(':group_id', $currentUser->getGroupId(), PDO::PARAM_STR);
+            $stmt->bindParam(':firstname', $currentUser->getFirstname(), PDO::PARAM_STR);
+            $stmt->bindParam(':lastname', $currentUser->getLastname(), PDO::PARAM_STR);
+            $stmt->bindParam(':email', $currentUser->getEmail(), PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $currentUser->getPhone(), PDO::PARAM_STR);
+            $stmt->bindParam(':study', $currentUser->getStudy(), PDO::PARAM_STR);
+            $stmt->bindParam(':semester', $currentUser->getSemester(), PDO::PARAM_STR);
+            $stmt->bindParam(':company_id', $currentUser->getCompanyId(), PDO::PARAM_STR);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return [true,"user updated"];
+            }
+            else{
+                return [false,"error"];
+            }
+        }
+    }
+
     public function deleteUser($id){
         $sql = "DELETE FROM users WHERE user_id=:id";
         $con = Connection::getInstance();

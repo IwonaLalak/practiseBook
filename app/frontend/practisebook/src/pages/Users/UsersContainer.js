@@ -40,6 +40,9 @@ export default class UsersContainer extends Component {
 
     handleClickEditUser(id){
         console.log("edytuje", id);
+
+
+
     }
 
     handleClickDeleteUser(id){
@@ -69,6 +72,9 @@ export default class UsersContainer extends Component {
                         />
                     </div>
                     <div>
+
+                    </div>
+                    <div style={{clear:'both'}}>
                        <UsersTable
                            users={this.state.users}
                            enableFilters = {this.state.filtersState}

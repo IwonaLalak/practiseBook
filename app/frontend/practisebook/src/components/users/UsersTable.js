@@ -162,7 +162,7 @@ export default class UsersTable extends Component {
                                            placeholder: 'Szukaj'
                                        } : false}>Telefon</TableHeaderColumn>
                     <TableHeaderColumn dataField='user_id' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2} dataFormat={this.renderActionButtons}
-                                       expandable={false}>
+                                       expandable={false}> Akcje
 
                     </TableHeaderColumn>
                 </BootstrapTable>

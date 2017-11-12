@@ -122,26 +122,29 @@ export default class UserAddContainer extends Component {
         UserService.addNewUser(data).then(function (response) {
             if (response.data[0]) {
                 this.refs.notificator.success("Pomyślnie dodano użytkownika", "", 3000);
-                // TODO: jeszcze raz czyszczenie forma
+
                 this.setState({
                     firstname: '',
-                    lastname:'',
-                    phone:'',
-                    email:'',
-                    login:'',
-                    password:'',
+                    lastname: '',
+                    phone: '',
+                    email: '',
+                    login: '',
+                    password: '',
                     group: null,
-                    company:null,
-                    study:'',
-                    semester:'',
+                    company: null,
+                    study: '',
+                    semester: '',
                     addBtnClicked: false
-                })
+                });
+
+                let inputs = document.getElementsByTagName('input');
+
+                for (let i = 0; i < inputs.length; i++) {
+                    inputs[i].value = '';
+                }
             }
             else if (!response.data[0] && response.data[1] === 'user exist') {
                 this.refs.notificator.error("Błąd dodawania nowego użytkownika.", "Podany login jest już zajęty", 3000);
-            }
-            else {
-                this.refs.notificator.error("Błąd dodawania nowego użytkownika.", "Wystąpił błąd po stronie bazy danych", 3000);
             }
         }.bind(this));
     }
@@ -164,19 +167,23 @@ export default class UserAddContainer extends Component {
                                     <FormGroup>
                                         <h5>Dane osobowe</h5>
                                         <Row>
-                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.firstname.length > 0)? 'has-error':''}>
+                                            <Col md={6} lg={6}
+                                                 className={(this.state.addBtnClicked && !this.state.firstname.length > 0) ? 'has-error' : ''}>
                                                 <ControlLabel>Imię</ControlLabel>
                                                 <FormControl type="text" onChange={this.onChangeFirstname}/>
                                             </Col>
-                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.lastname.length > 0)? 'has-error':''}>
+                                            <Col md={6} lg={6}
+                                                 className={(this.state.addBtnClicked && !this.state.lastname.length > 0) ? 'has-error' : ''}>
                                                 <ControlLabel>Nazwisko</ControlLabel>
                                                 <FormControl type="text" onChange={this.onChangeLastname}/>
                                             </Col>
-                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.phone.length > 0)? 'has-error':''}>
+                                            <Col md={6} lg={6}
+                                                 className={(this.state.addBtnClicked && !this.state.phone.length > 0) ? 'has-error' : ''}>
                                                 <ControlLabel>Telefon</ControlLabel>
                                                 <FormControl type="number" onChange={this.onChangePhone}/>
                                             </Col>
-                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.email.length > 0)? 'has-error':''}>
+                                            <Col md={6} lg={6}
+                                                 className={(this.state.addBtnClicked && !this.state.email.length > 0) ? 'has-error' : ''}>
                                                 <ControlLabel>Email</ControlLabel>
                                                 <FormControl type="email" onChange={this.onChangeEmail}/>
                                             </Col>
@@ -185,15 +192,17 @@ export default class UserAddContainer extends Component {
                                     <FormGroup>
                                         <h5>Dane konta</h5>
                                         <Row>
-                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.login.length > 0)? 'has-error':''}>
+                                            <Col md={6} lg={6}
+                                                 className={(this.state.addBtnClicked && !this.state.login.length > 0) ? 'has-error' : ''}>
                                                 <ControlLabel>Login</ControlLabel>
                                                 <FormControl type="text" onChange={this.onChangeLogin}/>
                                             </Col>
-                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.password.length > 0)? 'has-error':''}>
+                                            <Col md={6} lg={6}
+                                                 className={(this.state.addBtnClicked && !this.state.password.length > 0) ? 'has-error' : ''}>
                                                 <ControlLabel>Hasło</ControlLabel>
                                                 <FormControl type="password" onChange={this.onChangePassword}/>
                                             </Col>
-                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.group)? 'has-error':''}>
+                                            <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.group) ? 'has-error' : ''}>
                                                 <ControlLabel>Grupa</ControlLabel>
                                                 <Select
                                                     options={groups}
@@ -212,7 +221,7 @@ export default class UserAddContainer extends Component {
                                         <FormGroup>
                                             <h5>Dane pracownika firmy</h5>
                                             <Row>
-                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.company)? 'has-error':''}>
+                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.company) ? 'has-error' : ''}>
                                                     <ControlLabel>Firma</ControlLabel>
                                                     <FormControl onChange={this.onChangeCompany}/>
                                                 </Col>
@@ -223,11 +232,11 @@ export default class UserAddContainer extends Component {
                                         <FormGroup>
                                             <h5>Dane studenta</h5>
                                             <Row>
-                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.study)? 'has-error':''}>
+                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.study) ? 'has-error' : ''}>
                                                     <ControlLabel>Kierunek</ControlLabel>
                                                     <FormControl type="text" onChange={this.onChangeStudy}/>
                                                 </Col>
-                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.semester)? 'has-error':''}>
+                                                <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.semester) ? 'has-error' : ''}>
                                                     <ControlLabel>Semestr</ControlLabel>
                                                     <FormControl type="number" onChange={this.onChangeSemester}/>
                                                 </Col>

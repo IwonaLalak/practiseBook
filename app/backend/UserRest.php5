@@ -96,10 +96,25 @@ function update_user($user_id)
 {
     $data = json_decode(file_get_contents('php://input'));
 
-    $login = $data->name;
+    $response = array();
+    $service = new UserService();
+    $currentUser = new User();
+    $currentUser->setUserId($user_id);
+    $currentUser->setLogin($data->login);
+    $currentUser->setPassword($data->password);
+    $currentUser->setGroupId($data->group_id);
+    $currentUser->setFirstname($data->firstname);
+    $currentUser->setLastname($data->lastname);
+    $currentUser->setEmail($data->email);
+    $currentUser->setPhone($data->phone);
+    $currentUser->setStudy($data->study);
+    $currentUser->setSemester($data->semester);
+    $currentUser->setCompanyId($data->company_id);
+
+    $response = $service->updateUser($currentUser);
 
     header('Content-Type: plain/text');
-    echo json_encode(array("zmieniono", $login));
+    echo json_encode($response);
 }
 
 function delete_user($user_id)

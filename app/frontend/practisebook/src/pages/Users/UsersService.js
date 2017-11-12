@@ -17,7 +17,13 @@ export default{
     },
 
     editUser(id, data){
-
+        return axios(
+            {
+                url: URL + '/?user_id='+id,
+                method: 'put',
+                data: JSON.stringify(data)
+            }
+        )
     },
 
     deleteUser(id){
