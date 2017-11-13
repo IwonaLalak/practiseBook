@@ -1,0 +1,12 @@
+#ALL_COMPANIES {
+  padding: 15px;
+}
+#ADD_COMPANY,
+#EDIT_COMPANY {
+  padding: 15px;
+}
+#ADD_COMPANY form h5,
+#EDIT_COMPANY form h5 {
+  color: #666;
+  font-style: italic;
+}

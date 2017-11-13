@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ButtonAdd, ButtonAction} from '../../utilities/Buttons';
 
-export default class UsersTop extends Component {
+export default class GeneralTop extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +17,7 @@ export default class UsersTop extends Component {
     }
 
     onClickAdd(){
-        this.props.handleClickAddNewUser();
+        this.props.handleClickAdd();
     }
 
     render(){
@@ -28,7 +28,7 @@ export default class UsersTop extends Component {
                                   btnText={(this.state.enableSearch)? 'Ukryj narzędzia wyszukiwania' : 'Pokaż narzedzia wyszukiwania'}
                                   iconType="fa fa-search"
                     />
-                    <ButtonAdd onClick={this.onClickAdd} btnText="Dodaj nowego użytkownika"/>
+                    <ButtonAdd onClick={this.onClickAdd} btnText={this.props.addBtnText}/>
                 </div>
             </div>
         )

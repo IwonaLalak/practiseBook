@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import ReactNotify from 'react-notify';
 import Header from '../../components/header/Header';
-import UsersTop from '../../components/users/UsersTop';
+import GeneralTop from '../../components/generaltop/GeneralTop';
 import UsersTable from '../../components/users/UsersTable';
 import UsersForm from '../../components/users/UsersForm';
 import UserService from './UsersService';
@@ -87,9 +87,10 @@ export default class UsersContainer extends Component {
                 </div>
                 <div id="ALL_USERS">
                     <div>
-                        <UsersTop
-                            handleClickAddNewUser={this.handleClickAddNewUser}
+                        <GeneralTop
+                            handleClickAdd={this.handleClickAddNewUser}
                             handleClickEnableSearch={this.handleClickEnableSearch}
+                            addBtnText = "Dodaj nowego użytkownika"
                         />
                     </div>
                     <If isTrue={this.state.userForEdition}>

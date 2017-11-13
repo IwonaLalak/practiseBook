@@ -1,0 +1,19 @@
+.react-bs-table-container .table {
+  margin-bottom: 0;
+}
+.react-bs-table-container .react-bs-table-pagination .pagination {
+  margin: 0;
+  float: right;
+}
+.react-bs-table-container .react-bs-table-pagination ul.dropdown-menu {
+  min-width: 15px;
+}
+@media screen and (max-width: 1399px) {
+  .react-bs-table {
+    overflow-x: auto;
+  }
+  .react-bs-container-header,
+  .react-bs-container-body {
+    width: 1300px;
+  }
+}
