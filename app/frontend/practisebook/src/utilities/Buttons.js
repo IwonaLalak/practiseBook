@@ -83,6 +83,33 @@ ButtonSave.defaultProps = {
     btnDisabled: false
 };
 
+export const ButtonCancel = (props) => {
+    return (
+        <Button onClick={props.onClick}
+                bsStyle={props.btnColor}
+                bsSize={props.btnSize}
+                disabled={props.btnDisabled}
+        ><i className={props.iconType}></i> {props.btnText}</Button>
+    );
+};
+
+ButtonCancel.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    btnText: PropTypes.string,
+    btnColor: PropTypes.string,
+    btnSize: PropTypes.string,
+    iconType: PropTypes.string,
+    btnDisabled: PropTypes.bool
+};
+
+ButtonCancel.defaultProps = {
+    btnText: 'Anuluj',
+    iconType: 'fa fa-ban',
+    btnColor: 'default',
+    btnSize: 'small',
+    btnDisabled: false
+};
+
 
 export const TableBtnDelete = (props) => {
     return (

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Form, FormControl, FormGroup, ControlLabel, Col, Row} from 'react-bootstrap';
-import {ButtonSave} from "../../utilities/Buttons";
+import {Form, FormControl, FormGroup, ControlLabel, Col, Row, ButtonToolbar} from 'react-bootstrap';
+import {ButtonCancel, ButtonSave} from "../../utilities/Buttons";
 import Select from 'react-select';
 import If from '../../utilities/If';
 import ReactNotify from 'react-notify';
@@ -23,6 +23,7 @@ export default class UsersForm extends Component {
             addBtnClicked: false,
         };
         this.onAddBtnClick = this.onAddBtnClick.bind(this);
+        this.onCancelBtnClick = this.onCancelBtnClick.bind(this);
         this.onChangeGroup = this.onChangeGroup.bind(this);
         this.onChangeFirstname = this.onChangeFirstname.bind(this);
         this.onChangeLastname = this.onChangeLastname.bind(this);
@@ -134,6 +135,31 @@ export default class UsersForm extends Component {
         }
     }
 
+    onCancelBtnClick() {
+        this.props.handleCancelClick();
+    }
+
+    componentDidMount() {
+        if (this.props.editedUser) {
+            let groups = [{id: 1, name: 'admin'}, {id: 2, name: 'wykładowca'}, {id: 3, name: 'leader'}, {id: 4, name: 'student'}];
+            this.setState({
+                login: this.props.editedUser.login,
+                password: this.props.editedUser.password,
+                firstname: this.props.editedUser.firstname,
+                lastname: this.props.editedUser.lastname,
+                phone: this.props.editedUser.phone,
+                email: this.props.editedUser.email,
+                study: this.props.editedUser.study,
+                semester: this.props.editedUser.semester,
+                group: groups.find(group => group.id == this.props.editedUser.group_id),
+                groupId: this.props.editedUser.group_id,
+                company: this.props.editedUser.company_id
+            })
+
+
+        }
+    }
+
     render() {
 
         const groups = [{id: 1, name: 'admin'}, {id: 2, name: 'wykładowca'}, {id: 3, name: 'leader'}, {id: 4, name: 'student'}];
@@ -150,22 +176,26 @@ export default class UsersForm extends Component {
                                     <Col md={6} lg={6}
                                          className={(this.state.addBtnClicked && !this.state.firstname.length > 0) ? 'has-error' : ''}>
                                         <ControlLabel>Imię</ControlLabel>
-                                        <FormControl type="text" onChange={this.onChangeFirstname}/>
+                                        <FormControl type="text" onChange={this.onChangeFirstname}
+                                                     defaultValue={(this.props.editedUser) ? this.props.editedUser.firstname : ''}/>
                                     </Col>
                                     <Col md={6} lg={6}
                                          className={(this.state.addBtnClicked && !this.state.lastname.length > 0) ? 'has-error' : ''}>
                                         <ControlLabel>Nazwisko</ControlLabel>
-                                        <FormControl type="text" onChange={this.onChangeLastname}/>
+                                        <FormControl type="text" onChange={this.onChangeLastname}
+                                                     defaultValue={(this.props.editedUser) ? this.props.editedUser.lastname : ''}/>
                                     </Col>
                                     <Col md={6} lg={6}
                                          className={(this.state.addBtnClicked && !this.state.phone.length > 0) ? 'has-error' : ''}>
                                         <ControlLabel>Telefon</ControlLabel>
-                                        <FormControl type="number" onChange={this.onChangePhone}/>
+                                        <FormControl type="number" onChange={this.onChangePhone}
+                                                     defaultValue={(this.props.editedUser) ? this.props.editedUser.phone : ''}/>
                                     </Col>
                                     <Col md={6} lg={6}
                                          className={(this.state.addBtnClicked && !this.state.email.length > 0) ? 'has-error' : ''}>
                                         <ControlLabel>Email</ControlLabel>
-                                        <FormControl type="email" onChange={this.onChangeEmail}/>
+                                        <FormControl type="email" onChange={this.onChangeEmail}
+                                                     defaultValue={(this.props.editedUser) ? this.props.editedUser.email : ''}/>
                                     </Col>
                                 </Row>
                             </FormGroup>
@@ -175,12 +205,14 @@ export default class UsersForm extends Component {
                                     <Col md={6} lg={6}
                                          className={(this.state.addBtnClicked && !this.state.login.length > 0) ? 'has-error' : ''}>
                                         <ControlLabel>Login</ControlLabel>
-                                        <FormControl type="text" onChange={this.onChangeLogin}/>
+                                        <FormControl type="text" onChange={this.onChangeLogin}
+                                                     defaultValue={(this.props.editedUser) ? this.props.editedUser.login : ''}/>
                                     </Col>
                                     <Col md={6} lg={6}
                                          className={(this.state.addBtnClicked && !this.state.password.length > 0) ? 'has-error' : ''}>
                                         <ControlLabel>Hasło</ControlLabel>
-                                        <FormControl type="password" onChange={this.onChangePassword}/>
+                                        <FormControl type="password" onChange={this.onChangePassword}
+                                                     defaultValue={(this.props.editedUser) ? this.props.editedUser.password : ''}/>
                                     </Col>
                                     <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.group) ? 'has-error' : ''}>
                                         <ControlLabel>Grupa</ControlLabel>
@@ -198,28 +230,31 @@ export default class UsersForm extends Component {
                                 </Row>
                             </FormGroup>
                             <div style={{clear: 'both'}}>
-                                <If isTrue={this.state.groupId === 3}>
+                                <If isTrue={this.state.groupId == 3}>
                                     <FormGroup style={(this.props.horizontal) ? {} : {float: 'left', width: '50%'}}>
                                         <h5>Dane pracownika firmy</h5>
                                         <Row>
                                             <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.company) ? 'has-error' : ''}>
                                                 <ControlLabel>Firma</ControlLabel>
-                                                <FormControl onChange={this.onChangeCompany}/>
+                                                <FormControl onChange={this.onChangeCompany}
+                                                             defaultValue={(this.props.editedUser) ? this.props.editedUser.company_id : ''}/>
                                             </Col>
                                         </Row>
                                     </FormGroup>
                                 </If>
-                                <If isTrue={this.state.groupId === 4}>
+                                <If isTrue={this.state.groupId == 4}>
                                     <FormGroup style={(this.props.horizontal) ? {} : {float: 'left', width: '50%'}}>
                                         <h5>Dane studenta</h5>
                                         <Row>
                                             <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.study) ? 'has-error' : ''}>
                                                 <ControlLabel>Kierunek</ControlLabel>
-                                                <FormControl type="text" onChange={this.onChangeStudy}/>
+                                                <FormControl type="text" onChange={this.onChangeStudy}
+                                                             defaultValue={(this.props.editedUser) ? this.props.editedUser.study : ''}/>
                                             </Col>
                                             <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.semester) ? 'has-error' : ''}>
                                                 <ControlLabel>Semestr</ControlLabel>
-                                                <FormControl type="number" onChange={this.onChangeSemester}/>
+                                                <FormControl type="number" onChange={this.onChangeSemester}
+                                                             defaultValue={(this.props.editedUser) ? this.props.editedUser.semester : ''}/>
                                             </Col>
                                         </Row>
                                     </FormGroup>
@@ -227,8 +262,11 @@ export default class UsersForm extends Component {
                             </div>
                             <div style={{clear: 'both'}}>
                                 <FormGroup>
-                                    <div className={(this.props.horizontal)? "pull-right":""}>
-                                        <ButtonSave onClick={this.onAddBtnClick}/>
+                                    <div className={(this.props.horizontal) ? "pull-right" : ""}>
+                                        <ButtonToolbar>
+                                            <ButtonCancel onClick={this.onCancelBtnClick}/>
+                                            <ButtonSave onClick={this.onAddBtnClick}/>
+                                        </ButtonToolbar>
                                     </div>
                                 </FormGroup>
                             </div>

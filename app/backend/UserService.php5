@@ -85,7 +85,7 @@ class UserService
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $currentUser->getUserId(), PDO::PARAM_INT);
         $stmt->execute();
-        if ($stmt->rowCount() > 0) {
+        if (!($stmt->rowCount() > 0)) {
             return [false,"user doesnt exist"];
         }
         else{
