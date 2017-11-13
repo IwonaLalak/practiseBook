@@ -12,7 +12,7 @@ export default class CompaniesContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'firmy',text:'firmy'},{url:'',text:'przegląd'}]}/>
                 </div>
                 <div>
                     strona firm

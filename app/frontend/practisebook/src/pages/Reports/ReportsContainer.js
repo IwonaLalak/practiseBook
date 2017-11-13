@@ -12,7 +12,7 @@ export default class ReportsContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'raporty',text:'raporty'},{url:'',text:'przegląd'}]}/>
                 </div>
                 <div>
                     strona raportow

@@ -12,7 +12,7 @@ export default class CalendarContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'kalendarz',text:'kalendarz'},{url:'',text:'przegląd'}]}/>
                 </div>
                 <div>
                     strona kalendarza

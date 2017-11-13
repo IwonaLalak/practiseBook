@@ -12,7 +12,7 @@ export default class NotesContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'uwagi',text:'uwagi'},{url:'',text:'przegląd'}]}/>
                 </div>
                 <div>
                     strona uwag

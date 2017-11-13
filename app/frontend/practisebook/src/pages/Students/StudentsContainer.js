@@ -12,7 +12,7 @@ export default class StudentsContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'studenci',text:'studenci'},{url:'',text:'przegląd'}]}/>
                 </div>
                 <div>
                     strona studentow

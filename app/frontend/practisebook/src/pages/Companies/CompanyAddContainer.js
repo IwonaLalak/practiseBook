@@ -12,7 +12,7 @@ export default class CompanyAddContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["firmy","dodaj"]}/>
+                    <Header url={[{url:'firmy',text:'firmy'},{url:'',text:'dodaj'}]}/>
                 </div>
                 <div>
                     dodanie firmy

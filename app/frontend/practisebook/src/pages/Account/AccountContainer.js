@@ -12,7 +12,7 @@ export default class AccountContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'konto',text:'konto użytkownika'},{url:'',text:'Zmiana hasła'}]}/>
                 </div>
                 <div>
                     strona konta

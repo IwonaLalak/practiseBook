@@ -12,7 +12,7 @@ export default class UserContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["użytkownicy","użytownik"]}/>
+                    <Header url={[{url:'uzytkownicy',text:'użytkownicy'},{url:'',text:'użytkownik'}]}/>
                 </div>
                 <div>
                     strona usera

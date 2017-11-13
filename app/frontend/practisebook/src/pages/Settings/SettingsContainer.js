@@ -12,7 +12,7 @@ export default class SettingsContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'ustawienia',text:'ustawienia'},{url:'',text:'ustawienia główne'}]}/>
                 </div>
                 <div>
                     strona ustawien

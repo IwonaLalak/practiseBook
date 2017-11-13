@@ -27,7 +27,7 @@ export default class UserAddContainer extends Component {
             <div>
                 <ReactNotify ref='notificator'/>
                 <div>
-                    <Header url={["użytkownicy", "dodaj"]}/>
+                    <Header url={[{url:'uzytkownicy',text:'użytkownicy'},{url:'',text:'dodaj'}]}/>
                 </div>
                 <div id="ADD_USER">
                     <div>

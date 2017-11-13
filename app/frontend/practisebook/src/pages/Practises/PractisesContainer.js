@@ -12,7 +12,7 @@ export default class PractisesContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'praktyki',text:'praktyki'},{url:'',text:'przegląd'}]}/>
                 </div>
                 <div>
                     strona praktyk

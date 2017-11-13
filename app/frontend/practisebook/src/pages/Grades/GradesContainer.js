@@ -12,7 +12,7 @@ export default class GradesContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["faktury","przegląd"]}/>
+                    <Header url={[{url:'oceny',text:'oceny'},{url:'',text:'przegląd'}]}/>
                 </div>
                 <div>
                     strona ocen

@@ -7,8 +7,6 @@ class Header extends Component {
         this.renderBreadcrumbs = this.renderBreadcrumbs.bind(this);
     }
 
-    // TODO: breadcrumbs renderuje złe linki, przykładowo chce skierować pod localhost:3000/użytkownicy - należy usunąć polskie znaki
-
     renderBreadcrumbs() {
         if (this.props.url) {
             return (
@@ -24,12 +22,12 @@ class Header extends Component {
                     {this.props.url.map((item, index) =>
                         (index === this.props.url.length - 1) ?
                             <span>
-                                {item}
+                                {item.text}
                             </span>
                             :
                             <span>
-                                 <Link to={'/' + item}>
-                                     {item}
+                                 <Link to={'/' + item.url}>
+                                     {item.text}
                                 </Link>
                                 <span className="breadcrumbSlash">
                                     /
