@@ -4,6 +4,7 @@ import Header from '../../components/header/Header';
 import UserService from './UsersService';
 import UsersForm from '../../components/users/UsersForm';
 import {withRouter} from 'react-router-dom';
+import CompanyService from "../Companies/CompanyService";
 
 export default class UserAddContainer extends Component {
     constructor(props) {
@@ -11,9 +12,11 @@ export default class UserAddContainer extends Component {
         this.state = {};
         this.saveUser = this.saveUser.bind(this);
         this.cancelEdition = this.cancelEdition.bind(this);
+        this.getCompaniesData = this.getCompaniesData.bind(this);
     }
 
     saveUser(data) {
+
         UserService.addNewUser(data).then(function (response) {
             if (response.data[0]) {
                 this.refs.notificator.success("Pomyślnie dodano użytkownika", "", 3000);
@@ -28,6 +31,16 @@ export default class UserAddContainer extends Component {
         this.props.history.push("/uzytkownicy");
     }
 
+    getCompaniesData(){
+        CompanyService.getAllCompanies().then(function (response) {
+            this.setState({companies: response.data})
+        }.bind(this))
+    }
+
+    componentDidMount() {
+        this.getCompaniesData();
+    }
+
     render() {
         return (
             <div>
@@ -37,7 +50,7 @@ export default class UserAddContainer extends Component {
                 </div>
                 <div id="ADD_USER">
                     <div>
-                        <UsersForm handleAddClick={this.saveUser} handleCancelClick={this.cancelEdition} horizontal={true} editedUser={false}/>
+                        <UsersForm handleAddClick={this.saveUser} handleCancelClick={this.cancelEdition} horizontal={true} editedUser={false} companies={this.state.companies}/>
                     </div>
                 </div>
             </div>

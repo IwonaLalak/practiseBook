@@ -11,6 +11,7 @@ export default class UsersTable extends Component {
         this.renderActionButtons = this.renderActionButtons.bind(this);
         this.onEditClick = this.onEditClick.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
+        this.expandComponent = this.expandComponent.bind(this);
     }
 
     onEditClick(id) {
@@ -58,20 +59,18 @@ export default class UsersTable extends Component {
 
             return (
                 <div>
-                    <span className="label label-default">Student </span>
-                    <span>Kierunek: </span>
-                    <span>{row.study}</span>
-                    <span>Semestr: </span>
-                    <span>{row.semester}</span>
+                    <span className="label label-default">Student kierunku:</span>
+                    <span>{row.study}, {row.semester}</span>
                 </div>
             )
         }
         else {
+            let company = this.props.companies.find(company => company.company_id == row.company_id);
+            if(company)
             return (
                 <div>
-                    <span className="label label-default">Pracownik </span>
-                    <span>Firma: </span>
-                    <span>{row.company_id}</span>
+                    <span className="label label-default">Pracownik firmy:</span>
+                    <span>{company.name}</span>
                 </div>
             )
         }

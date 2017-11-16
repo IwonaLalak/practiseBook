@@ -61,7 +61,7 @@ export default class UsersForm extends Component {
     }
 
     onChangeCompany(e) {
-        this.setState({company: e.target.value});
+        this.setState({company: e});
     }
 
     onChangeStudy(e) {
@@ -104,7 +104,7 @@ export default class UsersForm extends Component {
                 login: this.state.login,
                 password: this.state.password,
                 group_id: this.state.groupId,
-                company_id: this.state.company,
+                company_id: this.state.company.company_id,
                 study: this.state.study,
                 semester: this.state.semester
             }
@@ -131,7 +131,11 @@ export default class UsersForm extends Component {
             }
         }
         else {
-            this.refs.notificator.error("Błąd dodawania nowego użytkownika.", "Nie uzupełniono poprawnie danych", 3000);
+            if(!this.props.editedUser)
+                this.refs.notificator.error("Błąd dodawania nowego użytkownika.", "Nie uzupełniono poprawnie danych", 3000);
+            else{
+                this.refs.notificator.error("Błąd edytowania użytkownika.", "Nie uzupełniono poprawnie danych", 3000);
+            }
         }
     }
 
@@ -153,10 +157,8 @@ export default class UsersForm extends Component {
                 semester: this.props.editedUser.semester,
                 group: groups.find(group => group.id == this.props.editedUser.group_id),
                 groupId: this.props.editedUser.group_id,
-                company: this.props.editedUser.company_id
+                company: this.props.companies.find(company => company.company_id == this.props.editedUser.company_id)
             })
-
-
         }
     }
 
@@ -206,7 +208,9 @@ export default class UsersForm extends Component {
                                          className={(this.state.addBtnClicked && !this.state.login.length > 0) ? 'has-error' : ''}>
                                         <ControlLabel>Login</ControlLabel>
                                         <FormControl type="text" onChange={this.onChangeLogin}
-                                                     defaultValue={(this.props.editedUser) ? this.props.editedUser.login : ''}/>
+                                                     defaultValue={(this.props.editedUser) ? this.props.editedUser.login : ''}
+                                                     disabled={(this.props.editedUser)}
+                                        />
                                     </Col>
                                     <Col md={6} lg={6}
                                          className={(this.state.addBtnClicked && !this.state.password.length > 0) ? 'has-error' : ''}>
@@ -236,8 +240,16 @@ export default class UsersForm extends Component {
                                         <Row>
                                             <Col md={6} lg={6} className={(this.state.addBtnClicked && !this.state.company) ? 'has-error' : ''}>
                                                 <ControlLabel>Firma</ControlLabel>
-                                                <FormControl onChange={this.onChangeCompany}
-                                                             defaultValue={(this.props.editedUser) ? this.props.editedUser.company_id : ''}/>
+                                                <Select
+                                                    options={this.props.companies}
+                                                    value={this.state.company}
+                                                    name="CompanySelect"
+                                                    onChange={this.onChangeCompany}
+                                                    clearable={true}
+                                                    labelKey="name"
+                                                    valueKey="company_id"
+                                                    placeholder="Wybierz firmę"
+                                                />
                                             </Col>
                                         </Row>
                                     </FormGroup>

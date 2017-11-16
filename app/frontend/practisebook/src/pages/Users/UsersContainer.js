@@ -7,16 +7,19 @@ import UsersTable from '../../components/users/UsersTable';
 import UsersForm from '../../components/users/UsersForm';
 import UserService from './UsersService';
 import If from "../../utilities/If";
+import CompanyService from "../Companies/CompanyService";
 
 export default class UsersContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             users: [],
+            companies: [],
             filtersState: false,
             userForEdition: false
         };
         this.getData = this.getData.bind(this);
+        this.getCompaniesData = this.getCompaniesData.bind(this);
         this.handleClickAddNewUser = this.handleClickAddNewUser.bind(this);
         this.handleClickEnableSearch = this.handleClickEnableSearch.bind(this);
         this.handleClickEditUser = this.handleClickEditUser.bind(this);
@@ -27,11 +30,18 @@ export default class UsersContainer extends Component {
 
     componentDidMount() {
         this.getData();
+        this.getCompaniesData();
     }
 
     getData() {
         UserService.getAllUsers().then(function (response) {
             this.setState({users: response.data})
+        }.bind(this))
+    }
+
+    getCompaniesData(){
+        CompanyService.getAllCompanies().then(function (response) {
+            this.setState({companies: response.data})
         }.bind(this))
     }
 
@@ -95,7 +105,7 @@ export default class UsersContainer extends Component {
                     </div>
                     <If isTrue={this.state.userForEdition}>
                         <div id="EDIT_USER">
-                            <UsersForm handleAddClick={this.saveUser} handleCancelClick={this.cancelEdition} horizontal={false} editedUser={this.state.userForEdition}/>
+                            <UsersForm handleAddClick={this.saveUser} handleCancelClick={this.cancelEdition} horizontal={false} editedUser={this.state.userForEdition} companies={this.state.companies}/>
                         </div>
                     </If>
                     <div style={{clear: 'both'}}>
@@ -104,6 +114,7 @@ export default class UsersContainer extends Component {
                             enableFilters={this.state.filtersState}
                             handleEditClick={this.handleClickEditUser}
                             handleDeleteClick={this.handleClickDeleteUser}
+                            companies = {this.state.companies}
                         />
                     </div>
                 </div>
