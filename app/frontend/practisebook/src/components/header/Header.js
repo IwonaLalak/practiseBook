@@ -21,11 +21,11 @@ class Header extends Component {
                             </span>
                     {this.props.url.map((item, index) =>
                         (index === this.props.url.length - 1) ?
-                            <span>
+                            <span key={item.text+index}>
                                 {item.text}
                             </span>
                             :
-                            <span>
+                            <span key={item.text+index}>
                                  <Link to={'/' + item.url}>
                                      {item.text}
                                 </Link>

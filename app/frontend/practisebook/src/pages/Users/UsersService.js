@@ -36,6 +36,16 @@ export default{
                 method: 'delete'
             }
         )
+    },
+
+    changePassword(data,id){
+        return axios(
+            {
+                url: URL + '/?user_id='+id,
+                method: 'post',
+                data: JSON.stringify(data)
+            }
+        )
     }
 
 }

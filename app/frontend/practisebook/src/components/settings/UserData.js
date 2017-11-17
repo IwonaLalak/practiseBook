@@ -133,7 +133,7 @@ export default class UserData extends Component {
                         {this.state.user.phone}
                     </span>
                 </p>
-                <If isTrue={this.state.user.study}>
+                <If isTrue={Boolean(this.state.user.study)}>
                     <p>
                         <label>
                             Kieruek:
@@ -143,7 +143,7 @@ export default class UserData extends Component {
                     </span>
                     </p>
                 </If>
-                <If isTrue={this.state.user.semester}>
+                <If isTrue={Boolean(this.state.user.semester)}>
                     <p>
                         <label>
                             Semestr:
@@ -153,7 +153,7 @@ export default class UserData extends Component {
                     </span>
                     </p>
                 </If>
-                <If isTrue={this.state.user.company_id}>
+                <If isTrue={Boolean(this.state.user.company_id)}>
                     <p>
                         <label>
                             Firma:
