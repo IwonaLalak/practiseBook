@@ -12,10 +12,6 @@ require_once 'User.php5';
 
 class UserService
 {
-    public function saySomething()
-    {
-        echo "something";
-    }
 
     public function getAllUsers()
     {
@@ -37,9 +33,9 @@ class UserService
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return [true,$stmt->fetch(PDO::FETCH_ASSOC)];
         } else {
-            return false;
+            return [false, 'user not found'];
         }
     }
 
@@ -129,6 +125,35 @@ class UserService
         }
         else{
             return [false, "error"];
+        }
+    }
+
+    public function updateUserPassword($currentUser){
+        $sql = "SELECT * from users WHERE user_id=:id";
+        $con = Connection::getInstance();
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $currentUser->getUserId(), PDO::PARAM_INT);
+        $stmt->execute();
+        if (!($stmt->rowCount() > 0)) {
+            return [false,"user doesnt exist"];
+        }
+        else{
+            $sql = "
+                    UPDATE `users` 
+                    SET `password` = :password
+                    WHERE `users`.`user_id` =:id
+                    ";
+
+            $stmt = $con->handle->prepare($sql);
+            $stmt->bindParam(':id', $currentUser->getUserId(), PDO::PARAM_INT);
+            $stmt->bindParam(':password', $currentUser->getPassword(), PDO::PARAM_STR);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return [true,"password updated"];
+            }
+            else{
+                return [false,"error"];
+            }
         }
     }
 

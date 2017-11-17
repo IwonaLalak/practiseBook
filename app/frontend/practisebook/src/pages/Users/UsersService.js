@@ -4,6 +4,10 @@ let URL = 'http://localhost/practiseBook/app/backend/UserRest.php5';
 
 export default{
 
+    getUser(id){
+        return axios.get(URL+'/?user_id='+id);
+    },
+
     getAllUsers(){
         return axios.get(URL);
     },

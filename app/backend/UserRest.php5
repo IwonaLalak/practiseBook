@@ -28,7 +28,7 @@ switch ($request_method) {
 
     case 'POST':
         if (intval($_GET['user_id']))
-            update_user(intval($_GET['user_id']));
+            update_password(intval($_GET['user_id']));
         else
             insert_user();
         break;
@@ -124,5 +124,20 @@ function delete_user($user_id)
     $response = $service->deleteUser($user_id);
 
     header('Content-Type: application/json');
+    echo json_encode($response);
+}
+
+function update_password($user_id){
+    $data = json_decode(file_get_contents('php://input'));
+
+    $response = array();
+    $service = new UserService();
+    $currentUser = new User();
+    $currentUser->setUserId($user_id);
+    $currentUser->setPassword($data->password);
+
+    $response = $service->updateUserPassword($currentUser);
+
+    header('Content-Type: plain/text');
     echo json_encode($response);
 }
