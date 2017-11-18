@@ -104,7 +104,7 @@ export default class UsersForm extends Component {
                 login: this.state.login,
                 password: this.state.password,
                 group_id: this.state.groupId,
-                company_id: this.state.company.company_id,
+                company_id: (this.state.company)? this.state.company.company_id : null,
                 study: this.state.study,
                 semester: this.state.semester
             }
@@ -157,7 +157,7 @@ export default class UsersForm extends Component {
                 semester: this.props.editedUser.semester,
                 group: groups.find(group => group.id == this.props.editedUser.group_id),
                 groupId: this.props.editedUser.group_id,
-                company: this.props.companies.find(company => company.company_id == this.props.editedUser.company_id)
+                company: (this.props.editedUser.company_id)? this.props.companies.find(company => company.company_id == this.props.editedUser.company_id) : null
             })
         }
     }

@@ -103,7 +103,7 @@ export default class UsersContainer extends Component {
                             addBtnText = "Dodaj nowego użytkownika"
                         />
                     </div>
-                    <If isTrue={this.state.userForEdition}>
+                    <If isTrue={Boolean(this.state.userForEdition)}>
                         <div id="EDIT_USER">
                             <UsersForm handleAddClick={this.saveUser} handleCancelClick={this.cancelEdition} horizontal={false} editedUser={this.state.userForEdition} companies={this.state.companies}/>
                         </div>

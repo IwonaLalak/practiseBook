@@ -124,12 +124,12 @@ export default class UsersTable extends Component {
                 >
                     <TableHeaderColumn isKey dataField='user_id' hidden>ID</TableHeaderColumn>
                     <TableHeaderColumn dataField='login' thStyle={tabgrid.tg3} tdStyle={tabgrid.tg3}
-                                       filter={(this.props.enableFilters) ? {type: 'TextFilter', delay: 500, placeholder: 'Szukaj'} : false}
+                                       filter={(this.props.enableFilters)? {type: 'TextFilter', delay: 500, placeholder: 'Szukaj'} : false}
                     >Login</TableHeaderColumn>
                     <TableHeaderColumn dataField='group_id' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2} dataFormat={this.renderUserGroup}
                                        ormatExtraData={this.props.priorytety}
                                        filter={
-                                           (this.props.enableFilters) ?
+                                           (this.props.enableFilters)?
                                                {
                                                    type: 'SelectFilter',
                                                    options: groups,
@@ -137,25 +137,25 @@ export default class UsersTable extends Component {
                                                } : false
                                        }>Grupa</TableHeaderColumn>
                     <TableHeaderColumn dataField='firstname' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
-                                       filter={(this.props.enableFilters) ? {
+                                       filter={(this.props.enableFilters)? {
                                            type: 'TextFilter',
                                            delay: 500,
                                            placeholder: 'Szukaj'
                                        } : false}>Imię</TableHeaderColumn>
                     <TableHeaderColumn dataField='lastname' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
-                                       filter={(this.props.enableFilters) ? {
+                                       filter={(this.props.enableFilters)? {
                                            type: 'TextFilter',
                                            delay: 500,
                                            placeholder: 'Szukaj'
                                        } : false}>Nazwisko</TableHeaderColumn>
                     <TableHeaderColumn dataField='email' thStyle={tabgrid.tg3} tdStyle={tabgrid.tg3}
-                                       filter={(this.props.enableFilters) ? {
+                                       filter={(this.props.enableFilters)? {
                                            type: 'TextFilter',
                                            delay: 500,
                                            placeholder: 'Szukaj'
                                        } : false}>Email</TableHeaderColumn>
                     <TableHeaderColumn dataField='phone' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2}
-                                       filter={(this.props.enableFilters) ? {
+                                       filter={(this.props.enableFilters)? {
                                            type: 'TextFilter',
                                            delay: 500,
                                            placeholder: 'Szukaj'
