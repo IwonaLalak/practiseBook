@@ -72,6 +72,56 @@ class PractiseService
 
     }
 
+    public function getPractiseByUserType($usertype,$id){
+        $practises = null;
+        $lecturers = null;
+        $leaders = null;
+        $students = null;
+
+        // getting practise with company
+        $sql = "select * from practises, companies where practises.".$usertype."=:id and practises.company_id=companies.company_id";
+        $con = Connection::getInstance();
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $practises = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        // getting student
+        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises.".$usertype."=:id and practises.student_id=users.user_id";
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        // getting lecturer
+
+        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises.".$usertype."=:id and practises.lecturer_id=users.user_id";
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $lecturers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        // getting leader
+        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises.".$usertype."=:id and practises.leader_id=users.user_id";
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $leaders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        if($practises != null){
+            return array("practises" => $practises, "students" => $students, "lecturers" =>$lecturers, "leaders" => $leaders);
+        }else{
+            return array(false, "error, cannot get data");
+        }
+
+    }
+
     public function addNewPractise($newPractise)
     {
 

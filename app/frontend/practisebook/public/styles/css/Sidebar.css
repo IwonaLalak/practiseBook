@@ -1,5 +1,5 @@
 #SidebarContainer {
-  position: absolute;
+  position: fixed;
   width: 300px;
 }
 #SidebarContainer #SidebarPages {

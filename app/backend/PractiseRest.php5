@@ -21,7 +21,20 @@ switch ($request_method) {
         if (!empty($_GET['practise_id'])) {
             $id = intval($_GET['practise_id']);
             get_practises($id);
-        } else {
+        }
+        else if(!empty($_GET['student_id'])){
+            $id = intval($_GET['student_id']);
+            get_practises_by_user("student_id",$id);
+        }
+        else if(!empty($_GET['lecturer_id'])){
+            $id = intval($_GET['lecturer_id']);
+            get_practises_by_user("lecturer_id",$id);
+        }
+        else if(!empty($_GET['leader_id'])){
+            $id = intval($_GET['leader_id']);
+            get_practises_by_user("leader_id",$id);
+        }
+        else {
             get_practises();
         }
         break;
@@ -62,6 +75,26 @@ function get_practises($id = 0){
             $response = $data;
         }
     }
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+}
+
+function get_practise_by_student($id){
+    $response = array();
+    $service = new PractiseService();
+
+    $response = $service->getPractiseByStudent($id);
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+}
+
+function get_practises_by_user($user, $id){
+    $response = array();
+    $service = new PractiseService();
+
+    $response = $service->getPractiseByUserType($user,$id);
 
     header('Content-Type: application/json');
     echo json_encode($response);
