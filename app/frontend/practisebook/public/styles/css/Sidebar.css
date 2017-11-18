@@ -42,3 +42,19 @@
   text-decoration: none;
   color: #82d5e9;
 }
+@media screen and (max-width: 991px) {
+  #SidebarContainer {
+    position: relative;
+    width: 100%;
+  }
+  #SidebarContainer .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+  #SidebarContainer .navbar ul li a {
+    color: #fff;
+  }
+  #SidebarContainer .navbar ul li a .fa {
+    margin-right: 5px;
+  }
+}
