@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import If from '../../utilities/If';
 import Header from '../../components/header/Header';
 import PractiseDataForStudents from "../../components/practises/PractiseDataForStudents";
+import PractisesDataContainer from "../../components/practises/PractisesDataContainer";
 
 export default class PractisesContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            logged: 'student'
+            logged: 'admin'
         };
         this.renderAdminPart = this.renderAdminPart.bind(this);
         this.renderStudentPart = this.renderStudentPart.bind(this);
@@ -23,11 +24,20 @@ export default class PractisesContainer extends Component {
     }
 
     renderAdminPart(){
-        return <div>aaa</div>
+        return(
+            <div id="PRACTISES_DATA">
+                <PractisesDataContainer userid={false}/>
+            </div>
+        )
     }
 
     renderLecturerPart(){
-        return <div>lll</div>
+        //todo: userid do zmiany
+        return(
+            <div id="PRACTISES_DATA">
+                <PractisesDataContainer userid={25}/>
+            </div>
+        )
     }
 
     render(){

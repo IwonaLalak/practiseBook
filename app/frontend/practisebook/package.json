@@ -11,7 +11,8 @@
     "react-notify": "^3.0.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
-    "react-select": "^1.0.0-rc.10"
+    "react-select": "^1.0.0-rc.10",
+    "react-tooltip": "^3.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -15,14 +15,43 @@ class PractiseService
 
     public function getAllPractises()
     {
+        $practises = null;
+        $lecturers = null;
+        $leaders = null;
+        $students = null;
+
         $sql = "select * from practises, companies where practises.company_id=companies.company_id";
         $con = Connection::getInstance();
         $stmt = $con->handle->query($sql);
         if ($stmt->rowCount() > 0) {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            return false;
+            $practises = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        // getting lecturers
+        $sql = "select * from practises, users where practises.lecturer_id = users.user_id";
+        $stmt = $con->handle->query($sql);
+        if ($stmt->rowCount() > 0) {
+            $lecturers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        // getting students
+        $sql = "select * from practises, users where practises.student_id = users.user_id";
+        $stmt = $con->handle->query($sql);
+        if ($stmt->rowCount() > 0) {
+            $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        //getting leaders
+        $sql = "select * from practises, users where practises.leader_id = users.user_id";
+        $stmt = $con->handle->query($sql);
+        if ($stmt->rowCount() > 0) {
+            $leaders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        if($practises != null)
+            return array("practises" => $practises, "lecturers" => $lecturers, "leaders" => $leaders, "students" => $students);
+        else
+            return array(false, "error, cannot get data");
     }
 
     public function getPractise($id)
