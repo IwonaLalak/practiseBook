@@ -40,7 +40,6 @@ export default class PractisesDataContainer extends Component {
                         })
                     }
                 }
-                console.log(response)
             }.bind(this))
         }
         else{
@@ -65,7 +64,7 @@ export default class PractisesDataContainer extends Component {
     }
 
     handleClickAddNewPractise() {
-        //this.props.history.push("/uzytkownicy/dodaj");
+        this.props.onClickAdd();
     }
 
     handleClickEditPractise(id) {
@@ -73,7 +72,6 @@ export default class PractisesDataContainer extends Component {
     }
 
     handleClickDeletePractise(id) {
-
     }
 
     render() {

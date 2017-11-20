@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import If from '../../utilities/If';
+import {withRouter} from 'react-router-dom';
 import Header from '../../components/header/Header';
 import PractiseDataForStudents from "../../components/practises/PractiseDataForStudents";
 import PractisesDataContainer from "../../components/practises/PractisesDataContainer";
@@ -13,6 +14,11 @@ export default class PractisesContainer extends Component {
         this.renderAdminPart = this.renderAdminPart.bind(this);
         this.renderStudentPart = this.renderStudentPart.bind(this);
         this.renderLecturerPart = this.renderLecturerPart.bind(this);
+        this.handleAddNewPractise = this.handleAddNewPractise.bind(this);
+    }
+
+    handleAddNewPractise(){
+        this.props.history.push("/praktyki/dodaj");
     }
 
     renderStudentPart(){
@@ -26,7 +32,7 @@ export default class PractisesContainer extends Component {
     renderAdminPart(){
         return(
             <div id="PRACTISES_DATA">
-                <PractisesDataContainer userid={false}/>
+                <PractisesDataContainer userid={false} onClickAdd={this.handleAddNewPractise}/>
             </div>
         )
     }
@@ -35,7 +41,7 @@ export default class PractisesContainer extends Component {
         //todo: userid do zmiany
         return(
             <div id="PRACTISES_DATA">
-                <PractisesDataContainer userid={25}/>
+                <PractisesDataContainer userid={25} onClickAdd={this.handleAddNewPractise}/>
             </div>
         )
     }

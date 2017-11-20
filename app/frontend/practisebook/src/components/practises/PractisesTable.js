@@ -5,7 +5,7 @@ import tabgrid from '../../utilities/TabGrid';
 import {TableBtnEdit, TableBtnDelete} from '../../utilities/Buttons';
 import ReactTooltip from 'react-tooltip'
 
-export default class UsersTable extends Component {
+export default class PractisesTable extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -126,6 +126,9 @@ export default class UsersTable extends Component {
                     <TableHeaderColumn dataField='date_end' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2}
                                        filter={(this.props.enableFilters) ? {type: 'TextFilter', delay: 500, placeholder: 'Szukaj'} : false}
                     >Data końca</TableHeaderColumn>
+                    <TableHeaderColumn dataField='total_time' thStyle={tabgrid.tg1} tdStyle={tabgrid.tg1}
+                                       filter={(this.props.enableFilters) ? {type: 'TextFilter', delay: 500, placeholder: 'Szukaj'} : false}
+                    >Czas (h)</TableHeaderColumn>
                     <TableHeaderColumn dataField='student_id' thStyle={tabgrid.tg3} tdStyle={tabgrid.tg3}
                                        filter={(this.props.enableFilters) ? {
                                            type: 'TextFilter',
@@ -147,7 +150,7 @@ export default class UsersTable extends Component {
                                            placeholder: 'Szukaj'
                                        } : false}
                                        dataFormat={this.renderLecturer}>Wykładowca</TableHeaderColumn>
-                    <TableHeaderColumn dataField='name' thStyle={tabgrid.tg3} tdStyle={tabgrid.tg3}
+                    <TableHeaderColumn dataField='name' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2}
                                        filter={(this.props.enableFilters) ? {
                                            type: 'TextFilter',
                                            delay: 500,

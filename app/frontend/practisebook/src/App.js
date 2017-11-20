@@ -14,10 +14,10 @@ import GradesContainer from './pages/Grades/GradesContainer';
 import NotesContainer from './pages/Notes/NotesContainer';
 import PostsContainer from './pages/Posts/PostsContainer';
 import PractisesContainer from './pages/Practises/PractisesContainer';
+import PractiseAddContainer from './pages/Practises/PractiseAddContainer';
 import ReportsContainer from './pages/Reports/ReportsContainer';
 import SettingsContainer from './pages/Settings/SettingsContainer';
 import UsersContainer from './pages/Users/UsersContainer';
-import UserContainer from './pages/Users/UserContainer';
 import UserAddContainer from './pages/Users/UserAddContainer';
 import StudentsContainer from "./pages/Students/StudentsContainer";
 
@@ -153,11 +153,8 @@ class App extends Component {
                        <Switch>
                            <Route exact path="/" component={LoginContainer}/>
                            <Route path="/login" component={LoginContainer}/>
-
                            <Route exact path="/uzytkownicy" component={UsersContainer}/>
                            <Route exact path="/uzytkownicy/dodaj" component={UserAddContainer}/>
-                           <Route path="/uzytkownicy/:id" component={UserContainer}/>
-
                            <Route exact path="/firmy" component={CompaniesContainer}/>
                            <Route exact path="/firmy/dodaj" component={CompanyAddContainer}/>
                            <Route path="/firmy/:id" component={CompanyContainer}/>
@@ -165,7 +162,8 @@ class App extends Component {
                            <Route path="/kalendarz" component={CalendarContainer}/>
                            <Route path="/wpisy" component={PostsContainer}/>
                            <Route path="/studenci" component={StudentsContainer}/>
-                           <Route path="/praktyki" component={PractisesContainer}/>
+                           <Route exact path="/praktyki" component={PractisesContainer}/>
+                           <Route exact path="/praktyki/dodaj" component={PractiseAddContainer}/>
                            <Route path="/oceny" component={GradesContainer}/>
                            <Route path="/raporty" component={ReportsContainer}/>
                            <Route path="/konto" component={AccountContainer}/>

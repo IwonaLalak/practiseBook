@@ -1,0 +1,22 @@
+#GLOBAL_SETTINGS,
+#USER_ACCOUNT_SETTINGS {
+  padding: 15px;
+}
+#GLOBAL_SETTINGS #userdata,
+#USER_ACCOUNT_SETTINGS #userdata,
+#GLOBAL_SETTINGS #changePasswordForm,
+#USER_ACCOUNT_SETTINGS #changePasswordForm {
+  padding-left: 5px;
+}
+#GLOBAL_SETTINGS h4,
+#USER_ACCOUNT_SETTINGS h4 {
+  margin-top: 15px;
+}
+#GLOBAL_SETTINGS p label,
+#USER_ACCOUNT_SETTINGS p label {
+  color: grey;
+}
+#GLOBAL_SETTINGS p span,
+#USER_ACCOUNT_SETTINGS p span {
+  margin-left: 3px;
+}

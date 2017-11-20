@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.0",
+    "moment": "^2.19.2",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.5",
     "react-bootstrap-table": "^4.1.1",
+    "react-date-picker": "^6.3.1",
     "react-dom": "^16.0.0",
     "react-notify": "^3.0.0",
     "react-router-dom": "^4.2.2",
