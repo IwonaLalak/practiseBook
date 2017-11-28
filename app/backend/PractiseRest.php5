@@ -105,12 +105,18 @@ function insert_practise(){
     $response = array();
     $service = new PractiseService();
     $newPractise = new Practise();
+
+    $sdate = $data->date_start;
+    $edate = $data->date_end;
+    $sdate = gmdate("Y-m-d H:i:s");
+    $edate = gmdate("Y-m-d H:i:s");
+
     $newPractise->setStudentId($data->student_id);
     $newPractise->setLecturerId($data->lecturer_id);
     $newPractise->setLeaderId($data->leader_id);
     $newPractise->setCompanyId($data->company_id);
-    $newPractise->setDateStart($data->date_start);
-    $newPractise->setDateEnd($data->date_end);
+    $newPractise->setDateStart($sdate);
+    $newPractise->setDateEnd($edate);
     $newPractise->setTotalTime($data->total_time);
 
     $response = $service->addNewPractise($newPractise);

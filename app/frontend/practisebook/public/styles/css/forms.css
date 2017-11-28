@@ -1,0 +1,7 @@
+.has-error .Select-control,
+.has-error input {
+  border-color: firebrick !important;
+}
+.has-error label.control-label {
+  color: #b22222;
+}

@@ -1,5 +1,13 @@
 #PRACTISE_DATA,
 #PRACTISES_DATA,
-#ADD_PRACTISE {
+#ADD_PRACTISE,
+#EDIT_PRACTISE {
   padding: 15px;
+}
+#PRACTISE_DATA form h5,
+#PRACTISES_DATA form h5,
+#ADD_PRACTISE form h5,
+#EDIT_PRACTISE form h5 {
+  color: #666;
+  font-style: italic;
 }

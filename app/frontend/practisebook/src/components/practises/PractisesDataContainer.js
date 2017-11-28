@@ -12,7 +12,7 @@ export default class PractisesDataContainer extends Component {
             practises: [],
             leaders: [],
             lecturers: [],
-            students: []
+            students: [],
         }
         this.getPractisesData = this.getPractisesData.bind(this);
         this.handleClickEnableSearch = this.handleClickEnableSearch.bind(this);
@@ -21,17 +21,17 @@ export default class PractisesDataContainer extends Component {
         this.handleClickDeletePractise = this.handleClickDeletePractise.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getPractisesData();
     }
 
-    getPractisesData(){
-        if(this.props.userid){
+    getPractisesData() {
+        if (this.props.userid) {
             let userid = this.props.userid;
 
             PractisesService.getPractiseByLecturer(userid).then(function (response) {
-                if(response.status == 200){
-                    if(response.data[0] != false){
+                if (response.status == 200) {
+                    if (response.data[0] != false) {
                         this.setState({
                             practises: response.data.practises,
                             leaders: response.data.leaders,
@@ -42,10 +42,10 @@ export default class PractisesDataContainer extends Component {
                 }
             }.bind(this))
         }
-        else{
+        else {
             PractisesService.getAllPractises().then(function (response) {
-                if(response.status == 200){
-                    if(response.data[0] != false){
+                if (response.status == 200) {
+                    if (response.data[0] != false) {
                         this.setState({
                             practises: response.data.practises,
                             leaders: response.data.leaders,
@@ -54,7 +54,6 @@ export default class PractisesDataContainer extends Component {
                         })
                     }
                 }
-                console.log(response)
             }.bind(this))
         }
     }
@@ -81,7 +80,7 @@ export default class PractisesDataContainer extends Component {
                     <GeneralTop
                         handleClickAdd={this.handleClickAddNewPractise}
                         handleClickEnableSearch={this.handleClickEnableSearch}
-                        addBtnText = "Dodaj nową praktykę"
+                        addBtnText="Dodaj nową praktykę"
                     />
                 </Col>
                 <Col xs={12}>
