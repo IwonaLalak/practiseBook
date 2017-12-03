@@ -5,20 +5,24 @@ import PostsTable from "../../components/posts/PostsTable";
 import GeneralTop from "../../components/generaltop/GeneralTop";
 import If from "../../utilities/If";
 import PostsService from "./PostsService";
+import PostsForm from "../../components/posts/PostsForm";
 
 export default class PostsContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts:[],
+            posts: [],
             filtersState: false,
-            postForEdition: false
+            postForEdition: false,
+            postsFormVisibility: false,
         };
         this.getData = this.getData.bind(this);
         this.handleClickEnableSearch = this.handleClickEnableSearch.bind(this);
         this.handleClickAddNewPost = this.handleClickAddNewPost.bind(this);
         this.handleClickEditPost = this.handleClickEditPost.bind(this);
         this.handleClickDeletePost = this.handleClickDeletePost.bind(this);
+        this.cancelSaving = this.cancelSaving.bind(this);
+        this.savePost = this.savePost.bind(this);
     }
 
     componentDidMount() {
@@ -36,44 +40,56 @@ export default class PostsContainer extends Component {
     }
 
     handleClickAddNewPost() {
-        this.props.history.push("/wpisy/dodaj");
+        this.setState({
+            postsFormVisibility: true
+        })
     }
 
     handleClickEditPost(id) {
-        this.setState({postForEdition: this.state.posts.find(post => post.post_id === id)});
+        this.setState({postForEdition: this.state.posts.find(post => post.post_id === id), postsFormVisibility: true});
     }
 
-   /* savePost(data) {
-        // todo: rest edit
-       console.log('saving...')
-    }
+     savePost(data, isEdition) {
+         console.log(data);
+        if(isEdition){
+            console.log('edit')
+            // todo: rest edit
+        }
+        else{
+            console.log('add')
+            // todo: rest add
+        }
 
-    cancelEdition(){
-        this.setState({postForEdition: false});
-    }
-*/
+        this.cancelSaving();
+     }
+
+     cancelSaving(){
+         this.setState({postForEdition: false, postsFormVisibility: false});
+     }
+
     handleClickDeletePost(id) {
         // todo: rest
-       console.log('delete post');
+        console.log('delete post');
     }
 
-    render(){
+    render() {
         return (
             <div>
                 <div>
-                    <Header url={[{url:'wpisy',text:'wpisy'},{url:'',text:'przegląd'}]}/>
+                    <Header url={[{url: 'wpisy', text: 'wpisy'}, {url: '', text: 'przegląd'}]}/>
                 </div>
                 <div id="ALL_POSTS">
                     <div>
                         <GeneralTop
                             handleClickAdd={this.handleClickAddNewPost}
                             handleClickEnableSearch={this.handleClickEnableSearch}
-                            addBtnText = "Dodaj nowy wpis"
+                            addBtnText="Dodaj nowy wpis"
                         />
                     </div>
-                    <If isTrue={Boolean(this.state.postForEdition)}>
+                    <If isTrue={Boolean(this.state.postsFormVisibility)}>
                         <div id="EDIT_POST">
-                            edit
+                            <PostsForm handleAddClick={this.savePost} handleCancelClick={this.cancelSaving}
+                                       editedPost={this.state.postForEdition} />
                         </div>
                     </If>
                     <div style={{clear: 'both'}}>
