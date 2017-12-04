@@ -55,7 +55,9 @@ class Header extends Component {
                 <div id="userdataContainer">
                     <div>
                         <span>
-                            testowy@user.com
+                            {
+                                localStorage.getItem("current_username")
+                            }
                         </span>
                         <Link to={'/'}>
                             <span style={{cursor: 'pointer'}} onClick={this.logOut}>

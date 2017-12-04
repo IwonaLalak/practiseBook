@@ -10,13 +10,9 @@ export default class NotesContainer extends Component {
 
 
     componentDidMount(){
-        console.log(
-            localStorage.getItem("current_userid")
-        )
+        let data = JSON.parse(localStorage.getItem("current_userdata"));
 
-        console.log(
-            localStorage.getItem("current_userdata")
-        )
+        console.log(data)
     }
 
     render(){

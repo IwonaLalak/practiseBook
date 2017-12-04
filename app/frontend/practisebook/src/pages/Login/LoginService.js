@@ -13,11 +13,12 @@ export default{
     },
     setUserdata(data){
         localStorage.setItem("current_userid", data.user_id);
-        localStorage.setItem("current_userdata", data);
-        console.log(data)
+        localStorage.setItem("current_username", data.login);
+        localStorage.setItem("current_userdata", JSON.stringify(data));
     },
     logout(){
         localStorage.removeItem("current_userid");
+        localStorage.removeItem("current_username");
         localStorage.removeItem("current_userdata");
     }
 

@@ -13,7 +13,7 @@ require_once 'User.php5';
 class LoginService
 {
     public function login($user){
-        $sql = "select * from users where users.login=:login and users.password=:password";
+        $sql = "select user_id, login, group_id, firstname, lastname, email, phone, study, semester, company_id from users where users.login=:login and users.password=:password";
         $con = Connection::getInstance();
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':login', $user->getLogin(), PDO::PARAM_STR);
