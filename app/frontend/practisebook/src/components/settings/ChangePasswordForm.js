@@ -20,7 +20,7 @@ export default class ChangePasswordForm extends Component {
     handleSavePassword() {
         this.setState({buttonClicked: true});
         if(this.state.password.length>0){
-            this.props.handleChangePassword({password: this.state.password});
+        this.props.handleChangePassword({password: window.btoa(this.state.password)});
         }
     }
 

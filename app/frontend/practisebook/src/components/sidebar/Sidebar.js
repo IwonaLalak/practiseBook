@@ -17,20 +17,21 @@ class Sidebar extends Component {
                 {
                     (window.location.pathname === '/' || window.location.pathname === '/login') ?
                         <div id="SidebarLogin">
-                            <div>
+                            <div id="app_name">
                                 {
                                     GlobalInformations.APP_NAME
                                 }
                             </div>
-                            <p>
+                            <p id="app_version">
+                                <i className="fa fa-lg fa-code" title="app version"></i>
                                 {
-                                    "ver. " +
+                                    "v " +
                                     GlobalInformations.APP_VERSION
                                 }
                             </p>
-                            <p>
+                            <p id="app_author">
+                                <i className="fa fa-lg fa-user-o" title="app author"></i>
                                 {
-                                    "autor: " +
                                     GlobalInformations.APP_AUTHOR
                                 }
                             </p>

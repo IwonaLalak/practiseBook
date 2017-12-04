@@ -40,8 +40,7 @@ export default class AccountContainer extends Component {
     }
 
     saveNewPassword(data) {
-        // todo: change userid to current logged
-        let userid = 38;
+        let userid = localStorage.getItem("current_userid");
         UsersService.changePassword(data, userid).then(function (response) {
             if (response.data[0]) {
                 this.refs.notificator.success("Pomyślnie zmieniono hasło", "", 3000);

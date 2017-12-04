@@ -1,0 +1,31 @@
+@import "variables";
+
+#LOGIN_PAGE {
+  background: @primary-color;
+  height: 100vh;
+  #loginContainer {
+    margin-top: 150px;
+    margin-left: 50px;
+    background: #eee;
+    border: 1px solid #eee;
+    border-radius: 1px;
+    box-shadow: 2px 1px 3px #111;
+    form {
+      padding: 5px 30px;
+      color: @primary-color;
+      .form-group:last-of-type {
+        text-align: center;
+        .btn-primary {
+          background: @secondary-color;
+          border-color: @secondary-color-darker;
+          .fa {
+            margin-right: 7px;
+          }
+          &:hover{
+            background: @secondary-color-darker;
+          }
+        }
+      }
+    }
+  }
+}

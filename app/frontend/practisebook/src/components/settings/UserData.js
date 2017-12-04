@@ -22,8 +22,7 @@ export default class UserData extends Component {
     }
 
     getUserData() {
-        //TODO: userid do zmiany
-        let id = 38;
+        let id = localStorage.getItem("current_userid");
 
         UsersService.getUser(id).then(function (response) {
             if(response.status == 200 ){

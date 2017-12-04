@@ -1,6 +1,42 @@
 #SidebarContainer {
   position: fixed;
   width: 300px;
+  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.2);
+}
+#SidebarContainer #SidebarLogin {
+  height: 100vh;
+  background: #343434;
+}
+#SidebarContainer #SidebarLogin #app_name {
+  text-align: center;
+  font-size: 30px;
+  padding: 15px 0;
+  color: #fff;
+  text-shadow: 1px 1px 1px #111;
+}
+#SidebarContainer #SidebarLogin #app_version,
+#SidebarContainer #SidebarLogin #app_author {
+  margin-left: 30px;
+  padding-left: 5px;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #111;
+}
+#SidebarContainer #SidebarLogin #app_version .fa,
+#SidebarContainer #SidebarLogin #app_author .fa {
+  margin-right: 10px;
+  width: 20px;
+}
+#SidebarContainer #SidebarLogin #app_version {
+  margin-right: 30px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+@media screen and (max-width: 992px) {
+  #SidebarContainer #SidebarLogin {
+    height: auto;
+    padding-bottom: 15px;
+  }
 }
 #SidebarContainer #SidebarPages {
   background: #343434;

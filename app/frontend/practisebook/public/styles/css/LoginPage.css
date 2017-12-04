@@ -1,0 +1,29 @@
+#LOGIN_PAGE {
+  background: #1b325f;
+  height: 100vh;
+}
+#LOGIN_PAGE #loginContainer {
+  margin-top: 150px;
+  margin-left: 50px;
+  background: #eee;
+  border: 1px solid #eee;
+  border-radius: 1px;
+  box-shadow: 2px 1px 3px #111;
+}
+#LOGIN_PAGE #loginContainer form {
+  padding: 5px 30px;
+  color: #1b325f;
+}
+#LOGIN_PAGE #loginContainer form .form-group:last-of-type {
+  text-align: center;
+}
+#LOGIN_PAGE #loginContainer form .form-group:last-of-type .btn-primary {
+  background: #82d5e9;
+  border-color: #78cbdf;
+}
+#LOGIN_PAGE #loginContainer form .form-group:last-of-type .btn-primary .fa {
+  margin-right: 7px;
+}
+#LOGIN_PAGE #loginContainer form .form-group:last-of-type .btn-primary:hover {
+  background: #78cbdf;
+}

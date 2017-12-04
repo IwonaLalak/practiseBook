@@ -8,6 +8,17 @@ export default class NotesContainer extends Component {
         this.state = {};
     }
 
+
+    componentDidMount(){
+        console.log(
+            localStorage.getItem("current_userid")
+        )
+
+        console.log(
+            localStorage.getItem("current_userdata")
+        )
+    }
+
     render(){
         return (
             <div>
@@ -16,6 +27,11 @@ export default class NotesContainer extends Component {
                 </div>
                 <div>
                     strona uwag
+                    <h3>
+                        {
+                            localStorage.getItem("current_userid")
+                        }
+                    </h3>
                 </div>
             </div>
         )

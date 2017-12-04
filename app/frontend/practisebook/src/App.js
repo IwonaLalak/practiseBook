@@ -20,6 +20,8 @@ import SettingsContainer from './pages/Settings/SettingsContainer';
 import UsersContainer from './pages/Users/UsersContainer';
 import UserAddContainer from './pages/Users/UserAddContainer';
 import StudentsContainer from "./pages/Students/StudentsContainer";
+// for tests
+import ForTestsContainer from "./pages/_FOR_TESTS/ForTestsContainer";
 
 class App extends Component {
 
@@ -170,6 +172,7 @@ class App extends Component {
                            <Route path="/uwagi" component={NotesContainer}/>
 
 
+                           <Route path="/fortests" component={ForTestsContainer}/>
 
 
                        </Switch>
