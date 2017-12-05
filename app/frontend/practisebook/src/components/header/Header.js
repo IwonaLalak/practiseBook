@@ -56,7 +56,7 @@ class Header extends Component {
                     <div>
                         <span>
                             {
-                                localStorage.getItem("current_username")
+                                localStorage.getItem("current_user")
                             }
                         </span>
                         <Link to={'/'}>

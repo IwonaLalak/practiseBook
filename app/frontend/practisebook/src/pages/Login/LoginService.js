@@ -14,13 +14,37 @@ export default{
     setUserdata(data){
         localStorage.setItem("current_userid", data.user_id);
         localStorage.setItem("current_username", data.login);
-        localStorage.setItem("current_userdata", JSON.stringify(data));
+        localStorage.setItem("current_user", data.firstname + ' '+data.lastname);
+        localStorage.setItem("current_usergroup", data.group_id);
+    //    localStorage.setItem("current_userdata", JSON.stringify(data));
     },
     logout(){
         localStorage.removeItem("current_userid");
         localStorage.removeItem("current_username");
-        localStorage.removeItem("current_userdata");
-    }
+        localStorage.removeItem("current_user");
+        localStorage.removeItem("current_usergroup");
+      //  localStorage.removeItem("current_userdata");
+    },
+
+    isUserLogged(){
+        return Boolean(localStorage.getItem("current_userid"));
+    },
+
+    isAdmin(){
+        return (localStorage.getItem("current_userid") == 1);
+    },
+
+    isLecturer(){
+        return (localStorage.getItem("current_userid") == 2);
+    },
+
+    isLeader(){
+        return (localStorage.getItem("current_userid") == 3);
+    },
+
+    isStudent(){
+        return (localStorage.getItem("current_userid") == 4);
+    },
 
 
 }

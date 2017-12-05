@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Header from '../../components/header/Header';
 
-export default class CompanyContainer extends Component {
+export default class ReportContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -12,10 +12,10 @@ export default class CompanyContainer extends Component {
         return (
             <div>
                 <div>
-                    <Header url={["firmy","firma"]}/>
+                    <Header url={[{url:'raporty',text:'raporty'},{url:'',text:'przegląd'}]}/>
                 </div>
                 <div>
-                    firma
+                    <p>raport id: {this.props.match.params.id}</p>
                 </div>
             </div>
         )

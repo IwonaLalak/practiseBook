@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 
 import GlobalInformations from '../../GlobalInformations';
 import {Nav, Navbar, NavItem} from "react-bootstrap";
+import LoginService from "../../pages/Login/LoginService";
+import If from "../../utilities/If";
 
 class Sidebar extends Component {
     constructor(props) {
@@ -50,121 +52,139 @@ class Sidebar extends Component {
                                         </div>
                                         <div id="SidebarLinks">
                                             <ul>
-                                                <li>
-                                                    <Link to="/uzytkownicy">
-                                            <span>
-                                                <i className="fa fa-group"></i>
-                                            </span>
+                                                <If isTrue={LoginService.isAdmin()}>
+                                                    <li>
+                                                        <Link to="/uzytkownicy">
+                                                            <span>
+                                                                <i className="fa fa-group"></i>
+                                                            </span>
+                                                            <span>
+                                                                Użytkownicy
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isAdmin() || LoginService.isLecturer()}>
+                                                    <li>
+                                                        <Link to="/firmy">
+                                                            <span>
+                                                                <i className="fa fa-briefcase"></i>
+                                                            </span>
+                                                            <span>
+                                                                Firmy
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isUserLogged()}>
+                                                    <li>
+                                                        <Link to="/praktyki">
+                                                            <span>
+                                                                <i className="fa fa-graduation-cap"></i>
+                                                            </span>
+                                                            <span>
+                                                                Praktyki
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isLeader() || LoginService.isLecturer()}>
+                                                    <li>
+                                                        <Link to="/studenci">
+                                                            <span>
+                                                                <i className="fa fa-group"></i>
+                                                            </span>
+                                                            <span>
+                                                                Studenci
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isStudent()}>
+                                                    <li>
+                                                        <Link to="/kalendarz">
+                                                            <span>
+                                                                <i className="fa fa-calendar"></i>
+                                                            </span>
+                                                            <span>
+                                                                Kalendarz
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isStudent()}>
+                                                    <li>
+                                                        <Link to="/wpisy">
+                                                            <span>
+                                                                <i className="fa fa-sticky-note-o"></i>
+                                                            </span>
+                                                            <span>
+                                                                Wpisy
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isLecturer()}>
+                                                    <li>
+                                                        <Link to="/oceny">
                                                         <span>
-                                                Użytkownicy
-                                            </span>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/firmy">
-                                            <span>
-                                                <i className="fa fa-briefcase"></i>
-                                            </span>
-                                                        <span>
-                                                Firmy
-                                            </span>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/ustawienia">
-                                            <span>
-                                                <i className="fa fa-cogs"></i>
-                                            </span>
-                                                        <span>
-                                                Ustawienia
-                                            </span>
-                                                    </Link>
-                                                </li>
+                                                            <i className="fa fa-star-half-o"></i>
+                                                        </span>
+                                                            <span>
+                                                            Oceny
+                                                        </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isLeader()}>
+                                                    <li>
+                                                        <Link to="/raporty">
+                                                            <span>
+                                                                <i className="fa fa-file-text-o"></i>
+                                                            </span>
+                                                            <span>
+                                                                Raporty
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isLeader()}>
+                                                    <li>
+                                                        <Link to="/uwagi">
+                                                            <span>
+                                                                <i className="fa fa-comments-o"></i>
+                                                            </span>
+                                                            <span>
+                                                                Uwagi
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isAdmin()}>
+                                                    <li>
+                                                        <Link to="/ustawienia">
+                                                            <span>
+                                                                <i className="fa fa-wrench"></i>
+                                                            </span>
+                                                            <span>
+                                                                Ustawienia
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
+                                                <If isTrue={LoginService.isUserLogged()}>
+                                                    <li>
+                                                        <Link to="/konto">
+                                                            <span>
+                                                                <i className="fa fa-cogs"></i>
+                                                            </span>
+                                                            <span>
+                                                                Konto
+                                                            </span>
+                                                        </Link>
+                                                    </li>
+                                                </If>
 
-
-                                                <li>
-                                                    <Link to="/kalendarz">
-                                            <span>
-                                                <i className="fa fa-calendar"></i>
-                                            </span>
-                                                        <span>
-                                                Kalendarz
-                                            </span>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/wpisy">
-                                            <span>
-                                                <i className="fa fa-sticky-note-o"></i>
-                                            </span>
-                                                        <span>
-                                                Wpisy
-                                            </span>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/studenci">
-                                            <span>
-                                                <i className="fa fa-group"></i>
-                                            </span>
-                                                        <span>
-                                                Studenci
-                                            </span>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/praktyki">
-                                            <span>
-                                                <i className="fa fa-graduation-cap"></i>
-                                            </span>
-                                                        <span>
-                                                Praktyki
-                                            </span>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/oceny">
-                                            <span>
-                                                <i className="fa fa-star-half-o"></i>
-                                            </span>
-                                                        <span>
-                                                Oceny
-                                            </span>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/raporty">
-                                            <span>
-                                                <i className="fa fa-file-text-o"></i>
-                                            </span>
-                                                        <span>
-                                                Raporty
-                                            </span>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/konto">
-                                            <span>
-                                                <i className="fa fa-cogs"></i>
-                                            </span>
-                                                        <span>
-                                                Konto
-                                            </span>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="/uwagi">
-                                            <span>
-                                                <i className="fa fa-comments-o"></i>
-                                            </span>
-                                                        <span>
-                                                Uwagi
-                                            </span>
-                                                    </Link>
-                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -179,108 +199,130 @@ class Sidebar extends Component {
                                             </Navbar.Header>
                                             <Navbar.Collapse>
                                                 <Nav>
-                                                    <NavItem>
-                                                        <Link to="/uzytkownicy">
+                                                    <If isTrue={LoginService.isAdmin()}>
+                                                        <NavItem>
+                                                            <Link to="/uzytkownicy">
                                                             <span>
                                                                 <i className="fa fa-group"></i>
                                                             </span>
-                                                            <span>
+                                                                <span>
                                                                 Użytkownicy
                                                             </span>
-                                                        </Link>
-                                                    </NavItem>
-                                                    <NavItem>
-                                                        <Link to="/firmy">
+                                                            </Link>
+                                                        </NavItem>
+                                                    </If>
+                                                    <If isTrue={LoginService.isAdmin() || LoginService.isLecturer()}>
+                                                        <NavItem>
+                                                            <Link to="/firmy">
                                                             <span>
                                                                 <i className="fa fa-briefcase"></i>
                                                             </span>
-                                                            <span>
+                                                                <span>
                                                                 Firmy
                                                             </span>
-                                                        </Link>
-                                                    </NavItem>
-                                                    <NavItem>
-                                                        <Link to="/ustawienia">
-                                            <span>
-                                                <i className="fa fa-cogs"></i>
-                                            </span>
-                                                            <span>
-                                                Ustawienia
-                                            </span>
-                                                        </Link>
-                                                    </NavItem>
-                                                    <NavItem> <Link to="/kalendarz">
-                                            <span>
-                                                <i className="fa fa-calendar"></i>
-                                            </span>
-                                                        <span>
-                                                Kalendarz
-                                            </span>
-                                                    </Link>
-                                                    </NavItem>
-                                                    <NavItem><Link to="/wpisy">
-                                            <span>
-                                                <i className="fa fa-sticky-note-o"></i>
-                                            </span>
-                                                        <span>
-                                                Wpisy
-                                            </span>
-                                                    </Link>
-                                                    </NavItem>
-                                                    <NavItem><Link to="/studenci">
-                                            <span>
-                                                <i className="fa fa-group"></i>
-                                            </span>
-                                                        <span>
-                                                Studenci
-                                            </span>
-                                                    </Link>
-                                                    </NavItem>
-                                                    <NavItem><Link to="/praktyki">
+                                                            </Link>
+                                                        </NavItem>
+                                                    </If>
+                                                    <If isTrue={LoginService.isUserLogged()}>
+                                                        <NavItem>
+                                                            <Link to="/praktyki">
                                             <span>
                                                 <i className="fa fa-graduation-cap"></i>
                                             </span>
-                                                        <span>
+                                                                <span>
                                                 Praktyki
                                             </span>
-                                                    </Link>
-                                                    </NavItem>
-                                                    <NavItem><Link to="/oceny">
+                                                            </Link>
+                                                        </NavItem>
+                                                    </If>
+                                                    <If isTrue={LoginService.isStudent()}>
+
+                                                        <NavItem> <Link to="/kalendarz">
+                                            <span>
+                                                <i className="fa fa-calendar"></i>
+                                            </span>
+                                                            <span>
+                                                Kalendarz
+                                            </span>
+                                                        </Link>
+                                                        </NavItem></If>
+                                                    <If isTrue={LoginService.isStudent()}>
+
+                                                        <NavItem><Link to="/wpisy">
+                                            <span>
+                                                <i className="fa fa-sticky-note-o"></i>
+                                            </span>
+                                                            <span>
+                                                Wpisy
+                                            </span>
+                                                        </Link>
+                                                        </NavItem>
+                                                    </If>
+                                                    <If isTrue={LoginService.isLeader() || LoginService.isLecturer()}>
+
+                                                        <NavItem><Link to="/studenci">
+                                            <span>
+                                                <i className="fa fa-group"></i>
+                                            </span>
+                                                            <span>
+                                                Studenci
+                                            </span>
+                                                        </Link>
+                                                        </NavItem></If>
+                                                    <If isTrue={LoginService.isLecturer()}>
+                                                        <NavItem><Link to="/oceny">
                                             <span>
                                                 <i className="fa fa-star-half-o"></i>
                                             </span>
-                                                        <span>
+                                                            <span>
                                                 Oceny
                                             </span>
-                                                    </Link>
-                                                    </NavItem>
-                                                    <NavItem><Link to="/raporty">
+                                                        </Link>
+                                                        </NavItem></If>
+                                                    <If isTrue={LoginService.isLeader()}>
+                                                        <NavItem><Link to="/raporty">
                                             <span>
                                                 <i className="fa fa-file-text-o"></i>
                                             </span>
-                                                        <span>
+                                                            <span>
                                                 Raporty
                                             </span>
-                                                    </Link>
-                                                    </NavItem>
-                                                    <NavItem><Link to="/konto">
-                                            <span>
-                                                <i className="fa fa-cogs"></i>
-                                            </span>
-                                                        <span>
-                                                Konto
-                                            </span>
-                                                    </Link>
-                                                    </NavItem>
-                                                    <NavItem><Link to="/uwagi">
+                                                        </Link>
+                                                        </NavItem>
+                                                    </If>
+                                                    <If isTrue={LoginService.isLeader()}>
+                                                        <NavItem><Link to="/uwagi">
                                             <span>
                                                 <i className="fa fa-comments-o"></i>
                                             </span>
-                                                        <span>
+                                                            <span>
                                                 Uwagi
                                             </span>
-                                                    </Link>
-                                                    </NavItem>
+                                                        </Link>
+                                                        </NavItem></If>
+                                                    <If isTrue={LoginService.isAdmin()}>
+                                                        <NavItem>
+                                                            <Link to="/ustawienia">
+                                            <span>
+                                                <i className="fa fa-wrench"></i>
+                                            </span>
+                                                                <span>
+                                                Ustawienia
+                                            </span>
+                                                            </Link>
+                                                        </NavItem>
+                                                    </If>
+                                                    <If isTrue={LoginService.isUserLogged()}>
+                                                        <NavItem><Link to="/konto">
+                                            <span>
+                                                <i className="fa fa-cogs"></i>
+                                            </span>
+                                                            <span>
+                                                Konto
+                                            </span>
+                                                        </Link>
+                                                        </NavItem></If>
+
                                                 </Nav>
                                             </Navbar.Collapse>
                                         </Navbar>
