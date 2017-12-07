@@ -28,6 +28,9 @@ export default class PractiseAddContainer extends Component {
     }
 
     savePractise(data) {
+
+        console.log(data);
+
         PractisesService.addNewPractise(data).then(function (response) {
 
             console.log(response)

@@ -104,28 +104,20 @@ function insert_practise()
     $response = array();
     $service = new PractiseService();
     $newPractise = new Practise();
-    /*
-        $sdate = $data->date_start;
-        $edate = $data->date_end;
-        $sdate = gmdate("Y-m-d h:m:s");
-        $edate = gate("Y-m-d");
-    /*
-        $newPractise->setStudentId($data->student_id);
-        $newPractise->setLecturerId($data->lecturer_id);
-        $newPractise->setLeaderId($data->leader_id);
-        $newPractise->setCompanyId($data->company_id);
-        $newPractise->setDateStart($sdate);
-        $newPractise->setDateEnd($edate);
-        $newPractise->setTotalTime($data->total_time);*/
 
-    // $response = $service->addNewPractise($newPractise);
+    $newPractise->setStudentId($data->student_id);
+    $newPractise->setLecturerId($data->lecturer_id);
+    $newPractise->setLeaderId($data->leader_id);
+    $newPractise->setCompanyId($data->company_id);
+    $newPractise->setDateStart($data->date_start);
+    $newPractise->setDateEnd($data->date_end);
+    $newPractise->setTotalTime($data->total_time);
 
-/*    date_default_timezone_set("UTC");
-    $sdate = date($data->date_start);*/
+    $response = $service->addNewPractise($newPractise);
 
 
     header('Content-Type: application/json');
-    echo json_encode([$data->date_start]);
+    echo json_encode($response);
 }
 
 function update_user($user_id)

@@ -29,37 +29,28 @@ export default class UsersTable extends Component {
         this.onChangeDateStart = this.onChangeDateStart.bind(this);
         this.onChangeDateEnd = this.onChangeDateEnd.bind(this);
         this.onChangeTotalTime = this.onChangeTotalTime.bind(this);
-
-        this.formatDateToInsert = this.formatDateToInsert.bind(this);
     }
 
     onCancelBtnClick() {
         this.props.handleCancelClick();
     }
 
-    formatDateToInsert(date){
-        console.log(date);
 
-
-
-    }
 
     onAddBtnClick() {
-
-        this.formatDateToInsert(this.state.date_start);
 
         // todo: dodać z settingsow ograniczenia
 
         this.setState({buttonClicked: true});
 
-        if(
+        if (
             this.state.selectedStudent !== null &&
             this.state.selectedLecturer !== null &&
-                this.state.selectedLeader !== null &&
-                this.state.selectedCompany !==null &&
-                this.state.total_time > 0 &&
-            (this.state.date_end - this.state.date_start > 86400000)
-        ){
+            this.state.selectedLeader !== null &&
+            this.state.selectedCompany !== null &&
+            this.state.total_time > 0 &&
+            (new Date(this.state.date_end) > new Date(this.state.date_start))
+        ) {
             let data = {
                 student_id: this.state.selectedStudent.user_id,
                 lecturer_id: this.state.selectedLecturer.user_id,
@@ -88,12 +79,12 @@ export default class UsersTable extends Component {
                 total_time: 0
             });
         }
-        else{
-                if(this.state.date_end - this.state.date_start > 86400000){
-                    this.refs.notificator.error("Błąd dodawania nowej praktyki.", "Niepoprawne ramy czasowe", 3000);
-                }else{
-                    this.refs.notificator.error("Błąd dodawania nowej praktyki.", "Nie uzupełniono poprawnie danych", 3000);
-                }
+        else {
+            if (new Date(this.state.date_end) <= new Date(this.state.date_start)) {
+                this.refs.notificator.error("Błąd dodawania nowej praktyki.", "Niepoprawne ramy czasowe", 3000);
+            } else {
+                this.refs.notificator.error("Błąd dodawania nowej praktyki.", "Nie uzupełniono poprawnie danych", 3000);
+            }
         }
     }
 
@@ -111,27 +102,27 @@ export default class UsersTable extends Component {
 
     onChangeLeader(e) {
         this.setState({selectedLeader: e});
-        if(e !== null){
+        if (e !== null) {
             this.setState({selectedCompany: this.props.companies.find(company => company.company_id == e.company_id)})
         }
-        else{
+        else {
             this.setState({selectedCompany: null})
         }
     }
 
     onChangeDateStart(e) {
-        this.setState({date_start: new Date(e)})
+        this.setState({date_start: e.target.value})
     }
 
     onChangeDateEnd(e) {
-        this.setState({date_end: new Date(e)})
+        this.setState({date_end: e.target.value})
     }
 
     onChangeTotalTime(e) {
         this.setState({total_time: e.target.value})
     }
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         if (localStorage.getItem("current_usergroup") == 2) {
             this.setState({selectedLecturer: this.props.lecturers.find(lecturer => lecturer.user_id == localStorage.getItem("current_userid"))})
         }
@@ -147,7 +138,7 @@ export default class UsersTable extends Component {
                             <FormGroup>
                                 <h5>Wybór studenta oraz opiekuna za strony uczelni</h5>
                                 <Row>
-                                    <Col xs={12} md={6} className={(this.state.buttonClicked && !this.state.selectedStudent)? 'has-error':''}>
+                                    <Col xs={12} md={6} className={(this.state.buttonClicked && !this.state.selectedStudent) ? 'has-error' : ''}>
                                         <ControlLabel>Student</ControlLabel>
                                         <Select
                                             options={this.props.students}
@@ -160,25 +151,25 @@ export default class UsersTable extends Component {
                                             placeholder="Wybierz studenta"
                                         />
                                     </Col>
-                                    <Col xs={12} md={6} className={(this.state.buttonClicked && !this.state.selectedLecturer)? 'has-error':''}>
-                                    <ControlLabel>Opiekun ze strony uczelni</ControlLabel>
-                                    <Select
-                                        options={this.props.lecturers}
-                                        value={this.state.selectedLecturer}
-                                        name="LecturerSelect"
-                                        onChange={this.onChangeLecturer}
-                                        clearable={false}
-                                        labelKey="lastname"
-                                        valueKey="user_id"
-                                        placeholder="Wybierz wykładowcę"
-                                    />
-                                </Col>
+                                    <Col xs={12} md={6} className={(this.state.buttonClicked && !this.state.selectedLecturer) ? 'has-error' : ''}>
+                                        <ControlLabel>Opiekun ze strony uczelni</ControlLabel>
+                                        <Select
+                                            options={this.props.lecturers}
+                                            value={this.state.selectedLecturer}
+                                            name="LecturerSelect"
+                                            onChange={this.onChangeLecturer}
+                                            clearable={false}
+                                            labelKey="lastname"
+                                            valueKey="user_id"
+                                            placeholder="Wybierz wykładowcę"
+                                        />
+                                    </Col>
                                 </Row>
                             </FormGroup>
                             <FormGroup>
                                 <h5>Wybór opiekuna ze strony firmy</h5>
                                 <Row>
-                                    <Col xs={12} md={6} className={(this.state.buttonClicked && !this.state.selectedLeader)? 'has-error':''}>
+                                    <Col xs={12} md={6} className={(this.state.buttonClicked && !this.state.selectedLeader) ? 'has-error' : ''}>
                                         <ControlLabel>Opiekun ze strony firmy</ControlLabel>
                                         <Select
                                             options={this.props.leaders}
@@ -191,7 +182,7 @@ export default class UsersTable extends Component {
                                             placeholder="Wybierz leadera"
                                         />
                                     </Col>
-                                    <Col xs={12} md={6} className={(this.state.buttonClicked && !this.state.selectedCompany)? 'has-error':''}>
+                                    <Col xs={12} md={6} className={(this.state.buttonClicked && !this.state.selectedCompany) ? 'has-error' : ''}>
                                         <ControlLabel>Firma</ControlLabel>
                                         <Select
                                             options={this.props.companies}
@@ -209,45 +200,47 @@ export default class UsersTable extends Component {
                             <FormGroup>
                                 <h5>Termin i długość praktyki</h5>
                                 <Row>
-                                    <Col xs={12} md={5} >
+                                    <Col xs={12} md={3} className={((new Date(this.state.date_end) <= new Date(this.state.date_start) && this.state.buttonClicked)? 'has-error' : '')}>
                                         <ControlLabel>Data rozpoczęcia</ControlLabel>
                                         <div>
-                                            <DatePicker
-                                                onChange={this.onChangeDateStart}
-                                                value={this.state.date_start}
-                                                dropdownMode="select"
-                                                forceValidDate={true}
-                                                dateFormat='YYYY-MM-DD'
-                                                updateOnDateClick={true}
-                                            />
+                                            {/*<DatePicker
+                                                        onChange={this.onChangeDateStart}
+                                                        value={this.state.date_start}
+                                                        dropdownMode="select"
+                                                        forceValidDate={true}
+                                                        dateFormat='YYYY-MM-DD'
+                                                        updateOnDateClick={true}
+                                                    />*/}
+                                            <FormControl type={"date"} onChange={this.onChangeDateStart}/>
                                         </div>
                                     </Col>
-                                    <Col xs={12} md={5}>
+                                    <Col xs={12} md={3} className={((new Date(this.state.date_end) <= new Date(this.state.date_start) && this.state.buttonClicked)? 'has-error' : '')}>
                                         <ControlLabel>Data zakończenia</ControlLabel>
                                         <div>
-                                            <DatePicker
+                                            {/*<DatePicker
                                                 onChange={this.onChangeDateEnd}
                                                 value={this.state.date_end}
                                                 dropdownMode="select"
                                                 forceValidDate={true}
                                                 dateFormat='YYYY-MM-DD'
                                                 updateOnDateClick={true}
-                                            />
+                                            />*/}
+                                            <FormControl type={"date"} onChange={this.onChangeDateEnd}/>
                                         </div>
                                     </Col>
-                                    <Col xs={12} md={2} className={(this.state.buttonClicked && !this.state.total_time>0)? 'has-error':''}>
+                                    <Col xs={12} md={2} className={(this.state.buttonClicked && !this.state.total_time > 0) ? 'has-error' : ''}>
                                         <ControlLabel>Długość (h)</ControlLabel>
                                         <FormControl type="number" onChange={this.onChangeTotalTime}/>
                                     </Col>
+                                    <Col xs={12} md={4}>
+                                        <div className="pull-right">
+                                            <ButtonToolbar style={{marginTop: '27px'}}>
+                                                <ButtonCancel onClick={this.onCancelBtnClick}/>
+                                                <ButtonSave onClick={this.onAddBtnClick}/>
+                                            </ButtonToolbar>
+                                        </div>
+                                    </Col>
                                 </Row>
-                            </FormGroup>
-                            <FormGroup>
-                                <div className="pull-right">
-                                    <ButtonToolbar>
-                                        <ButtonCancel onClick={this.onCancelBtnClick}/>
-                                        <ButtonSave onClick={this.onAddBtnClick}/>
-                                    </ButtonToolbar>
-                                </div>
                             </FormGroup>
                         </Col>
                     </div>
