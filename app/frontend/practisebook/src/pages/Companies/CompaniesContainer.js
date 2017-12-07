@@ -88,6 +88,8 @@ export default class CompaniesContainer extends Component {
                             handleClickAdd={this.handleClickAddNewCompany}
                             handleClickEnableSearch={this.handleClickEnableSearch}
                             addBtnText = "Dodaj nową firmę"
+                            disableForParticularGroup={true}
+                            disableFor={"2"}
                         />
                     </div>
                     <If isTrue={this.state.companyForEdition}>

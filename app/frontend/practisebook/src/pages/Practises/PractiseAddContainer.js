@@ -29,6 +29,9 @@ export default class PractiseAddContainer extends Component {
 
     savePractise(data) {
         PractisesService.addNewPractise(data).then(function (response) {
+
+            console.log(response)
+
             if(response.status == 200){
                 this.refs.notificator.success("Pomyślnie dodano nowa praktykę", "", 3000);
             }

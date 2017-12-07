@@ -76,7 +76,7 @@ class Sidebar extends Component {
                                                         </Link>
                                                     </li>
                                                 </If>
-                                                <If isTrue={LoginService.isUserLogged()}>
+                                                <If isTrue={LoginService.isAdmin() || LoginService.isLecturer() || LoginService.isStudent()}>
                                                     <li>
                                                         <Link to="/praktyki">
                                                             <span>
@@ -223,7 +223,7 @@ class Sidebar extends Component {
                                                             </Link>
                                                         </NavItem>
                                                     </If>
-                                                    <If isTrue={LoginService.isUserLogged()}>
+                                                    <If isTrue={LoginService.isAdmin() || LoginService.isLecturer() || LoginService.isStudent()}>
                                                         <NavItem>
                                                             <Link to="/praktyki">
                                             <span>

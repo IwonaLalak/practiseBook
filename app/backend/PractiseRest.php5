@@ -21,26 +21,22 @@ switch ($request_method) {
         if (!empty($_GET['practise_id'])) {
             $id = intval($_GET['practise_id']);
             get_practises($id);
-        }
-        else if(!empty($_GET['student_id'])){
+        } else if (!empty($_GET['student_id'])) {
             $id = intval($_GET['student_id']);
-            get_practises_by_user("student_id",$id);
-        }
-        else if(!empty($_GET['lecturer_id'])){
+            get_practises_by_user("student_id", $id);
+        } else if (!empty($_GET['lecturer_id'])) {
             $id = intval($_GET['lecturer_id']);
-            get_practises_by_user("lecturer_id",$id);
-        }
-        else if(!empty($_GET['leader_id'])){
+            get_practises_by_user("lecturer_id", $id);
+        } else if (!empty($_GET['leader_id'])) {
             $id = intval($_GET['leader_id']);
-            get_practises_by_user("leader_id",$id);
-        }
-        else {
+            get_practises_by_user("leader_id", $id);
+        } else {
             get_practises();
         }
         break;
 
     case 'POST':
-            insert_practise();
+        insert_practise();
         break;
 
     case 'PUT':
@@ -62,14 +58,14 @@ switch ($request_method) {
         break;
 }
 
-function get_practises($id = 0){
+function get_practises($id = 0)
+{
     $response = array();
     $service = new PractiseService();
 
-    if($id == 0){
+    if ($id == 0) {
         $response = $service->getAllPractises();
-    }
-    else{
+    } else {
         $data = $service->getPractise($id);
         if ($data) {
             $response = $data;
@@ -80,7 +76,8 @@ function get_practises($id = 0){
     echo json_encode($response);
 }
 
-function get_practise_by_student($id){
+function get_practise_by_student($id)
+{
     $response = array();
     $service = new PractiseService();
 
@@ -90,39 +87,45 @@ function get_practise_by_student($id){
     echo json_encode($response);
 }
 
-function get_practises_by_user($user, $id){
+function get_practises_by_user($user, $id)
+{
     $response = array();
     $service = new PractiseService();
 
-    $response = $service->getPractiseByUserType($user,$id);
+    $response = $service->getPractiseByUserType($user, $id);
 
     header('Content-Type: application/json');
     echo json_encode($response);
 }
 
-function insert_practise(){
+function insert_practise()
+{
     $data = json_decode(file_get_contents('php://input'));
     $response = array();
     $service = new PractiseService();
     $newPractise = new Practise();
+    /*
+        $sdate = $data->date_start;
+        $edate = $data->date_end;
+        $sdate = gmdate("Y-m-d h:m:s");
+        $edate = gate("Y-m-d");
+    /*
+        $newPractise->setStudentId($data->student_id);
+        $newPractise->setLecturerId($data->lecturer_id);
+        $newPractise->setLeaderId($data->leader_id);
+        $newPractise->setCompanyId($data->company_id);
+        $newPractise->setDateStart($sdate);
+        $newPractise->setDateEnd($edate);
+        $newPractise->setTotalTime($data->total_time);*/
 
-    $sdate = $data->date_start;
-    $edate = $data->date_end;
-    $sdate = gmdate("Y-m-d H:i:s");
-    $edate = gmdate("Y-m-d H:i:s");
+    // $response = $service->addNewPractise($newPractise);
 
-    $newPractise->setStudentId($data->student_id);
-    $newPractise->setLecturerId($data->lecturer_id);
-    $newPractise->setLeaderId($data->leader_id);
-    $newPractise->setCompanyId($data->company_id);
-    $newPractise->setDateStart($sdate);
-    $newPractise->setDateEnd($edate);
-    $newPractise->setTotalTime($data->total_time);
+/*    date_default_timezone_set("UTC");
+    $sdate = date($data->date_start);*/
 
-    $response = $service->addNewPractise($newPractise);
 
     header('Content-Type: application/json');
-    echo json_encode($response);
+    echo json_encode([$data->date_start]);
 }
 
 function update_user($user_id)

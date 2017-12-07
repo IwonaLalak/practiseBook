@@ -11,24 +11,33 @@ export default class GeneralTop extends Component {
         this.onClickEnableSearch = this.onClickEnableSearch.bind(this);
     }
 
-    onClickEnableSearch(){
+    onClickEnableSearch() {
         this.setState({enableSearch: !this.state.enableSearch});
         this.props.handleClickEnableSearch();
     }
 
-    onClickAdd(){
+    onClickAdd() {
         this.props.handleClickAdd();
     }
 
-    render(){
+    render() {
         return (
             <div>
                 <div className="pull-right">
                     <ButtonAction onClick={this.onClickEnableSearch}
-                                  btnText={(this.state.enableSearch)? 'Ukryj narzędzia wyszukiwania' : 'Pokaż narzedzia wyszukiwania'}
+                                  btnText={(this.state.enableSearch) ? 'Ukryj narzędzia wyszukiwania' : 'Pokaż narzedzia wyszukiwania'}
                                   iconType="fa fa-search"
                     />
-                    <ButtonAdd onClick={this.onClickAdd} btnText={this.props.addBtnText}/>
+                    {
+                        (this.props.disableForParticularGroup) ?
+                            (localStorage.getItem("current_usergroup") == this.props.disableFor) ?
+                                ''
+                                :
+                                <ButtonAdd onClick={this.onClickAdd} btnText={this.props.addBtnText}/>
+                            :
+                            <ButtonAdd onClick={this.onClickAdd} btnText={this.props.addBtnText}/>
+                    }
+
                 </div>
             </div>
         )

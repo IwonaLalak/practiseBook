@@ -51,7 +51,7 @@ class App extends Component {
                            <Route path="/wpisy" render={()=> (LoginService.isStudent())? <PostsContainer/> : <Redirect to="/konto"/>}/>
                            <Route exact path="/studenci" render={()=> (LoginService.isLecturer() || LoginService.isLeader())? <StudentsContainer/> : <Redirect to="/konto"/>}/>
                            <Route path="/student/:id" render={(props)=> (LoginService.isLecturer() || LoginService.isLeader())? <StudentContainer {...props}/> : <Redirect to="/konto"/>}/>
-                           <Route exact path="/praktyki" render={(props)=> (LoginService.isUserLogged())? <PractisesContainer {...props}/> : <Redirect to="/login"/>}/>
+                           <Route exact path="/praktyki" render={(props)=> (LoginService.isAdmin() || LoginService.isLecturer() || LoginService.isStudent())? <PractisesContainer {...props}/> : <Redirect to="/konto"/>}/>
                            <Route exact path="/praktyki/dodaj" render={(props)=> (LoginService.isLecturer() || LoginService.isAdmin())? <PractiseAddContainer {...props}/> : <Redirect to="/konto"/>}/>
                            <Route path="/oceny" render={()=> (LoginService.isLecturer())? <GradesContainer/> : <Redirect to="/konto"/>}/>
                            <Route exact path="/raporty" render={()=> (LoginService.isLeader() || LoginService.isLecturer())? <ReportsContainer/> : <Redirect to="/konto"/>}/>

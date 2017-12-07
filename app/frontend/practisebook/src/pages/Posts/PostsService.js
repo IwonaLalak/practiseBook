@@ -15,32 +15,33 @@ export default{
     getAllPosts(){
         return axios.get(URL);
     },
-/*
-    addNewUser(data){
+
+    addNewPost(data){
         return axios({
             method: 'post',
             url: URL,
             data: JSON.stringify(data)
         })
     },
+    /*
 
-    editUser(id, data){
-        return axios(
-            {
-                url: URL + '/?user_id='+id,
-                method: 'put',
-                data: JSON.stringify(data)
-            }
-        )
-    },
-
-    deleteUser(id){
-        return axios({
-                url: URL+'/?user_id='+id,
-                method: 'delete'
-            }
-        )
-    },
-    */
+        editUser(id, data){
+            return axios(
+                {
+                    url: URL + '/?user_id='+id,
+                    method: 'put',
+                    data: JSON.stringify(data)
+             }
+            )
+        },
+    /*
+        deleteUser(id){
+            return axios({
+                    url: URL+'/?user_id='+id,
+                    method: 'delete'
+                }
+            )
+        },
+        */
 
 }

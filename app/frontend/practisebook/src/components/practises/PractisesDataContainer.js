@@ -3,6 +3,7 @@ import {Tabs, Tab, Row, Col} from 'react-bootstrap';
 import PractisesService from "../../pages/Practises/PractisesService";
 import PractisesTable from "./PractisesTable";
 import GeneralTop from "../generaltop/GeneralTop";
+import ReactNotify from 'react-notify';
 
 export default class PractisesDataContainer extends Component {
     constructor(props) {
@@ -71,11 +72,17 @@ export default class PractisesDataContainer extends Component {
     }
 
     handleClickDeletePractise(id) {
+        PractisesService.deletePractise(id).then(function (response) {
+            console.log(response);
+            this.refs.notificator.success("Pomyślnie usunięto praktykę", "", 3000);
+            this.getPractisesData();
+        }.bind(this))
     }
 
     render() {
         return (
             <Row>
+                <ReactNotify ref='notificator'/>
                 <Col xs={12}>
                     <GeneralTop
                         handleClickAdd={this.handleClickAddNewPractise}

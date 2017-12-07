@@ -30,14 +30,14 @@ switch ($request_method) {
 
     case 'POST':
         if (intval($_GET['post_id']))
-            update_company(intval($_GET['post_id']));
+            update_post(intval($_GET['post_id']));
         else
-            insert_company();
+            insert_post();
         break;
 
     case 'PUT':
         if (intval($_GET['post_id']))
-            update_company(intval($_GET['post_id']));
+            update_post(intval($_GET['post_id']));
         break;
 
     case 'OPTIONS':
@@ -46,7 +46,7 @@ switch ($request_method) {
 
     case 'DELETE':
         $post_id = intval($_GET['post_id']);
-        delete_company($post_id);
+        delete_post($post_id);
         break;
 
     default:
@@ -84,28 +84,31 @@ function get_posts_by_student($id)
 
 
 
-function insert_company()
+function insert_post()
 {
     $data = json_decode(file_get_contents('php://input'));
     $response = array();
-    $service = new CompanyService();
-    $newCompany = new Company();
-    $newCompany->setName($data->name);
-    $newCompany->setBrand($data->brand);
-    $newCompany->setEmail($data->email);
-    $newCompany->setPhone($data->phone);
-    $newCompany->setCity($data->city);
-    $newCompany->setStreet($data->street);
-    $newCompany->setPlace($data->place);
-    $newCompany->setDescription($data->description);
+    $service = new PostService();
+    $newPost = new Post();
 
-    $response = $service->addNewCompany($newCompany);
+    $sdate = $data->post_date_start;
+    $edate = $data->post_date_end;
+    $sdate = gmdate("Y-m-d H:i:s");
+    $edate = gmdate("Y-m-d H:i:s");
+
+    $newPost->setStudentId($data->student_id);
+    $newPost->setPractiseId($data->practise_id);
+    $newPost->setPostDateStart($sdate);
+    $newPost->setPostDateEnd($edate);
+    $newPost->setPostDescription($data->post_description);
+
+    $response = $service->addNewPost($newPost);
 
     header('Content-Type: application/json');
-    echo json_encode($response);
+    echo json_encode([$response,$sdate, $edate]);
 }
 
-function update_company($id)
+function update_post($id)
 {
     $data = json_decode(file_get_contents('php://input'));
 
@@ -128,7 +131,7 @@ function update_company($id)
     echo json_encode($response);
 }
 
-function delete_company($id)
+function delete_post($id)
 {
     $response = array();
     $service = new CompanyService();

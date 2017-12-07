@@ -27,6 +27,9 @@ export default class PostsForm extends Component {
 
     onAddBtnClick() {
 
+
+        console.log(this.state.date);
+
         // todo: dodac ograniczenia
 
         this.setState({addBtnClicked: true})
@@ -43,14 +46,14 @@ export default class PostsForm extends Component {
             date_end.setMinutes(parseInt(this.state.time_end.substr(3, 2)));
 
             let data = {
-                practise_id: 0,
-                student_id:0,
+                practise_id: this.props.practise_id,
+                student_id: localStorage.getItem("current_userid"),
                 post_date_start: date_start,
                 post_date_end: date_end,
                 post_description: this.state.description
             };
 
-            this.props.handleAddClick(data,Boolean(this.props.editedPost));
+           // this.props.handleAddClick(data,Boolean(this.props.editedPost));
 
             this.setState({addBtnClicked: false})
 
@@ -85,7 +88,7 @@ export default class PostsForm extends Component {
     }
 
     onChangeDate(e) {
-        this.setState({date: new Date(e.target.value)})
+        this.setState({date: e.target.value})
         if (e.target.value.length < 1) {
             this.setState({date: null})
         }

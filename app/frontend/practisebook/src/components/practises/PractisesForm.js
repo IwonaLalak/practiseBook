@@ -29,13 +29,24 @@ export default class UsersTable extends Component {
         this.onChangeDateStart = this.onChangeDateStart.bind(this);
         this.onChangeDateEnd = this.onChangeDateEnd.bind(this);
         this.onChangeTotalTime = this.onChangeTotalTime.bind(this);
+
+        this.formatDateToInsert = this.formatDateToInsert.bind(this);
     }
 
     onCancelBtnClick() {
         this.props.handleCancelClick();
     }
 
+    formatDateToInsert(date){
+        console.log(date);
+
+
+
+    }
+
     onAddBtnClick() {
+
+        this.formatDateToInsert(this.state.date_start);
 
         // todo: dodać z settingsow ograniczenia
 
@@ -59,7 +70,7 @@ export default class UsersTable extends Component {
                 total_time: this.state.total_time
             }
 
-          //  this.props.handleAddClick(data);
+            this.props.handleAddClick(data);
             let inputs = document.getElementsByTagName('input');
 
             for (let i = 0; i < inputs.length; i++) {
@@ -118,6 +129,12 @@ export default class UsersTable extends Component {
 
     onChangeTotalTime(e) {
         this.setState({total_time: e.target.value})
+    }
+
+    componentWillReceiveProps(){
+        if (localStorage.getItem("current_usergroup") == 2) {
+            this.setState({selectedLecturer: this.props.lecturers.find(lecturer => lecturer.user_id == localStorage.getItem("current_userid"))})
+        }
     }
 
     render() {

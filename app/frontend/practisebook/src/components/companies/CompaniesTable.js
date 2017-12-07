@@ -88,13 +88,13 @@ export default class CompaniesTable extends Component {
                                            (this.props.enableFilters) ?
                                                {type: 'TextFilter', delay: 500, placeholder: 'Szukaj'}: false
                                        }>Branża</TableHeaderColumn>
-                    <TableHeaderColumn dataField='email' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2}
+                    <TableHeaderColumn dataField='email' thStyle={(localStorage.getItem("current_usergroup") == '2')? tabgrid.tg3: tabgrid.tg2} tdStyle={(localStorage.getItem("current_usergroup") == '2')? tabgrid.tg3: tabgrid.tg2}
                                        filter={(this.props.enableFilters) ? {
                                            type: 'TextFilter',
                                            delay: 500,
                                            placeholder: 'Szukaj'
                                        } : false}>Email</TableHeaderColumn>
-                    <TableHeaderColumn dataField='phone' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2}
+                    <TableHeaderColumn dataField='phone' thStyle={(localStorage.getItem("current_usergroup") == '2')? tabgrid.tg3: tabgrid.tg2} tdStyle={(localStorage.getItem("current_usergroup") == '2')? tabgrid.tg3: tabgrid.tg2}
                                        filter={(this.props.enableFilters) ? {
                                            type: 'TextFilter',
                                            delay: 500,
@@ -119,7 +119,7 @@ export default class CompaniesTable extends Component {
                                            placeholder: 'Szukaj'
                                        } : false}>Numer</TableHeaderColumn>
                     <TableHeaderColumn dataField='company_id' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2} dataFormat={this.renderActionButtons}
-                                       expandable={false}> Akcje
+                                       expandable={false} hidden={(localStorage.getItem("current_usergroup") == '2')}> Akcje
 
                     </TableHeaderColumn>
                 </BootstrapTable>
