@@ -42,17 +42,17 @@ class App extends Component {
                        <Switch>
                            <Route exact path="/" component={LoginContainer}/>
                            <Route path="/login" component={LoginContainer}/>
-                           <Route exact path="/uzytkownicy" render={()=> (LoginService.isAdmin())? <UsersContainer/> : <Redirect to="/konto"/>}/>
-                           <Route exact path="/uzytkownicy/dodaj"  render={()=> (LoginService.isAdmin())? <UserAddContainer/> : <Redirect to="/konto"/>}/>
-                           <Route exact path="/firmy" render={()=> (LoginService.isAdmin() || LoginService.isLecturer())? <CompaniesContainer/> : <Redirect to="/konto"/>}/>
-                           <Route exact path="/firmy/dodaj" render={()=> (LoginService.isAdmin())? <CompanyAddContainer/> : <Redirect to="/konto"/>}/>
+                           <Route exact path="/uzytkownicy" render={(props)=> (LoginService.isAdmin())? <UsersContainer {...props}/> : <Redirect to="/konto"/>}/>
+                           <Route exact path="/uzytkownicy/dodaj"  render={(props)=> (LoginService.isAdmin())? <UserAddContainer {...props}/> : <Redirect to="/konto"/>}/>
+                           <Route exact path="/firmy" render={(props)=> (LoginService.isAdmin() || LoginService.isLecturer())? <CompaniesContainer {...props}/> : <Redirect to="/konto"/>}/>
+                           <Route exact path="/firmy/dodaj" render={(props)=> (LoginService.isAdmin())? <CompanyAddContainer {...props}/> : <Redirect to="/konto"/>}/>
                            <Route path="/ustawienia" render={()=> (LoginService.isAdmin())? <SettingsContainer/> : <Redirect to="/konto"/>}/>
                            <Route path="/kalendarz" render={()=> (LoginService.isStudent())? <CalendarContainer/> : <Redirect to="/konto"/>}/>
                            <Route path="/wpisy" render={()=> (LoginService.isStudent())? <PostsContainer/> : <Redirect to="/konto"/>}/>
                            <Route exact path="/studenci" render={()=> (LoginService.isLecturer() || LoginService.isLeader())? <StudentsContainer/> : <Redirect to="/konto"/>}/>
                            <Route path="/student/:id" render={(props)=> (LoginService.isLecturer() || LoginService.isLeader())? <StudentContainer {...props}/> : <Redirect to="/konto"/>}/>
-                           <Route exact path="/praktyki" render={()=> (LoginService.isUserLogged())? <PractisesContainer/> : <Redirect to="/login"/>}/>
-                           <Route exact path="/praktyki/dodaj" render={()=> (LoginService.isLecturer() || LoginService.isAdmin())? <PractiseAddContainer/> : <Redirect to="/konto"/>}/>
+                           <Route exact path="/praktyki" render={(props)=> (LoginService.isUserLogged())? <PractisesContainer {...props}/> : <Redirect to="/login"/>}/>
+                           <Route exact path="/praktyki/dodaj" render={(props)=> (LoginService.isLecturer() || LoginService.isAdmin())? <PractiseAddContainer {...props}/> : <Redirect to="/konto"/>}/>
                            <Route path="/oceny" render={()=> (LoginService.isLecturer())? <GradesContainer/> : <Redirect to="/konto"/>}/>
                            <Route exact path="/raporty" render={()=> (LoginService.isLeader() || LoginService.isLecturer())? <ReportsContainer/> : <Redirect to="/konto"/>}/>
                            <Route path="/raport/:id" render={(props)=> (LoginService.isUserLogged())? <ReportContainer {...props}/> : <Redirect to="/login"/>}/>

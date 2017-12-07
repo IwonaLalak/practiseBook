@@ -31,6 +31,7 @@ export default class ForTestsContainer extends Component {
     getData() {
         UserService.getAllUsers().then(function (response) {
             this.setState({users: response.data})
+            console.log(response.data)
         }.bind(this))
     }
 

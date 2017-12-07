@@ -9,7 +9,7 @@ export default class PractisesContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            logged: 'admin'
+            logged: (localStorage.getItem("current_usergroup") == 4)? "student" : (localStorage.getItem("current_usergroup") == 2)? "lecturer" : "admin"
         };
         this.renderAdminPart = this.renderAdminPart.bind(this);
         this.renderStudentPart = this.renderStudentPart.bind(this);
@@ -18,7 +18,7 @@ export default class PractisesContainer extends Component {
     }
 
     handleAddNewPractise(){
-        this.props.history.push("/praktyki/dodaj");
+       this.props.history.push("/praktyki/dodaj");
     }
 
     renderStudentPart(){
@@ -38,10 +38,9 @@ export default class PractisesContainer extends Component {
     }
 
     renderLecturerPart(){
-        //todo: userid do zmiany
         return(
             <div id="PRACTISES_DATA">
-                <PractisesDataContainer userid={25} onClickAdd={this.handleAddNewPractise}/>
+                <PractisesDataContainer userid={localStorage.getItem("current_userid")} onClickAdd={this.handleAddNewPractise}/>
             </div>
         )
     }

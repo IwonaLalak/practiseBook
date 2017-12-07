@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Tabs, Tab, Row, Col} from 'react-bootstrap';
 import PractisesService from "../../pages/Practises/PractisesService";
+import If from "../../utilities/If";
 
 export default class PractiseDataForStudents extends Component {
     constructor(props) {
@@ -17,32 +18,31 @@ export default class PractiseDataForStudents extends Component {
         this.renderLecturer = this.renderLecturer.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getPractiseData();
     }
 
-    getPractiseData(){
+    getPractiseData() {
         //todo: userid do zmiany
-        let userid = 24;
+        let userid = localStorage.getItem("current_userid");
 
         PractisesService.getPractiseByStudent(userid).then(function (response) {
-            if(response.status == 200){
-                if(response.data[0] != false){
-                   this.setState({
-                       practises: response.data.practises,
-                       leaders: response.data.leaders,
-                       lecturers: response.data.lecturers
-                   })
+            if (response.status == 200) {
+                if (response.data[0] != false) {
+                    this.setState({
+                        practises: response.data.practises,
+                        leaders: response.data.leaders,
+                        lecturers: response.data.lecturers
+                    })
                 }
             }
-            console.log(response)
         }.bind(this))
     }
 
-    renderLeader(id){
+    renderLeader(id) {
         let leader = this.state.leaders.find(leader => leader.user_id == id);
-        if(leader){
-            return(
+        if (leader) {
+            return (
                 <div>
                     <h5>{leader.firstname} {leader.lastname}</h5>
                     <p>
@@ -56,10 +56,10 @@ export default class PractiseDataForStudents extends Component {
         }
     }
 
-    renderLecturer(id){
+    renderLecturer(id) {
         let lecturer = this.state.lecturers.find(lecturer => lecturer.user_id == id);
-        if(lecturer){
-            return(
+        if (lecturer) {
+            return (
                 <div>
                     <h5>{lecturer.firstname} {lecturer.lastname}</h5>
                     <p>
@@ -72,108 +72,118 @@ export default class PractiseDataForStudents extends Component {
             )
         }
     }
-    renderMainData(){
-        return(
-            <Row>
-                <Col xs={12} md={10} lg={7}>
-                    {
-                        this.state.practises.map((item, index) =>
-                            <div key={++index}>
-                                {
-                                    (this.state.practises.length > 1)?
-                                        <h2>{"Praktyka "+index}</h2>
-                                        :
-                                        ''
-                                }
-                                <div>
-                                    <h4>
-                                        <i className="fa fa-lg fa-calendar"></i>
-                                        Terminarz i wymiar praktyki
-                                    </h4>
-                                    <p>
-                                        <label>
-                                            Data rozpoczęcia:
-                                        </label>
-                                        <span>
+
+    renderMainData() {
+        return (
+            <div>
+                <Row>
+                    <Col xs={12} md={10} lg={7}>
+                        {
+                            this.state.practises.map((item, index) =>
+                                    <div key={++index}>
+                                        {
+                                            (this.state.practises.length > 1) ?
+                                                <h2>{"Praktyka " + index}</h2>
+                                                :
+                                                ''
+                                        }
+                                        <div>
+                                            <h4>
+                                                <i className="fa fa-lg fa-calendar"></i>
+                                                Terminarz i wymiar praktyki
+                                            </h4>
+                                            <p>
+                                                <label>
+                                                    Data rozpoczęcia:
+                                                </label>
+                                                <span>
                                             {item.date_start}
                             </span>
-                                    </p>
-                                    <p>
-                                        <label>
-                                            Data zakończenia:
-                                        </label>
-                                        <span>
+                                            </p>
+                                            <p>
+                                                <label>
+                                                    Data zakończenia:
+                                                </label>
+                                                <span>
                                             {item.date_end}
                             </span>
-                                    </p>
-                                    <p>
-                                        <label>
-                                            Wymiar godzinowy praktyki:
-                                        </label>
-                                        <span>
+                                            </p>
+                                            <p>
+                                                <label>
+                                                    Wymiar godzinowy praktyki:
+                                                </label>
+                                                <span>
                                             {item.total_time}
                             </span>
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4>
-                                        <i className="fa fa-lg fa-building-o"></i>
-                                        Zakład pracy
-                                    </h4>
-                                    <p>
-                                        <label>
-                                            Nazwa:
-                                        </label>
-                                        <span>
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h4>
+                                                <i className="fa fa-lg fa-building-o"></i>
+                                                Zakład pracy
+                                            </h4>
+                                            <p>
+                                                <label>
+                                                    Nazwa:
+                                                </label>
+                                                <span>
                                             {item.name}
                             </span>
-                                    </p>
-                                    <p>
-                                        <label>
-                                            Adres:
-                                        </label>
-                                        <span>
+                                            </p>
+                                            <p>
+                                                <label>
+                                                    Adres:
+                                                </label>
+                                                <span>
                                             {item.street} {item.place}, {item.city}
                             </span>
-                                    </p>
-                                    <p>
-                                        <label>
-                                            Kontakt:
-                                        </label>
-                                        <span>
+                                            </p>
+                                            <p>
+                                                <label>
+                                                    Kontakt:
+                                                </label>
+                                                <span>
                                             {item.phone}, {item.email}
                             </span>
-                                    </p>
-                                </div>
-                                <div>
-                                    <h4>
-                                        <i className="fa fa-lg fa-users"></i>
-                                        Opiekunowie
-                                    </h4>
-                                    <p>
-                                        <label>
-                                            Opiekun ze strony firmy:
-                                        </label>
-                                        {this.renderLeader(item.leader_id)}
-                                    </p>
-                                    <p>
-                                        <label>
-                                            Opiekun z strony uczelni:
-                                        </label>
-                                        {this.renderLecturer(item.lecturer_id)}
-                                    </p>
-                                </div>
-                            </div>
-                        )
-                    }
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h4>
+                                                <i className="fa fa-lg fa-users"></i>
+                                                Opiekunowie
+                                            </h4>
+                                            <p>
+                                                <label>
+                                                    Opiekun ze strony firmy:
+                                                </label>
+                                                {this.renderLeader(item.leader_id)}
+                                            </p>
+                                            <p>
+                                                <label>
+                                                    Opiekun z strony uczelni:
+                                                </label>
+                                                {this.renderLecturer(item.lecturer_id)}
+                                            </p>
+                                        </div>
+                                    </div>
+                            )
+                        }
+                    </Col>
+                </Row>
 
-                </Col>
-            </Row>
+                <div>
+                    <If isTrue={this.state.practises.length < 1}>
+    <span>
+        Brak przypisanych praktyk
+        </span>
+                    </If>
+                </div>
+            </div>
         )
     }
 
-    renderGradeData(){
-        return(
+    renderGradeData() {
+        return (
             <Row>
                 <Col xs={12} md={10} lg={7}>
                     <h4>

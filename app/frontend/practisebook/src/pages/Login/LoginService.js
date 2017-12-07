@@ -31,19 +31,19 @@ export default{
     },
 
     isAdmin(){
-        return (localStorage.getItem("current_userid") == 1);
+        return (localStorage.getItem("current_usergroup") == 1);
     },
 
     isLecturer(){
-        return (localStorage.getItem("current_userid") == 2);
+        return (localStorage.getItem("current_usergroup") == 2);
     },
 
     isLeader(){
-        return (localStorage.getItem("current_userid") == 3);
+        return (localStorage.getItem("current_usergroup") == 3);
     },
 
     isStudent(){
-        return (localStorage.getItem("current_userid") == 4);
+        return (localStorage.getItem("current_usergroup") == 4);
     },
 
 
