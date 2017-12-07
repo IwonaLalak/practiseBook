@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {Form, FormControl, FormGroup, ControlLabel, Col, Row, ButtonToolbar} from 'react-bootstrap';
 import {ButtonCancel, ButtonSave} from "../../utilities/Buttons";
 import ReactNotify from 'react-notify';
-import DatePicker from 'react-date-picker'
-import DateField from 'react-date-picker'
+import DateUtilities from "../../utilities/DateUtilities";
 
 
 export default class PostsForm extends Component {
@@ -28,38 +27,28 @@ export default class PostsForm extends Component {
     onAddBtnClick() {
 
 
-        console.log(this.state.date);
-
         // todo: dodac ograniczenia
 
         this.setState({addBtnClicked: true})
 
-        if (this.state.date && this.state.time_start && this.state.time_end && this.state.description.length > 0 && (this.state.time_end > this.state.time_start)) {
 
-            let date_start = new Date(this.state.date);
-            let date_end = new Date(this.state.date);
-
-            date_start.setHours(parseInt(this.state.time_start.substr(0, 2)));
-            date_start.setMinutes(parseInt(this.state.time_start.substr(3, 2)));
-
-            date_end.setHours(parseInt(this.state.time_end.substr(0, 2)));
-            date_end.setMinutes(parseInt(this.state.time_end.substr(3, 2)));
+        if (this.state.description.length > 0 && (new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_end)) > new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_start)))) {
 
             let data = {
                 practise_id: this.props.practise_id,
                 student_id: localStorage.getItem("current_userid"),
-                post_date_start: date_start,
-                post_date_end: date_end,
+                post_date_start: DateUtilities.formatDateForInsert(this.state.date, this.state.time_start),
+                post_date_end: DateUtilities.formatDateForInsert(this.state.date, this.state.time_end),
                 post_description: this.state.description
             };
 
-           // this.props.handleAddClick(data,Boolean(this.props.editedPost));
+            this.props.handleAddClick(data,Boolean(this.props.editedPost));
 
             this.setState({addBtnClicked: false})
 
         }
         else {
-            if(this.state.time_end <= this.state.time_start){
+            if(new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_end)) <= new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_start))){
                 this.refs.notificator.error("Błąd dodawania nowego wpisu.", "Godzina końcowa musi być późniejsza od godziny startowej", 3000)
             }
             else{

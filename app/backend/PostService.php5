@@ -56,9 +56,7 @@ class PostService
     public function addNewPost($newPost)
     {
 
-        return 'aaaa';
-
-        /*$sql = "INSERT INTO `companies` (`post_id`, `practise_id`, `student_id`, `post_date_start`, `post_date_end`, `post_date_add`, `post_date_edit`, `post_description`)
+        $sql = "INSERT INTO `posts` (`post_id`, `practise_id`, `student_id`, `post_date_start`, `post_date_end`, `post_date_add`, `post_date_edit`, `post_description`)
                 VALUES (NULL, :practiseid, :studentid, :postdatestart, :postdateend, CURRENT_TIMESTAMP, NULL, :postdescription)";
         $con = Connection::getInstance();
 
@@ -73,54 +71,41 @@ class PostService
             return [true, "post added"];
         } else {
             return [false, "error"];
-        }*/
-    }
-
-    public function updateCompany($currentCompany)
-    {
-        $sql = "SELECT * from companies WHERE company_id=:id";
-        $con = Connection::getInstance();
-        $stmt = $con->handle->prepare($sql);
-        $stmt->bindParam(':id', $currentCompany->getCompanyId(), PDO::PARAM_INT);
-        $stmt->execute();
-        if (!($stmt->rowCount() > 0)) {
-            return [false, "company doesnt exist"];
-        } else {
-            $sql = "
-                    UPDATE `companies` 
-                    SET `name` = :name, `brand` = :brand, `description` = :description, `email` = :email, 
-                        `phone` = :phone, `city` = :city, `street`=:street, `place`=:place
-                    WHERE `companies`.`company_id` =:id
-                    ";
-
-            $stmt = $con->handle->prepare($sql);
-            $stmt->bindParam(':id', $currentCompany->getCompanyId(), PDO::PARAM_INT);
-            $stmt->bindParam(':name', $currentCompany->getName(), PDO::PARAM_STR);
-            $stmt->bindParam(':brand', $currentCompany->getBrand(), PDO::PARAM_STR);
-            $stmt->bindParam(':description', $currentCompany->getDescription(), PDO::PARAM_STR);
-            $stmt->bindParam(':email', $currentCompany->getEmail(), PDO::PARAM_STR);
-            $stmt->bindParam(':phone', $currentCompany->getPhone(), PDO::PARAM_STR);
-            $stmt->bindParam(':city', $currentCompany->getCity(), PDO::PARAM_STR);
-            $stmt->bindParam(':street', $currentCompany->getStreet(), PDO::PARAM_STR);
-            $stmt->bindParam(':place', $currentCompany->getPlace(), PDO::PARAM_STR);
-            $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                return [true, "company updated"];
-            } else {
-                return [false, "error"];
-            }
         }
     }
 
-    public function deleteCompany($id)
+    public function updatePost($currentPost)
     {
-        $sql = "DELETE FROM companies WHERE company_id=:id";
+
+        $con = Connection::getInstance();
+        $sql = "
+                    UPDATE `posts` 
+                    SET `post_date_start` = :postdatestart, `post_date_end` = :postdateend, `post_date_edit` = CURRENT_TIMESTAMP, `post_description` = :postdescription
+                    WHERE `posts`.`post_id` =:id
+                    ";
+
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $currentPost->getPostId(), PDO::PARAM_INT);
+        $stmt->bindParam(':postdatestart', $currentPost->getPostDateStart(), PDO::PARAM_STR);
+        $stmt->bindParam(':postdateend', $currentPost->getPostDateEnd(), PDO::PARAM_STR);
+        $stmt->bindParam(':postdescription', $currentPost->getPostDescription(), PDO::PARAM_STR);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return [true, "post updated"];
+        } else {
+            return [false, "error"];
+        }
+    }
+
+    public function deletePost($id)
+    {
+        $sql = "DELETE FROM posts WHERE post_id=:id";
         $con = Connection::getInstance();
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            return [true, "company deleted"];
+            return [true, "post deleted"];
         } else {
             return [false, "error"];
         }

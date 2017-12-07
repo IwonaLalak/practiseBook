@@ -2,46 +2,44 @@ import axios from 'axios';
 
 let URL = 'http://localhost/practiseBook/app/backend/PostRest.php5';
 
-export default{
+export default {
 
-    getPost(id){
-        return axios.get(URL+'/?post_id='+id);
+    getPost(id) {
+        return axios.get(URL + '/?post_id=' + id);
     },
 
-    getPostByStudent(student_id){
-        return axios.get(URL+'/?student_id='+student_id);
+    getPostByStudent(student_id) {
+        return axios.get(URL + '/?student_id=' + student_id);
     },
 
-    getAllPosts(){
+    getAllPosts() {
         return axios.get(URL);
     },
 
-    addNewPost(data){
+    addNewPost(data) {
         return axios({
             method: 'post',
             url: URL,
             data: JSON.stringify(data)
         })
     },
-    /*
 
-        editUser(id, data){
-            return axios(
-                {
-                    url: URL + '/?user_id='+id,
-                    method: 'put',
-                    data: JSON.stringify(data)
-             }
-            )
-        },
-    /*
-        deleteUser(id){
-            return axios({
-                    url: URL+'/?user_id='+id,
-                    method: 'delete'
-                }
-            )
-        },
-        */
+    editPost(id, data) {
+        return axios(
+            {
+                url: URL + '/?post_id=' + id,
+                method: 'put',
+                data: JSON.stringify(data)
+            }
+        )
+    },
+
+    deletePost(id) {
+        return axios({
+                url: URL + '/?post_id=' + id,
+                method: 'delete'
+            }
+        )
+    },
 
 }

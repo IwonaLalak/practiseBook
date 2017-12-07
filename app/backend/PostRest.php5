@@ -91,21 +91,16 @@ function insert_post()
     $service = new PostService();
     $newPost = new Post();
 
-    $sdate = $data->post_date_start;
-    $edate = $data->post_date_end;
-    $sdate = gmdate("Y-m-d H:i:s");
-    $edate = gmdate("Y-m-d H:i:s");
-
     $newPost->setStudentId($data->student_id);
     $newPost->setPractiseId($data->practise_id);
-    $newPost->setPostDateStart($sdate);
-    $newPost->setPostDateEnd($edate);
+    $newPost->setPostDateStart($data->post_date_start);
+    $newPost->setPostDateEnd($data->post_date_end);
     $newPost->setPostDescription($data->post_description);
 
     $response = $service->addNewPost($newPost);
 
     header('Content-Type: application/json');
-    echo json_encode([$response,$sdate, $edate]);
+    echo json_encode($response);
 }
 
 function update_post($id)
@@ -113,19 +108,14 @@ function update_post($id)
     $data = json_decode(file_get_contents('php://input'));
 
     $response = array();
-    $service = new CompanyService();
-    $currentCompany = new Company();
-    $currentCompany->setCompanyId($id);
-    $currentCompany->setName($data->name);
-    $currentCompany->setBrand($data->brand);
-    $currentCompany->setDescription($data->description);
-    $currentCompany->setEmail($data->email);
-    $currentCompany->setPhone($data->phone);
-    $currentCompany->setCity($data->city);
-    $currentCompany->setStreet($data->street);
-    $currentCompany->setPlace($data->place);
+    $service = new PostService();
+    $currentPost = new Post();
+    $currentPost->setPostId($id);
+    $currentPost->setPostDateStart($data->post_date_start);
+    $currentPost->setPostDateEnd($data->post_date_end);
+    $currentPost->setPostDescription($data->post_description);
 
-    $response = $service->updateCompany($currentCompany);
+    $response = $service->updatePost($currentPost);
 
     header('Content-Type: plain/text');
     echo json_encode($response);
@@ -134,8 +124,8 @@ function update_post($id)
 function delete_post($id)
 {
     $response = array();
-    $service = new CompanyService();
-    $response = $service->deleteCompany($id);
+    $service = new PostService();
+    $response = $service->deletePost($id);
 
     header('Content-Type: application/json');
     echo json_encode($response);
