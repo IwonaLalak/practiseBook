@@ -48,7 +48,7 @@ class PractiseService
             $leaders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        if($practises != null)
+        if ($practises != null)
             return array("practises" => $practises, "lecturers" => $lecturers, "leaders" => $leaders, "students" => $students);
         else
             return array(false, "error, cannot get data");
@@ -70,7 +70,7 @@ class PractiseService
             $practise = $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-       $sql = "select firstname, lastname, login, phone, email from practises, users where practises.practise_id=:id and practises.lecturer_id=users.user_id";
+        $sql = "select firstname, lastname, login, phone, email from practises, users where practises.practise_id=:id and practises.lecturer_id=users.user_id";
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -94,21 +94,22 @@ class PractiseService
             $student = $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        if($practise != null && $lecturer != null && $leader != null && $student != null)
+        if ($practise != null && $lecturer != null && $leader != null && $student != null)
             return array("practise" => $practise, "lecturer" => $lecturer, "leader" => $leader, "student" => $student);
         else
-           return array(false, "error, cannot get data");
+            return array(false, "error, cannot get data");
 
     }
 
-    public function getPractiseByUserType($usertype,$id){
+    public function getPractiseByUserType($usertype, $id)
+    {
         $practises = null;
         $lecturers = null;
         $leaders = null;
         $students = null;
 
         // getting practise with company
-        $sql = "select * from practises, companies where practises.".$usertype."=:id and practises.company_id=companies.company_id";
+        $sql = "select * from practises, companies where practises." . $usertype . "=:id and practises.company_id=companies.company_id";
         $con = Connection::getInstance();
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -117,7 +118,7 @@ class PractiseService
             $practises = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         // getting student
-        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises.".$usertype."=:id and practises.student_id=users.user_id";
+        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises." . $usertype . "=:id and practises.student_id=users.user_id";
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -127,7 +128,7 @@ class PractiseService
 
         // getting lecturer
 
-        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises.".$usertype."=:id and practises.lecturer_id=users.user_id";
+        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises." . $usertype . "=:id and practises.lecturer_id=users.user_id";
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -136,16 +137,16 @@ class PractiseService
         }
 
         // getting leader
-        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises.".$usertype."=:id and practises.leader_id=users.user_id";
+        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises." . $usertype . "=:id and practises.leader_id=users.user_id";
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             $leaders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        if($practises != null){
-            return array("practises" => $practises, "students" => $students, "lecturers" =>$lecturers, "leaders" => $leaders);
-        }else{
+        if ($practises != null) {
+            return array("practises" => $practises, "students" => $students, "lecturers" => $lecturers, "leaders" => $leaders);
+        } else {
             return array(false, "error, cannot get data");
         }
 
@@ -175,42 +176,31 @@ class PractiseService
         }
     }
 
-    public function updateUser($currentUser)
+    public function updatePractise($currentPractise)
     {
-        $sql = "SELECT * from users WHERE user_id=:id";
-        $con = Connection::getInstance();
-        $stmt = $con->handle->prepare($sql);
-        $stmt->bindParam(':id', $currentUser->getUserId(), PDO::PARAM_INT);
-        $stmt->execute();
-        if (!($stmt->rowCount() > 0)) {
-            return [false, "user doesnt exist"];
-        } else {
-            $sql = "
-                    UPDATE `users` 
-                    SET `login` = :login, `password` = :password, `firstname` = :firstname, `lastname` = :lastname, 
-                        `email` = :email, `phone` = :phone, `group_id`=:group_id, `study`=:study, `semester`=:semester, `company_id`=:company_id
-                    WHERE `users`.`user_id` =:id
+
+        $sql = "
+                    UPDATE `practises` 
+                    SET `leader_id` = :leader, `company_id` = :company, `date_start` = :datestart, `date_end` = :dateend, 
+                        `total_time` = :totaltime
+                    WHERE `practises`.`practise_id` =:id
                     ";
 
-            $stmt = $con->handle->prepare($sql);
-            $stmt->bindParam(':id', $currentUser->getUserId(), PDO::PARAM_INT);
-            $stmt->bindParam(':login', $currentUser->getLogin(), PDO::PARAM_STR);
-            $stmt->bindParam(':password', $currentUser->getPassword(), PDO::PARAM_STR);
-            $stmt->bindParam(':group_id', $currentUser->getGroupId(), PDO::PARAM_STR);
-            $stmt->bindParam(':firstname', $currentUser->getFirstname(), PDO::PARAM_STR);
-            $stmt->bindParam(':lastname', $currentUser->getLastname(), PDO::PARAM_STR);
-            $stmt->bindParam(':email', $currentUser->getEmail(), PDO::PARAM_STR);
-            $stmt->bindParam(':phone', $currentUser->getPhone(), PDO::PARAM_STR);
-            $stmt->bindParam(':study', $currentUser->getStudy(), PDO::PARAM_STR);
-            $stmt->bindParam(':semester', $currentUser->getSemester(), PDO::PARAM_STR);
-            $stmt->bindParam(':company_id', $currentUser->getCompanyId(), PDO::PARAM_STR);
-            $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                return [true, "user updated"];
-            } else {
-                return [false, "error"];
-            }
+        $con = Connection::getInstance();
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $currentPractise->getPractiseId(), PDO::PARAM_INT);
+        $stmt->bindParam(':leader', $currentPractise->getLeaderId(), PDO::PARAM_STR);
+        $stmt->bindParam(':company', $currentPractise->getCompanyId(), PDO::PARAM_STR);
+        $stmt->bindParam(':datestart', $currentPractise->getDateStart(), PDO::PARAM_STR);
+        $stmt->bindParam(':dateend', $currentPractise->getDateEnd(), PDO::PARAM_STR);
+        $stmt->bindParam(':totaltime', $currentPractise->getTotalTime(), PDO::PARAM_STR);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return [true, "practise updated"];
+        } else {
+            return [false, "error"];
         }
+
     }
 
     public function deletePractise($id)

@@ -2,16 +2,14 @@ import React, {Component} from 'react';
 import {Form, FormControl, FormGroup, ControlLabel, Col, Row, ButtonToolbar} from 'react-bootstrap';
 import {ButtonCancel, ButtonSave} from "../../utilities/Buttons";
 import Select from 'react-select';
-import If from '../../utilities/If';
 import ReactNotify from 'react-notify';
-import DatePicker from 'react-date-picker'
 
-export default class UsersTable extends Component {
+export default class PractisesForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date_start: new Date(),
-            date_end: new Date(),
+            date_start: null,
+            date_end: null,
             selectedStudent: null,
             selectedLecturer: null,
             selectedLeader: null,
@@ -203,33 +201,17 @@ export default class UsersTable extends Component {
                                     <Col xs={12} md={3} className={((new Date(this.state.date_end) <= new Date(this.state.date_start) && this.state.buttonClicked)? 'has-error' : '')}>
                                         <ControlLabel>Data rozpoczęcia</ControlLabel>
                                         <div>
-                                            {/*<DatePicker
-                                                        onChange={this.onChangeDateStart}
-                                                        value={this.state.date_start}
-                                                        dropdownMode="select"
-                                                        forceValidDate={true}
-                                                        dateFormat='YYYY-MM-DD'
-                                                        updateOnDateClick={true}
-                                                    />*/}
                                             <FormControl type={"date"} onChange={this.onChangeDateStart}/>
                                         </div>
                                     </Col>
                                     <Col xs={12} md={3} className={((new Date(this.state.date_end) <= new Date(this.state.date_start) && this.state.buttonClicked)? 'has-error' : '')}>
                                         <ControlLabel>Data zakończenia</ControlLabel>
                                         <div>
-                                            {/*<DatePicker
-                                                onChange={this.onChangeDateEnd}
-                                                value={this.state.date_end}
-                                                dropdownMode="select"
-                                                forceValidDate={true}
-                                                dateFormat='YYYY-MM-DD'
-                                                updateOnDateClick={true}
-                                            />*/}
                                             <FormControl type={"date"} onChange={this.onChangeDateEnd}/>
                                         </div>
                                     </Col>
                                     <Col xs={12} md={2} className={(this.state.buttonClicked && !this.state.total_time > 0) ? 'has-error' : ''}>
-                                        <ControlLabel>Długość (h)</ControlLabel>
+                                        <ControlLabel>Czas trwania (h)</ControlLabel>
                                         <FormControl type="number" onChange={this.onChangeTotalTime}/>
                                     </Col>
                                     <Col xs={12} md={4}>

@@ -40,8 +40,8 @@ switch ($request_method) {
         break;
 
     case 'PUT':
-        if (intval($_GET['user_id']))
-            update_user(intval($_GET['user_id']));
+        if (intval($_GET['practise_id']))
+            update_practise(intval($_GET['practise_id']));
         break;
 
     case 'OPTIONS':
@@ -120,26 +120,23 @@ function insert_practise()
     echo json_encode($response);
 }
 
-function update_user($user_id)
+function update_practise($id)
 {
+
     $data = json_decode(file_get_contents('php://input'));
 
     $response = array();
-    $service = new UserService();
-    $currentUser = new User();
-    $currentUser->setUserId($user_id);
-    $currentUser->setLogin($data->login);
-    $currentUser->setPassword($data->password);
-    $currentUser->setGroupId($data->group_id);
-    $currentUser->setFirstname($data->firstname);
-    $currentUser->setLastname($data->lastname);
-    $currentUser->setEmail($data->email);
-    $currentUser->setPhone($data->phone);
-    $currentUser->setStudy($data->study);
-    $currentUser->setSemester($data->semester);
-    $currentUser->setCompanyId($data->company_id);
+    $service = new PractiseService();
+    $currentPractise = new Practise();
 
-    $response = $service->updateUser($currentUser);
+    $currentPractise->setPractiseId($id);
+    $currentPractise->setLeaderId($data->leader_id);
+    $currentPractise->setCompanyId($data->company_id);
+    $currentPractise->setDateStart($data->date_start);
+    $currentPractise->setDateEnd($data->date_end);
+    $currentPractise->setTotalTime($data->total_time);
+
+    $response = $service->updatePractise($currentPractise);
 
     header('Content-Type: plain/text');
     echo json_encode($response);

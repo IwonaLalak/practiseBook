@@ -97,7 +97,6 @@ export default class PostsContainer extends Component {
     }
 
     handleClickDeletePost(id) {
-        // todo: rest
         console.log('delete post');
         PostsService.deletePost(id).then(function (response) {
             if(response.status == 200){
