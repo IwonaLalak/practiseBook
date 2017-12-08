@@ -1,21 +1,89 @@
 import React, {Component} from 'react';
 
 import Header from '../../components/header/Header';
+import GeneralTop from "../../components/generaltop/GeneralTop";
+import ReportsTable from "../../components/reports/ReportsTable";
+import ReportsForm from "../../components/reports/ReportsForm";
+import If from "../../utilities/If";
 
 export default class ReportsContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            reports: [],
+            filtersState: false,
+            showReportForm: false,
+            editionMode: false,
+            report: null,
+        };
+        this.handleClickEnableSearch = this.handleClickEnableSearch.bind(this);
+        this.handleClickAddNewReport = this.handleClickAddNewReport.bind(this);
+        this.handleClickEditReport = this.handleClickEditReport.bind(this);
+        this.handleClickDeleteReport = this.handleClickDeleteReport.bind(this);
+        this.handleClickSeeReport = this.handleClickSeeReport.bind(this);
+        this.handleSaveData = this.handleSaveData.bind(this);
+        this.handleCancelSave = this.handleCancelSave.bind(this);
+
     }
 
-    render(){
+    handleClickEnableSearch() {
+        this.setState({filtersState: !this.state.filtersState});
+    }
+
+    handleClickAddNewReport() {
+        this.setState({showReportForm: true, editionMode: true})
+    }
+
+    handleClickEditReport(id) {
+        this.setState({showReportForm: true, report: 'report', editionMode: true})
+    }
+
+    handleClickDeleteReport(id) {
+    }
+
+    handleClickSeeReport(id){
+        this.setState({showReportForm: true, report: 'report', editionMode: false})
+    }
+
+    handleSaveData(data) {
+        console.log(data)
+    }
+
+    handleCancelSave() {
+        this.setState({showReportForm: false, report: null})
+    }
+
+    render() {
         return (
             <div>
                 <div>
-                    <Header url={[{url:'raporty',text:'raporty'},{url:'',text:'przegląd'}]}/>
+                    <Header url={[{url: 'raporty', text: 'raporty'}, {url: '', text: 'przegląd'}]}/>
                 </div>
-                <div>
-                    strona raportow
+                <div id="ALL_REPORTS">
+                    <div>
+                        <If isTrue={!this.state.showReportForm}>
+                            <GeneralTop handleClickAdd={this.handleClickAddNewReport}
+                                        handleClickEnableSearch={this.handleClickEnableSearch}
+                                        addBtnText="Dodaj nowy raport"
+                            />
+                        </If>
+                    </div>
+                    <div style={{clear: 'both'}}>
+                        <If isTrue={this.state.showReportForm}>
+                            <ReportsForm handleCancelClick={this.handleCancelSave} handleSaveClick={this.handleSaveData}
+                                         editionMode={this.state.editionMode} report={this.state.report}
+                            />
+                        </If>
+                    </div>
+                    <div style={{clear: 'both'}}>
+                        <ReportsTable
+                            reports={this.state.reports}
+                            enableFilters={this.state.filtersState}
+                            handleEditClick={this.handleClickEditReport}
+                            handleDeleteClick={this.handleClickDeleteReport}
+                            handleSeeClick = {this.handleClickSeeReport}
+                        />
+                    </div>
                 </div>
             </div>
         )

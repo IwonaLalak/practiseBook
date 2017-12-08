@@ -110,6 +110,59 @@ ButtonCancel.defaultProps = {
     btnDisabled: false
 };
 
+export const ButtonClose = (props) => {
+    return (
+        <Button onClick={props.onClick}
+                bsStyle={props.btnColor}
+                bsSize={props.btnSize}
+                disabled={props.btnDisabled}
+        ><i className={props.iconType}></i> {props.btnText}</Button>
+    );
+};
+
+ButtonClose.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    btnText: PropTypes.string,
+    btnColor: PropTypes.string,
+    btnSize: PropTypes.string,
+    iconType: PropTypes.string,
+    btnDisabled: PropTypes.bool
+};
+
+ButtonClose.defaultProps = {
+    btnText: 'Zamknij',
+    iconType: 'fa fa-times',
+    btnColor: 'default',
+    btnSize: 'small',
+    btnDisabled: false
+};
+
+export const ButtonEdit = (props) => {
+    return (
+        <Button onClick={props.onClick}
+                bsStyle={props.btnColor}
+                bsSize={props.btnSize}
+                disabled={props.btnDisabled}
+        ><i className={props.iconType}></i> {props.btnText}</Button>
+    );
+};
+
+ButtonEdit.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    btnText: PropTypes.string,
+    btnColor: PropTypes.string,
+    btnSize: PropTypes.string,
+    iconType: PropTypes.string,
+    btnDisabled: PropTypes.bool
+};
+
+ButtonEdit.defaultProps = {
+    btnText: 'Edytuj',
+    iconType: 'fa fa-edit',
+    btnColor: 'warning',
+    btnSize: 'small',
+    btnDisabled: false
+};
 
 export const TableBtnDelete = (props) => {
     return (
@@ -167,6 +220,35 @@ TableBtnEdit.defaultProps = {
     title: 'Edytuj pozycję',
     iconType: 'fa fa-edit',
     btnColor: 'warning',
+    btnSize: 'small',
+    btnDisabled: false
+};
+export const TableBtnSee = (props) => {
+    return (
+        <Button onClick={props.onClick}
+                bsStyle={props.btnColor}
+                bsSize={props.btnSize}
+                disabled={props.btnDisabled}
+                title={props.title}
+        ><i className={props.iconType}></i> {props.btnText}</Button>
+    );
+};
+
+TableBtnSee.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    btnText: PropTypes.string,
+    title: PropTypes.string,
+    btnColor: PropTypes.string,
+    btnSize: PropTypes.string,
+    iconType: PropTypes.string,
+    btnDisabled: PropTypes.bool
+};
+
+TableBtnSee.defaultProps = {
+    btnText: '',
+    title: 'Zobacz pozycję',
+    iconType: 'fa fa-eye',
+    btnColor: 'info',
     btnSize: 'small',
     btnDisabled: false
 };
