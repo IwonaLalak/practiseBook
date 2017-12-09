@@ -6,6 +6,8 @@ import ReportsTable from "../../components/reports/ReportsTable";
 import ReportsForm from "../../components/reports/ReportsForm";
 import If from "../../utilities/If";
 import ReportsService from "./ReportsService";
+import PractisesService from "../Practises/PractisesService";
+import ReactNotify from 'react-notify';
 
 export default class ReportsContainer extends Component {
     constructor(props) {
@@ -16,6 +18,8 @@ export default class ReportsContainer extends Component {
             showReportForm: false,
             editionMode: false,
             report: null,
+            practises: [],
+            students: [],
         };
         this.handleClickEnableSearch = this.handleClickEnableSearch.bind(this);
         this.handleClickAddNewReport = this.handleClickAddNewReport.bind(this);
@@ -30,18 +34,22 @@ export default class ReportsContainer extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getReports();
+        this.getPractises();
     }
 
-    getReports(){
+    getReports() {
         ReportsService.getReportByLeader(localStorage.getItem("current_userid")).then(function (response) {
             this.setState({reports: response.data})
         }.bind(this))
     }
 
-    getPractises(){
-
+    getPractises() {
+        PractisesService.getPractiseByLeader(localStorage.getItem("current_userid")).then(function (response) {
+            this.setState({practises: response.data.practises, students: response.data.students})
+            console.log(response.data)
+        }.bind(this))
     }
 
     handleClickEnableSearch() {
@@ -58,16 +66,47 @@ export default class ReportsContainer extends Component {
     }
 
     handleClickDeleteReport(id) {
+        ReportsService.deleteReport(id).then(function (response) {
+            if (response.status == 200) {
+                this.refs.notificator.success("Pomyślnie usunięto raport.", "", 3000);
+                this.getReports();
+            }
+            else {
+                this.refs.notificator.error("Błąd podczas usuwania raportu.", "Nastąpił błąd po stronie serwera", 3000);
+            }
+        }.bind(this))
     }
 
-    handleClickSeeReport(id){
+    handleClickSeeReport(id) {
         let report = this.state.reports.find(report => report.raport_id == id);
         this.setState({showReportForm: true, report: report, editionMode: false})
     }
 
     handleSaveData(data, editionMode) {
-        console.log(data)
-        console.log(editionMode)
+        if (editionMode) {
+            ReportsService.editReport(this.state.report.raport_id, data).then(function (response) {
+                if (response.status == 200) {
+                    this.refs.notificator.success("Pomyślnie edytowano raport.", "", 3000);
+                    this.getReports();
+                }
+                else {
+                    this.refs.notificator.error("Błąd edycjii raportu.", "Nastąpił błąd po stronie serwera", 3000);
+                }
+            }.bind(this))
+        }
+        else {
+            ReportsService.addNewReport(data).then(function (response) {
+                if (response.status == 200) {
+                    this.refs.notificator.success("Pomyślnie dodano nowy raport.", "", 3000);
+                    this.getReports();
+                }
+                else {
+                    this.refs.notificator.error("Błąd dodawania raportu.", "Nastąpił błąd po stronie serwera", 3000);
+                }
+            }.bind(this))
+        }
+
+        this.handleCancelSave();
     }
 
     handleCancelSave() {
@@ -77,6 +116,7 @@ export default class ReportsContainer extends Component {
     render() {
         return (
             <div>
+                <ReactNotify ref='notificator'/>
                 <div>
                     <Header url={[{url: 'raporty', text: 'raporty'}, {url: '', text: 'przegląd'}]}/>
                 </div>
@@ -93,6 +133,7 @@ export default class ReportsContainer extends Component {
                         <If isTrue={this.state.showReportForm}>
                             <ReportsForm handleCancelClick={this.handleCancelSave} handleSaveClick={this.handleSaveData}
                                          editionMode={this.state.editionMode} report={this.state.report}
+                                         practises={this.state.practises} students={this.state.students}
                             />
                         </If>
                     </div>
@@ -102,7 +143,7 @@ export default class ReportsContainer extends Component {
                             enableFilters={this.state.filtersState}
                             handleEditClick={this.handleClickEditReport}
                             handleDeleteClick={this.handleClickDeleteReport}
-                            handleSeeClick = {this.handleClickSeeReport}
+                            handleSeeClick={this.handleClickSeeReport}
                         />
                     </div>
                 </div>
