@@ -118,7 +118,7 @@ class PractiseService
             $practises = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         // getting student
-        $sql = "select user_id, firstname, lastname, login, phone, email from practises, users where practises." . $usertype . "=:id and practises.student_id=users.user_id";
+        $sql = "select user_id, firstname, lastname, login, phone, email, semester, study from practises, users where practises." . $usertype . "=:id and practises.student_id=users.user_id";
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();

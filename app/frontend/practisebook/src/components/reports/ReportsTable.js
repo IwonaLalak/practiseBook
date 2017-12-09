@@ -3,6 +3,8 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {ButtonToolbar} from 'react-bootstrap';
 import tabgrid from '../../utilities/TabGrid';
 import {TableBtnEdit, TableBtnDelete, TableBtnSee} from '../../utilities/Buttons';
+import ReactTooltip from 'react-tooltip'
+
 
 export default class ReportsTable extends Component {
     constructor(props) {
@@ -36,40 +38,58 @@ export default class ReportsTable extends Component {
         )
     }
 
-    render() {
-
-        const options = {sizePerPageList: [10, 25, 50], sizePerPage: 25, expandBy: 'column'};
+    renderStudent(cell,row){
         return (
             <div>
-                <BootstrapTable data={[{post_id: 1}]}
+                <p data-tip='' data-for={'student_data' + cell} data-place="bottom">{row.firstname} {row.lastname}</p>
+                <ReactTooltip id={'student_data' + cell}>
+                    <p>{row.phone}</p>
+                    <p>{row.email}</p>
+                    <p>{row.study}, {row.semester}</p>
+                </ReactTooltip>
+            </div>
+        )    }
+
+    render() {
+
+        const options = {sizePerPageList: [10, 25, 50], sizePerPage: 25};
+        return (
+            <div>
+                <BootstrapTable data={this.props.reports}
                                 hover
                                 pagination
                                 options={options}
                                 bordered={false}
                 >
-                    <TableHeaderColumn isKey dataField='post_id' hidden>ID</TableHeaderColumn>
-                    <TableHeaderColumn dataField='post_date_start' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
+                    <TableHeaderColumn isKey dataField='raport_id' hidden>ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='raport_date' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
                                        filter={(this.props.enableFilters) ? {type: 'TextFilter', delay: 500, placeholder: 'Szukaj'} : false}
-                    >Początek</TableHeaderColumn>
-                    <TableHeaderColumn dataField='post_date_end' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
+                    >Data wystawienia raportu</TableHeaderColumn>
+                    <TableHeaderColumn dataField='date_start' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
                                        filter={(this.props.enableFilters) ? {
                                            type: 'TextFilter',
                                            delay: 500,
                                            placeholder: 'Szukaj'
-                                       } : false}>Koniec</TableHeaderColumn>
-                    <TableHeaderColumn dataField='post_date_add' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
+                                       } : false}>Data początku praktyki</TableHeaderColumn>
+                    <TableHeaderColumn dataField='date_end' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
                                        filter={(this.props.enableFilters) ? {
                                            type: 'TextFilter',
                                            delay: 500,
                                            placeholder: 'Szukaj'
-                                       } : false}>Dodano</TableHeaderColumn>
-                    <TableHeaderColumn dataField='post_date_edit' thStyle={tabgrid.tg5} tdStyle={tabgrid.tg5}
+                                       } : false}>Data końca praktyki</TableHeaderColumn>
+                    <TableHeaderColumn dataField='lastname' thStyle={tabgrid.tg4} tdStyle={tabgrid.tg4}
                                        filter={(this.props.enableFilters) ? {
                                            type: 'TextFilter',
                                            delay: 500,
                                            placeholder: 'Szukaj'
-                                       } : false}>Edytowano</TableHeaderColumn>
-                    <TableHeaderColumn dataField='post_id' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2} dataFormat={this.renderActionButtons}
+                                       } : false} dataFormat={this.renderStudent}>Student</TableHeaderColumn>
+                    <TableHeaderColumn dataField='raport_grade' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2}
+                                       filter={(this.props.enableFilters) ? {
+                                           type: 'TextFilter',
+                                           delay: 500,
+                                           placeholder: 'Szukaj'
+                                       } : false}>Ocena</TableHeaderColumn>
+                    <TableHeaderColumn dataField='raport_id' thStyle={tabgrid.tg2} tdStyle={tabgrid.tg2} dataFormat={this.renderActionButtons}
                                        > Akcje
 
                     </TableHeaderColumn>

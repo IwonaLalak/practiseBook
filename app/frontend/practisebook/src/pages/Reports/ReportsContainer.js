@@ -5,6 +5,7 @@ import GeneralTop from "../../components/generaltop/GeneralTop";
 import ReportsTable from "../../components/reports/ReportsTable";
 import ReportsForm from "../../components/reports/ReportsForm";
 import If from "../../utilities/If";
+import ReportsService from "./ReportsService";
 
 export default class ReportsContainer extends Component {
     constructor(props) {
@@ -24,6 +25,23 @@ export default class ReportsContainer extends Component {
         this.handleSaveData = this.handleSaveData.bind(this);
         this.handleCancelSave = this.handleCancelSave.bind(this);
 
+        this.getReports = this.getReports.bind(this);
+        this.getPractises = this.getPractises.bind(this);
+
+    }
+
+    componentDidMount(){
+        this.getReports();
+    }
+
+    getReports(){
+        ReportsService.getReportByLeader(localStorage.getItem("current_userid")).then(function (response) {
+            this.setState({reports: response.data})
+        }.bind(this))
+    }
+
+    getPractises(){
+
     }
 
     handleClickEnableSearch() {
@@ -35,18 +53,21 @@ export default class ReportsContainer extends Component {
     }
 
     handleClickEditReport(id) {
-        this.setState({showReportForm: true, report: 'report', editionMode: true})
+        let report = this.state.reports.find(report => report.raport_id == id);
+        this.setState({showReportForm: true, report: report, editionMode: true})
     }
 
     handleClickDeleteReport(id) {
     }
 
     handleClickSeeReport(id){
-        this.setState({showReportForm: true, report: 'report', editionMode: false})
+        let report = this.state.reports.find(report => report.raport_id == id);
+        this.setState({showReportForm: true, report: report, editionMode: false})
     }
 
-    handleSaveData(data) {
+    handleSaveData(data, editionMode) {
         console.log(data)
+        console.log(editionMode)
     }
 
     handleCancelSave() {
