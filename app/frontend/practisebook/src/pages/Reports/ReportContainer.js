@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import Header from '../../components/header/Header';
-import UsersService from "../Users/UsersService";
 import ReportsService from "./ReportsService";
 import ReportView from "../../components/reports/ReportView";
 

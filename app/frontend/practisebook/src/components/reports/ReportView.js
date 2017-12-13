@@ -1,16 +1,24 @@
 import React, {Component} from 'react';
 import {Col, Row} from 'react-bootstrap';
 import {ButtonAction} from "../../utilities/Buttons";
+import UsersService from "../../pages/Users/UsersService";
+import CompanyService from "../../pages/Companies/CompanyService";
 
 
 export default class ReportView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            report: {}
+            report: {},
+            users:[],
+            companies:[]
         };
+        this.getUsers = this.getUsers.bind(this);
+        this.getCompanies = this.getCompanies.bind(this);
         this.renderRadioboxTypeYesNo = this.renderRadioboxTypeYesNo.bind(this);
         this.renderRadiobox3Types = this.renderRadiobox3Types.bind(this);
+        this.renderUserData = this.renderUserData.bind(this);
+        this.renderCompany = this.renderCompany.bind(this);
     }
 
     renderRadioboxTypeYesNo(value){
@@ -35,8 +43,47 @@ export default class ReportView extends Component {
         )
     }
 
+    renderUserData(userid){
+        let user = this.state.users.find(user=> user.user_id == userid);
+        if(user){
+            return(
+                <span>
+                    {user.firstname+' '+user.lastname}
+                </span>
+            )
+        }
+        else return userid;
+    }
+
+    renderCompany(companyid){
+        let company = this.state.companies.find(company=> company.company_id == companyid);
+        if(company){
+            return(
+                <span>{company.name}</span>
+            )
+        }
+        else return companyid
+    }
+
     componentWillReceiveProps(nextprops) {
         this.setState({report: nextprops.report})
+    }
+
+    componentDidMount(){
+        this.getUsers();
+        this.getCompanies();
+    }
+
+    getUsers(){
+        UsersService.getAllUsers().then(function (response) {
+            this.setState({users:response.data})
+        }.bind(this))
+    }
+
+    getCompanies(){
+        CompanyService.getAllCompanies().then(function (response) {
+            this.setState({companies:response.data})
+        }.bind(this))
     }
 
     render() {
@@ -70,7 +117,7 @@ export default class ReportView extends Component {
                                             <p>
                                                 <span>Praktykant: </span>
                                                 <label>
-                                                {this.state.report.student_id}
+                                                {this.renderUserData(this.state.report.student_id)}
                                                 </label>
                                             </p>
 
@@ -85,7 +132,7 @@ export default class ReportView extends Component {
                                             <p>
                                                 <span>Zakład pracy: </span>
                                                 <label>
-                                                    {this.state.report.company_id}
+                                                    {this.renderCompany(this.state.report.company_id)}
                                                 </label>
                                             </p>
                                         </Col>
@@ -101,7 +148,7 @@ export default class ReportView extends Component {
                                             <p>
                                                 <span>Wystawiający: </span>
                                                 <label>
-                                                    {this.state.report.leader_id}
+                                                    {this.renderUserData(this.state.report.leader_id)}
                                                 </label>
                                             </p>
                                         </Col>

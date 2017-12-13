@@ -48,7 +48,6 @@ export default class ReportsContainer extends Component {
     getPractises() {
         PractisesService.getPractiseByLeader(localStorage.getItem("current_userid")).then(function (response) {
             this.setState({practises: response.data.practises, students: response.data.students})
-            console.log(response.data)
         }.bind(this))
     }
 
