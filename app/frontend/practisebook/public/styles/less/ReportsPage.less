@@ -1,9 +1,11 @@
+@import "variables";
+
 #ALL_REPORTS, #CURRENT_REPORT {
   padding: 15px;
 
 }
 
-#REPORT_FORM {
+#REPORT_FORM, #REPORT_VIEW {
 
   @media screen and (min-width: 992px) {
     border: 1px solid #ddd;
@@ -29,5 +31,47 @@
       color: #666;
       font-size: 16px;
     }
+  }
+}
+
+#REPORT_VIEW{
+
+  h1{
+    color: @primary-color;
+    margin: 15px 0;
+    padding-bottom: 25px;
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid @primary-color;
+  }
+
+  h4{
+    color: #666;
+  }
+
+  h5{
+    color: @primary-color;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .checked_answer{
+    font-weight: bold;
+  }
+  .unchecked_answer{
+    text-decoration: line-through;
+    font-weight: normal;
+  }
+  .slash_between_answers{
+    margin: 0 3px;
+  }
+
+  label{
+    margin-left: 5px;
+  }
+
+  .display_in_next_line{
+    display:block;
+    margin-left: 0;
   }
 }
