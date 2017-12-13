@@ -8,9 +8,9 @@ export default{
         return axios.get(URL+'/?leader_id='+id);
     },
 
-    /*getReportById(id){
+    getReportById(id){
         return axios.get(URL+'/?report_id='+id);
-    },*/
+    },
 
     getAllReports(){
         return axios.get(URL);
