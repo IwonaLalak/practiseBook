@@ -119,21 +119,15 @@ function update_note($id)
     $data = json_decode(file_get_contents('php://input'));
 
     $response = array();
-    $service = new ReportService();
-    $currentReport = new Report();
+    $service = new NoteService();
+    $currentNote = new Note();
 
-    $currentReport->setRaportId($id);
-    $currentReport->setRaportGrade($data->raport_grade);
-    $currentReport->setRaportDescription($data->raport_description);
-    $currentReport->setRadiobox1($data->radiobox1);
-    $currentReport->setRadiobox2($data->radiobox2);
-    $currentReport->setRadiobox3($data->radiobox3);
-    $currentReport->setRadiobox4($data->radiobox4);
-    $currentReport->setRadiobox5($data->radiobox5);
-    $currentReport->setRadiobox6($data->radiobox6);
-    $currentReport->setRadiobox7($data->radiobox7);
+    $currentNote->setNoteId($id);
+    $currentNote->setPostId($data->post_id);
+    $currentNote->setNoteContent($data->note_content);
 
-    $response = $service->updateReport($currentReport);
+
+    $response = $service->updateNote($currentNote);
 
     header('Content-Type: plain/text');
     echo json_encode($response);
@@ -142,8 +136,8 @@ function update_note($id)
 function delete_note($id)
 {
     $response = array();
-    $service = new ReportService();
-    $response = $service->deleteReport($id);
+    $service = new NoteService();
+    $response = $service->deleteNote($id);
 
     header('Content-Type: application/json');
     echo json_encode($response);

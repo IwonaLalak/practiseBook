@@ -75,7 +75,13 @@ export default class NotesForm extends Component {
 
     componentDidMount() {
         if (this.props.editedNote) {
-            console.log(this.props.editedNote)
+            this.setState({
+                note_content: this.props.editedNote.note_content,
+                selectedStudent: (this.props.students.find(student => student.user_id == this.props.editedNote.student_id))
+            });
+            PostsService.getPostByStudent(this.props.editedNote.student_id).then(function (response) {
+                this.setState({posts: response.data, selectedPost: response.data.find(post=> post.post_id == this.props.editedNote.post_id)})
+            }.bind(this))
         }
     }
 
@@ -110,6 +116,7 @@ export default class NotesForm extends Component {
                                             labelKey="lastname"
                                             valueKey="user_id"
                                             placeholder="Wybierz studenta"
+                                            disabled={this.props.editedNote}
                                         />
 
                                     </Col>
@@ -143,7 +150,11 @@ export default class NotesForm extends Component {
                                 <Row>
                                     <Col xs={12} lg={12} className={(this.state.addBtnClicked && this.state.note_content.length<1) ? 'has-error' : ''}>
                                         <ControlLabel>Treść uwagi</ControlLabel>
-                                        <textarea className="form-control" onChange={this.onChangeNoteContent}></textarea>
+                                        <textarea
+                                            className="form-control"
+                                            onChange={this.onChangeNoteContent}
+                                            defaultValue={(Boolean(this.props.editedNote)? this.props.editedNote.note_content : '')}
+                                        ></textarea>
                                     </Col>
                                 </Row>
                             </FormGroup>

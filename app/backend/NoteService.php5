@@ -88,44 +88,37 @@ class NoteService
         }
     }
 
-    public function updateReport($currentReport)
+    public function updateNote($currentNote)
     {
 
         $con = Connection::getInstance();
         $sql = "
-                     UPDATE `raports`
-                     SET `raport_grade` = :grade, `raport_description` = :description, `radiobox1` = :rb1, `radiobox2` = :rb2, `radiobox3` = :rb3, `radiobox4` = :rb4, `radiobox5` = :rb5, `radiobox6` = :rb6, `radiobox7` = :rb7
-                     WHERE `raports`.`raport_id` =:id
+                     UPDATE `notes`
+                     SET `post_id` = :postid, `note_content` = :notecontent
+                     WHERE `notes`.`note_id` =:id
                      ";
 
         $stmt = $con->handle->prepare($sql);
-        $stmt->bindParam(':id', $currentReport->getRaportId(), PDO::PARAM_INT);
-        $stmt->bindParam(':grade', $currentReport->getRaportGrade(), PDO::PARAM_STR);
-        $stmt->bindParam(':description', $currentReport->getRaportDescription(), PDO::PARAM_STR);
-        $stmt->bindParam(':rb1', $currentReport->getRadiobox1(), PDO::PARAM_INT);
-        $stmt->bindParam(':rb2', $currentReport->getRadiobox2(), PDO::PARAM_INT);
-        $stmt->bindParam(':rb3', $currentReport->getRadiobox3(), PDO::PARAM_INT);
-        $stmt->bindParam(':rb4', $currentReport->getRadiobox4(), PDO::PARAM_INT);
-        $stmt->bindParam(':rb5', $currentReport->getRadiobox5(), PDO::PARAM_INT);
-        $stmt->bindParam(':rb6', $currentReport->getRadiobox6(), PDO::PARAM_INT);
-        $stmt->bindParam(':rb7', $currentReport->getRadiobox7(), PDO::PARAM_INT);
+        $stmt->bindParam(':id', $currentNote->getNoteId(), PDO::PARAM_INT);
+        $stmt->bindParam(':postid', $currentNote->getPostId(), PDO::PARAM_INT);
+        $stmt->bindParam(':notecontent', $currentNote->getNoteContent(), PDO::PARAM_STR);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            return [true, "report updated"];
+            return [true, "note updated"];
         } else {
             return [false, "error"];
         }
     }
 
-    public function deleteReport($id)
+    public function deleteNote($id)
     {
-        $sql = "DELETE FROM raports WHERE raport_id=:id";
+        $sql = "DELETE FROM notes WHERE note_id=:id";
         $con = Connection::getInstance();
         $stmt = $con->handle->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            return [true, "report deleted"];
+            return [true, "note deleted"];
         } else {
             return [false, "error"];
         }

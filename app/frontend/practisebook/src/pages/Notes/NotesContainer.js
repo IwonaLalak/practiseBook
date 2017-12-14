@@ -55,12 +55,18 @@ export default class NotesContainer extends Component {
         this.setState({showNoteForm: true})
     }
 
-    handleClickEditNote() {
-
+    handleClickEditNote(id) {
+        let note = this.state.notes.find(note=> note.note_id == id);
+        this.setState({showNoteForm: true, editedNote: note})
     }
 
-    handleClickDeleteNote() {
-
+    handleClickDeleteNote(id) {
+        NotesService.deleteNote(id).then(function (response) {
+            if(response.status == 200) {
+                this.refs.notificator.success("Pomyślnie usunięto uwagę", "", 3000);
+                this.getNotes();
+            }
+        }.bind(this))
     }
 
     saveNote(data,isEdition) {
@@ -75,7 +81,18 @@ export default class NotesContainer extends Component {
                 }
             }.bind(this))
         }
-
+        else{
+            NotesService.editNote(this.state.editedNote.note_id, data).then(function (response) {
+                console.log(response)
+                if(response.status == 200){
+                    this.refs.notificator.success("Pomyślnie edytowano uwagę", "", 3000);
+                    this.getNotes();
+                }
+                else{
+                    this.refs.notificator.error("Błąd edycji uwagi.", "Wystąpił bład w bazie danych", 3000);
+                }
+            }.bind(this))
+        }
 
         this.cancelSaving();
     }

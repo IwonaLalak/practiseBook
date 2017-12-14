@@ -31,7 +31,7 @@ export default {
     editNote(id, data) {
         return axios(
             {
-                url: URL + '/?post_id=' + id,
+                url: URL + '/?note_id=' + id,
                 method: 'put',
                 data: JSON.stringify(data)
             }
@@ -40,7 +40,7 @@ export default {
 
     deleteNote(id) {
         return axios({
-                url: URL + '/?post_id=' + id,
+                url: URL + '/?note_id=' + id,
                 method: 'delete'
             }
         )
