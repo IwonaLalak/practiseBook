@@ -8,12 +8,14 @@ import PostsService from "./PostsService";
 import PostsForm from "../../components/posts/PostsForm";
 import PractisesService from "../Practises/PractisesService";
 import ReactNotify from 'react-notify';
+import NotesService from "../Notes/NotesService";
 
 export default class PostsContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             posts: [],
+            notes: [],
             practise_id: null,
             filtersState: false,
             postForEdition: false,
@@ -21,6 +23,7 @@ export default class PostsContainer extends Component {
         };
         this.getData = this.getData.bind(this);
         this.getPractiseId = this.getPractiseId.bind(this);
+        this.getLeaderNotes = this.getLeaderNotes.bind(this);
         this.handleClickEnableSearch = this.handleClickEnableSearch.bind(this);
         this.handleClickAddNewPost = this.handleClickAddNewPost.bind(this);
         this.handleClickEditPost = this.handleClickEditPost.bind(this);
@@ -32,6 +35,7 @@ export default class PostsContainer extends Component {
     componentDidMount() {
         this.getData();
         this.getPractiseId();
+        this.getLeaderNotes();
     }
 
     getData() {
@@ -47,6 +51,13 @@ export default class PostsContainer extends Component {
             if (response.data[0] != false) {
                 this.setState({practise_id: response.data.practises[0].practise_id});
             }
+        }.bind(this))
+    }
+
+    getLeaderNotes(){
+        NotesService.getNotesByStudent(localStorage.getItem("current_userid")).then(function (response) {
+            console.log(response)
+            this.setState({notes: response.data});
         }.bind(this))
     }
 
@@ -136,6 +147,7 @@ export default class PostsContainer extends Component {
                     <div style={{clear: 'both'}}>
                         <PostsTable
                             posts={this.state.posts}
+                            notes={this.state.notes}
                             enableFilters={this.state.filtersState}
                             handleEditClick={this.handleClickEditPost}
                             handleDeleteClick={this.handleClickDeletePost}

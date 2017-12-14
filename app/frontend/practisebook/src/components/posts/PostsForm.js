@@ -13,6 +13,7 @@ export default class PostsForm extends Component {
             date: null,
             time_start: null,
             time_end: null,
+            addBtnClicked: false,
         };
         this.onAddBtnClick = this.onAddBtnClick.bind(this);
         this.onCancelBtnClick = this.onCancelBtnClick.bind(this);

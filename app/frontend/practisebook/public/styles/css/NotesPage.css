@@ -1,0 +1,10 @@
+#ALL_NOTES {
+  padding: 15px;
+}
+#ALL_NOTES #NOTE_FORM #noStudentPostsInformation {
+  color: firebrick;
+  line-height: 44px;
+}
+#ALL_NOTES #NOTE_FORM #noStudentPostsInformation span {
+  margin-left: 7px;
+}
