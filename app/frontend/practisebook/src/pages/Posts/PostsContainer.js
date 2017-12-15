@@ -56,7 +56,6 @@ export default class PostsContainer extends Component {
 
     getLeaderNotes(){
         NotesService.getNotesByStudent(localStorage.getItem("current_userid")).then(function (response) {
-            console.log(response)
             this.setState({notes: response.data});
         }.bind(this))
     }

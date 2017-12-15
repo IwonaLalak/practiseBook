@@ -39,6 +39,7 @@ class ReportService
         }
     }
 
+    // todo: przejrzeć wszystkie gety i uszczególnić selekty aby nie zawierały zbędnych informacji jak hasła itd
     public function getReportsByLeaderId($id)
     {
         $sql = "select * from raports, practises, users where raports.practise_id = practises.practise_id and practises.student_id = users.user_id and raports.leader_id=:id";

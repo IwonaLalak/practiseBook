@@ -2,7 +2,7 @@
 @import "tables.css";
 @import "forms.css";
 @import "notify.css";
-@import "react-date-picker.css";
+@import "react-big-calendar.css";
 
 @import "Sidebar.css";
 @import "View.css";
@@ -16,3 +16,4 @@
 @import "PostsPage.css";
 @import "ReportsPage.css";
 @import "NotesPage.css";
+@import "CalendarPage.css";

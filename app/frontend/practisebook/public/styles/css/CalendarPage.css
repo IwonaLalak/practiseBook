@@ -1,0 +1,6 @@
+#CALENDAR_PAGE {
+  padding: 15px;
+}
+#CALENDAR_PAGE #selectboxOfViewOption .Select .Select-menu-outer {
+  z-index: 99;
+}
