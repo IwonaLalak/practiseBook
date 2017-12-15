@@ -248,6 +248,7 @@ export default class ReportView extends Component {
                         <Col xs={12} md={10} lg={8}>
                             <div className={'pull-right'} style={{marginTop: '15px'}}>
                                 <ButtonAction onClick={() => {
+                                    window.history.back();
                                 }} btnText={'Powrót'} iconType={'fa fa-angle-double-left'}/>
                             </div>
                         </Col>

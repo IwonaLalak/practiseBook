@@ -24,6 +24,9 @@ switch ($request_method) {
         else if(!empty($_GET['leader_id'])){
             get_report_by_leader(($_GET['leader_id']));
         }
+        else if(!empty($_GET['practise_id'])){
+            get_report_by_practise(($_GET['practise_id']));
+        }
         else {
             get_report();
         }
@@ -83,7 +86,14 @@ function get_report_by_leader($id)
     echo json_encode($response);
 }
 
-
+function get_report_by_practise($id)
+{
+    $response = array();
+    $service = new ReportService();
+    $response = $service->getReportsByPractiseId($id);
+    header('Content-Type: application/json');
+    echo json_encode($response);
+}
 
 function insert_report()
 {

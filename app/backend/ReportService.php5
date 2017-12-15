@@ -54,6 +54,20 @@ class ReportService
         }
     }
 
+    public function getReportsByPractiseId($id)
+    {
+        $sql = "select * from raports, practises where raports.practise_id = practises.practise_id and raports.practise_id=:id";
+        $con = Connection::getInstance();
+        $stmt = $con->handle->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
+    }
+
     public function addNewReport($newReport)
     {
 

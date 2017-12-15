@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Tabs, Tab, Row, Col} from 'react-bootstrap';
 import PractisesService from "../../pages/Practises/PractisesService";
 import If from "../../utilities/If";
+import ReportsService from "../../pages/Reports/ReportsService";
+import {Link} from "react-router-dom";
+import {ButtonAction} from "../../utilities/Buttons";
 
 export default class PractiseDataForStudents extends Component {
     constructor(props) {
@@ -9,13 +12,15 @@ export default class PractiseDataForStudents extends Component {
         this.state = {
             practises: [],
             leaders: [],
-            lecturers: []
+            lecturers: [],
+            isReportExist: false,
         }
         this.renderGradeData = this.renderGradeData.bind(this);
         this.renderMainData = this.renderMainData.bind(this);
         this.getPractiseData = this.getPractiseData.bind(this);
         this.renderLeader = this.renderLeader.bind(this);
         this.renderLecturer = this.renderLecturer.bind(this);
+        this.checkIfReportExist = this.checkIfReportExist.bind(this);
     }
 
     componentDidMount() {
@@ -34,9 +39,22 @@ export default class PractiseDataForStudents extends Component {
                         leaders: response.data.leaders,
                         lecturers: response.data.lecturers
                     })
+                    this.checkIfReportExist()
                 }
             }
         }.bind(this))
+    }
+
+    checkIfReportExist() {
+        if (this.state.practises) {
+            let practiseid = this.state.practises[0].practise_id;
+
+            ReportsService.getReportByPractise(practiseid).then(function (response) {
+                if (response.data)
+                    this.setState({isReportExist: response.data});
+                else this.setState({isReportExist: false});
+            }.bind(this))
+        }
     }
 
     renderLeader(id) {
@@ -198,7 +216,18 @@ export default class PractiseDataForStudents extends Component {
                         Raport oceniający pracę
                     </h4>
                     <p>
-                        tu raport
+                        <If isTrue={Boolean(this.state.isReportExist)}>
+                            <span>
+                                <span style={{marginRight: '5px'}}>Raport dostępny</span>
+                            <Link to={'/raport/' + this.state.isReportExist.raport_id}>
+                                <ButtonAction onClick={() => {
+                                }} iconType={'fa fa-eye'} btnText={'Zobacz raport'}/>
+                            </Link>
+                            </span>
+                        </If>
+                        <If isTrue={!this.state.isReportExist}>
+                            <span>Raport nie został jeszcze dodany.</span>
+                        </If>
                     </p>
                 </Col>
             </Row>
