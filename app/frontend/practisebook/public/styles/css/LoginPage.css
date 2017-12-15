@@ -5,16 +5,19 @@
 #LOGIN_PAGE #loginContainer {
   margin-top: 150px;
   margin-left: 50px;
-  background: #eee;
+  background: #fff;
   border: 1px solid #eee;
   border-radius: 1px;
   box-shadow: 2px 1px 3px #111;
 }
 #LOGIN_PAGE #loginContainer form {
-  padding: 5px 30px;
-  color: #1b325f;
+  padding: 20px 35px;
+}
+#LOGIN_PAGE #loginContainer form .label-addon {
+  margin: 0;
 }
 #LOGIN_PAGE #loginContainer form .form-group:last-of-type {
+  margin-bottom: 0;
   text-align: center;
 }
 #LOGIN_PAGE #loginContainer form .form-group:last-of-type .btn-primary {

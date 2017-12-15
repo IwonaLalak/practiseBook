@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import {Row, Col, Form, FormControl, FormGroup, ControlLabel, Button} from 'react-bootstrap';
+import {Row, Col, Form, FormControl, FormGroup, ControlLabel, Button,InputGroup} from 'react-bootstrap';
 import ReactNotify from 'react-notify';
 import LoginService from "./LoginService";
 
@@ -83,16 +83,20 @@ export default class LoginContainer extends Component {
             <div id="LOGIN_PAGE">
                 <ReactNotify ref='notificator'/>
                 <Row style={{margin: 0}}>
-                    <Col xs={12} md={8} lg={6}>
+                    <Col xs={12} md={8} lg={3}>
                         <div id="loginContainer">
                             <Form horizontal={true}>
                                 <FormGroup className={(this.state.buttonClicked && this.state.login.length < 1) ? "has-error" : ''}>
-                                    <ControlLabel>Login:</ControlLabel>
+                                    <InputGroup>
+                                        <InputGroup.Addon><label className={'label-addon'}><i className={'fa fa-user'}></i> Login:</label></InputGroup.Addon>
                                     <FormControl type="text" onChange={this.onChangeLogin}/>
+                                    </InputGroup>
                                 </FormGroup>
                                 <FormGroup className={(this.state.buttonClicked && this.state.password.length < 1) ? "has-error" : ''}>
-                                    <ControlLabel>Hasło:</ControlLabel>
+                                    <InputGroup>
+                                        <InputGroup.Addon><label className={'label-addon'}><i className={'fa fa-lock'}></i> Hasło:</label></InputGroup.Addon>
                                     <FormControl type="password" onChange={this.onChangePassword}/>
+                                    </InputGroup>
                                 </FormGroup>
                                 <FormGroup>
                                     <Button bsStyle="primary" onClick={this.onClickLogin}>

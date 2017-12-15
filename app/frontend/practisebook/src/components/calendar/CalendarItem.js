@@ -114,7 +114,7 @@ export default class CalendarItem extends Component {
             <div>
                 <span style={{fontWeight:'bold'}}>{event.title}</span>
                 <If isTrue={Boolean(this.state.notes.find(note=> note.post_id == event.post_id))}>
-                    <span style={{color: '#3174ad', marginLeft: '5px'}}>
+                    <span style={{color: '#87ae00', marginLeft: '5px'}}>
                         <i className={'fa fa-comments'} title={'Leader dodał uwagę do tego wpisu'}></i>
                     </span>
                 </If>

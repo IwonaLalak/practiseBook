@@ -1,6 +1,16 @@
 #CALENDAR_PAGE {
   padding: 15px;
+  /* overwriting styles from react-big-calendar.css */
 }
 #CALENDAR_PAGE #selectboxOfViewOption .Select .Select-menu-outer {
   z-index: 99;
+}
+#CALENDAR_PAGE .rbc-event {
+  background-color: #1b325f;
+}
+#CALENDAR_PAGE .rbc-event.rbc-selected {
+  background-color: #1a2850;
+}
+#CALENDAR_PAGE .rbc-day-slot .rbc-event {
+  border: 1px solid #1a2850;
 }
