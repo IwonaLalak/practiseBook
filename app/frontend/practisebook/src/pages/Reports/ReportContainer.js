@@ -21,7 +21,6 @@ export default class ReportContainer extends Component {
     getReportData(){
         //todo: walidacja czy dany id w url jest dobry
         ReportsService.getReportById(this.props.match.params.id).then(function (response) {
-            console.log(response);
             this.setState({report:response.data});
         }.bind(this))
     }

@@ -83,7 +83,7 @@ export default class LoginContainer extends Component {
             <div id="LOGIN_PAGE">
                 <ReactNotify ref='notificator'/>
                 <Row style={{margin: 0}}>
-                    <Col xs={12} md={8} lg={3}>
+                    <Col xs={12} md={8} lg={4}>
                         <div id="loginContainer">
                             <Form horizontal={true}>
                                 <FormGroup className={(this.state.buttonClicked && this.state.login.length < 1) ? "has-error" : ''}>

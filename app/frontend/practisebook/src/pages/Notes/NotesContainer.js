@@ -36,7 +36,7 @@ export default class NotesContainer extends Component {
         }.bind(this))
     }
 
-    getNotes(){
+    getNotes() {
         NotesService.getNotesByLeader(localStorage.getItem("current_userid")).then(function (response) {
             this.setState({notes: response.data})
         }.bind(this))
@@ -56,39 +56,39 @@ export default class NotesContainer extends Component {
     }
 
     handleClickEditNote(id) {
-        let note = this.state.notes.find(note=> note.note_id == id);
+        let note = this.state.notes.find(note => note.note_id == id);
         this.setState({showNoteForm: true, editedNote: note})
     }
 
     handleClickDeleteNote(id) {
         NotesService.deleteNote(id).then(function (response) {
-            if(response.status == 200) {
+            if (response.status == 200) {
                 this.refs.notificator.success("Pomyślnie usunięto uwagę", "", 3000);
                 this.getNotes();
             }
         }.bind(this))
     }
 
-    saveNote(data,isEdition) {
-        if(!isEdition){
+    saveNote(data, isEdition) {
+        if (!isEdition) {
             NotesService.addNewNote(data).then(function (response) {
-                if(response.status == 200){
+                if (response.status == 200) {
                     this.refs.notificator.success("Pomyślnie dodano uwagę", "", 3000);
                     this.getNotes();
                 }
-                else{
+                else {
                     this.refs.notificator.error("Błąd dodawania nowej uwagi.", "Wystąpił bład w bazie danych", 3000);
                 }
             }.bind(this))
         }
-        else{
+        else {
             NotesService.editNote(this.state.editedNote.note_id, data).then(function (response) {
                 console.log(response)
-                if(response.status == 200){
+                if (response.status == 200) {
                     this.refs.notificator.success("Pomyślnie edytowano uwagę", "", 3000);
                     this.getNotes();
                 }
-                else{
+                else {
                     this.refs.notificator.error("Błąd edycji uwagi.", "Wystąpił bład w bazie danych", 3000);
                 }
             }.bind(this))
@@ -110,12 +110,10 @@ export default class NotesContainer extends Component {
                 </div>
                 <div id="ALL_NOTES">
                     <div>
-                        <If isTrue={!this.state.showReportForm}>
-                            <GeneralTop handleClickAdd={this.handleClickAddNewNote}
-                                        handleClickEnableSearch={this.handleClickEnableSearch}
-                                        addBtnText="Dodaj nową uwagę"
-                            />
-                        </If>
+                        <GeneralTop handleClickAdd={this.handleClickAddNewNote}
+                                    handleClickEnableSearch={this.handleClickEnableSearch}
+                                    addBtnText="Dodaj nową uwagę"
+                        />
                     </div>
                     <div id="NOTE_FORM">
                         <If isTrue={Boolean(this.state.showNoteForm)}>
