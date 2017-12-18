@@ -2,25 +2,41 @@
 
 #CALENDAR_PAGE {
   padding: 15px;
+}
 
-  #selectboxOfViewOption{
-    .Select .Select-menu-outer{
-      z-index: 99;
-    }
+#CURRENT_EVENT{
+  .current_event_container{
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 15px 0;
+  }
+  .current_event_title{
+    background: #fff;
+    position: absolute;
+    display: inline-block;
+    top: -7px;
+    font-size: 16px;
+    padding: 10px;
+    color: #999;
   }
 
-  /* overwriting styles from react-big-calendar.css */
+}
 
-  .rbc-event{
-    background-color: @primary-color
+/* fix bug with select details of visibility*/
+#selectboxOfViewOption{
+  .Select .Select-menu-outer{
+    z-index: 99;
   }
+}
 
-  .rbc-event.rbc-selected {
-    background-color: #1a2850;
-  }
-  .rbc-day-slot .rbc-event {
-    border: 1px solid #1a2850;
-  }
+/* overwriting styles from react-big-calendar.css */
+.rbc-event{
+  background-color: @primary-color
+}
 
-
+.rbc-event.rbc-selected {
+  background-color: #1a2850;
+}
+.rbc-day-slot .rbc-event {
+  border: 1px solid #1a2850;
 }

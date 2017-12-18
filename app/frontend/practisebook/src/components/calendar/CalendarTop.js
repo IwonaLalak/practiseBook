@@ -9,6 +9,7 @@ export default class CalendarTop extends Component {
         this.state = {
             selectedOption: null
         };
+        this.onChangeViewOption = this.onChangeViewOption.bind(this);
     }
 
     componentDidMount() {
@@ -16,6 +17,9 @@ export default class CalendarTop extends Component {
 
     onChangeViewOption(e) {
         this.setState({selectedOption: e})
+        if(e != null){
+            this.props.handleChangeViewOption(e);
+        }
     }
 
     render() {
