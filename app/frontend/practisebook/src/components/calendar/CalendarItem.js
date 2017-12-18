@@ -8,6 +8,7 @@ import CalendarTop from "./CalendarTop";
 import If from "../../utilities/If";
 import CalendarCurrentEvent from "./CalendarCurrentEvent";
 import ReactNotify from 'react-notify';
+import CalendarEventForm from "./CalendarEventForm";
 
 moment.locale();
 BigCalendar.momentLocalizer(moment);
@@ -23,11 +24,13 @@ export default class CalendarItem extends Component {
             today: new Date(Date.now()),
             current_event: null,
             current_note: null,
+            not_month_view: false
         };
         this.getStudentNotes = this.getStudentNotes.bind(this);
         this.getStudentsPosts = this.getStudentsPosts.bind(this);
         this.onSelectSlot = this.onSelectSlot.bind(this);
         this.onSelectEvent = this.onSelectEvent.bind(this);
+        this.onViewChange= this.onViewChange.bind(this);
         this.changeViewOption = this.changeViewOption.bind(this);
         this.closeCurrentEvent = this.closeCurrentEvent.bind(this);
         this.handleEditPost = this.handleEditPost.bind(this);
@@ -85,6 +88,15 @@ export default class CalendarItem extends Component {
         if (note)
             this.setState({current_note: note});
         this.setState({current_event: event})
+    }
+
+    onViewChange(view){
+        if(view == 'month'){
+            this.setState({not_month_view: false})
+        }
+        else{
+            this.setState({not_month_view: true})
+        }
     }
 
     changeViewOption(obj) {
@@ -170,7 +182,7 @@ export default class CalendarItem extends Component {
             date: 'Data',
             time: 'Czas',
             event: 'Wydarzenie',
-            allDay: 'Cały dzień',
+            allDay: '',
             week: 'tydzień',
             work_week: 'tydzień roboczy',
             day: 'dzień',
@@ -205,6 +217,9 @@ export default class CalendarItem extends Component {
                     </If>
                 </div>
                 <div style={{clear: 'both'}}>
+                    <CalendarEventForm/>
+                </div>
+                <div style={{clear: 'both'}}>
                     <If isTrue={Boolean(this.state.current_event)}>
                         <CalendarCurrentEvent
                             event={this.state.current_event}
@@ -225,9 +240,10 @@ export default class CalendarItem extends Component {
                         views={['month', 'week', 'day', 'agenda']}
                         step={this.state.stepValue}
                         timeslots={this.state.timeslotsValue}
-                        selectable={this.props.editableMode}
+                        selectable={(this.props.editableMode && this.state.not_month_view)}
                         onSelectSlot={(slot) => this.onSelectSlot(slot)}
                         onSelectEvent={(event) => this.onSelectEvent(event)}
+                        onView={(view)=>{this.onViewChange(view)}}
                         min={new Date(this.state.today.getFullYear(), this.state.today.getMonth(), this.state.today.getDate(), 7)}
                         max={new Date(this.state.today.getFullYear(), this.state.today.getMonth(), this.state.today.getDate(), 20)}
                         components={{

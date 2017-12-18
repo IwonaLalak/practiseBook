@@ -1,20 +1,6 @@
 #CALENDAR_PAGE {
   padding: 15px;
 }
-#CURRENT_EVENT .current_event_container {
-  border: 1px solid #78cbdf;
-  padding: 15px;
-  margin: 15px 0;
-}
-#CURRENT_EVENT .current_event_title {
-  background: #fff;
-  position: absolute;
-  display: inline-block;
-  top: -7px;
-  font-size: 16px;
-  padding: 10px;
-  color: #1b325f;
-}
 /* fix bug with select details of visibility*/
 #selectboxOfViewOption .Select .Select-menu-outer {
   z-index: 99;
@@ -35,4 +21,10 @@
 .rbc-current-time-indicator,
 .rbc-current-time-indicator::before {
   background-color: #78cbdf;
+}
+.rbc-time-view .rbc-row {
+  min-height: 0px;
+}
+.rbc-time-view .rbc-row div:nth-child(1) {
+  height: 0px !important;
 }

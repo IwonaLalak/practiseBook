@@ -4,22 +4,7 @@
   padding: 15px;
 }
 
-#CURRENT_EVENT{
-  .current_event_container{
-    border: 1px solid @secondary-color-darker;
-    padding: 15px;
-    margin: 15px 0;
-  }
-  .current_event_title{
-    background: #fff;
-    position: absolute;
-    display: inline-block;
-    top: -7px;
-    font-size: 16px;
-    padding: 10px;
-    color: @primary-color;
-  }
-
+#CURRENT_EVENT, #EVENT_FORM{
 }
 
 /* fix bug with select details of visibility*/
@@ -47,4 +32,12 @@
 
 .rbc-current-time-indicator, .rbc-current-time-indicator::before {
   background-color:@secondary-color-darker;
+}
+
+.rbc-time-view .rbc-row {
+  min-height: 0px;
+}
+
+.rbc-time-view .rbc-row div:nth-child(1) {
+  height: 0px !important;
 }

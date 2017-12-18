@@ -67,8 +67,8 @@ export default class CalendarCurrentEvent extends Component {
                 <ReactNotify ref='notificator'/>
                 <Row>
                     <Col xs={12}>
-                        <div className='current_event_container'>
-                            <div className='current_event_title'>
+                        <div className='application_legend_container'>
+                            <div className='application_legend_title'>
                                 Podgląd danego wpisu
                             </div>
                             <Row>
