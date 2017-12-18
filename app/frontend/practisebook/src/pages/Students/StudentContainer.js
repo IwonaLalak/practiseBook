@@ -52,9 +52,9 @@ export default class StudentContainer extends Component {
                     <Header url={[{url: 'studenci', text: 'studenci'}, {url: '', text: 'Student '+this.props.match.params.id}]}/>
                 </div>
                 <div id="CURRENT_STUDENT">
-                    <Tabs defaultActiveKey={2} id="student-all-data-tab">
+                    <Tabs defaultActiveKey={1} id="student-all-data-tab">
                         <Tab eventKey={1} title="Informacje">
-                            <InformationTab student_id={this.props.match.params.id}/>
+                            <InformationTab student={this.state.student} lecturer={this.state.lecturer} leader={this.state.leader} practise={this.state.practise}/>
                         </Tab>
                         <Tab eventKey={2} title="Kalendarz studenta">
                             <CalendarTab student_id={this.props.match.params.id}/>
