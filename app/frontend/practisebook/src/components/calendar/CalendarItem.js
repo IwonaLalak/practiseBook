@@ -22,7 +22,7 @@ export default class CalendarItem extends Component {
             stepValue: 15,
             today: new Date(Date.now()),
             current_event: null,
-            current_note:null,
+            current_note: null,
         };
         this.getStudentNotes = this.getStudentNotes.bind(this);
         this.getStudentsPosts = this.getStudentsPosts.bind(this);
@@ -81,7 +81,7 @@ export default class CalendarItem extends Component {
 
     onSelectEvent(event) {
         let note = this.state.notes.find(note => note.post_id == event.post_id);
-        if(note)
+        if (note)
             this.setState({current_note: note});
         this.setState({current_event: event})
     }
@@ -93,14 +93,14 @@ export default class CalendarItem extends Component {
         })
     }
 
-    closeCurrentEvent(){
+    closeCurrentEvent() {
         this.setState({
             current_note: null,
             current_event: null
         })
     }
 
-    handleEditPost(){
+    handleEditPost() {
         console.log(this.state.current_event)
     }
 
@@ -109,7 +109,7 @@ export default class CalendarItem extends Component {
             <div title={event.desc}>
                 {event.title}
                 <If isTrue={Boolean(this.state.notes.find(note => note.post_id == event.post_id))}>
-                    <div className={'pull-right'} style={{color: '#d2ff00'}}>
+                    <div className={'pull-right'} style={{color: '#82d5e9'}}>
                         <i className={'fa fa-comments'} title={'Leader dodał uwagę do tego wpisu'}></i>
                     </div>
                 </If>
@@ -122,7 +122,7 @@ export default class CalendarItem extends Component {
             <div>
                 <span style={{fontWeight: 'bold', lineHeight: '1.5em'}}>{event.title}</span>
                 <If isTrue={Boolean(this.state.notes.find(note => note.post_id == event.post_id))}>
-                    <div className={'pull-right'} style={{color: '#d2ff00'}}>
+                    <div className={'pull-right'} style={{color: '#82d5e9'}}>
                         <i className={'fa fa-comments'} title={'Leader dodał uwagę do tego wpisu'}></i>
                     </div>
                 </If>
@@ -138,7 +138,7 @@ export default class CalendarItem extends Component {
             <div>
                 <span style={{fontWeight: 'bold'}}>{event.title}</span>
                 <If isTrue={Boolean(this.state.notes.find(note => note.post_id == event.post_id))}>
-                    <span style={{color: '#87ae00', marginLeft: '5px'}}>
+                    <span style={{color: '#78cbdf', marginLeft: '5px'}}>
                         <i className={'fa fa-comments'} title={'Leader dodał uwagę do tego wpisu'}></i>
                     </span>
                 </If>
@@ -175,7 +175,17 @@ export default class CalendarItem extends Component {
         return (
             <div>
                 <div>
-                    <CalendarTop handleChangeViewOption={this.changeViewOption}/>
+                    <If isTrue={this.state.events.length < 1}>
+                        <div className="application_error_text_alert">
+                            <i className="fa fa-exclamation-circle"></i>
+                            <span>Student nie posiada jeszcze żadnych wpisów</span>
+                        </div>
+                    </If>
+                </div>
+                <div>
+                    <If isTrue={this.state.events.length > 0}>
+                        <CalendarTop handleChangeViewOption={this.changeViewOption}/>
+                    </If>
                 </div>
                 <div style={{clear: 'both'}}>
                     <If isTrue={Boolean(this.state.current_event)}>

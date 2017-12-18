@@ -11,7 +11,7 @@ export default class ReportsForm extends Component {
         super(props);
         this.state = {
             editionMode: this.props.editionMode,
-            grade: null,
+            grade: '3.0',
             description: '',
             rb1: null,
             rb2: null,
@@ -364,6 +364,9 @@ export default class ReportsForm extends Component {
                                                              disabled={!this.state.editionMode}
                                                              onChange={this.onChangeGrade}
                                                 >
+                                                    <option value="2.0"
+                                                            selected={(this.props.report) ? this.props.report.raport_grade == '2.0' : false}>2.0
+                                                    </option>
                                                     <option value="3.0"
                                                             selected={(this.props.report) ? this.props.report.raport_grade == '3.0' : false}>3.0
                                                     </option>

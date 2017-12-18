@@ -67,17 +67,19 @@ export default class CalendarCurrentEvent extends Component {
                                              {this.props.event.post_description}
                                          </span>
                                      </p>
-                                     <p>
-                                         <label>Uwaga leadera:</label>
-                                         <span>
-                                             {
-                                                 Boolean(this.props.note)?
-                                                     this.props.note.note_content
-                                                     :
-                                                     'Brak uwag'
-                                             }
-                                         </span>
-                                     </p>
+                                     <If isTrue={Boolean(this.props.note)}>
+                                         <p>
+                                             <label>Uwaga leadera:</label>
+                                             <span>
+                                                 {
+                                                     Boolean(this.props.note)?
+                                                         this.props.note.note_content
+                                                         :
+                                                         'Brak uwag'
+                                                 }
+                                             </span>
+                                         </p>
+                                     </If>
                                  </div>
                              </Col>
                                <Col xs={12}>

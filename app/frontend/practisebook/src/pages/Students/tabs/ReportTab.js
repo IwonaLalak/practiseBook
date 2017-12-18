@@ -56,12 +56,14 @@ export default class ReportTab extends Component {
 
     render() {
         return (
-            <div className={'top15'}>
+            <div>
                 <ReactNotify ref='notificator'/>
                 <Row>
                     <Col xs={12} md={10} lg={12}>
                         <If isTrue={this.state.report}>
+                            <div className={'top15'}>
                             <ReportView report={this.state.report} hideBackButton={true}/>
+                            </div>
                         </If>
                         <If isTrue={!this.state.report}>
                             <div className="application_error_text_alert">

@@ -21,7 +21,7 @@ class NoteService
         if ($stmt->rowCount() > 0) {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            return false;
+            return [];
         }
     }
 
@@ -35,7 +35,7 @@ class NoteService
         if ($stmt->rowCount() > 0) {
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } else {
-            return false;
+            return [];
         }
     }
 
@@ -49,7 +49,7 @@ class NoteService
         if ($stmt->rowCount() > 0) {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            return false;
+            return [];
         }
     }
 
@@ -63,7 +63,7 @@ class NoteService
         if ($stmt->rowCount() > 0) {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            return false;
+            return [];
         }
     }
 

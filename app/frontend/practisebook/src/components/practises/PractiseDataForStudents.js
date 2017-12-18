@@ -5,6 +5,7 @@ import If from "../../utilities/If";
 import ReportsService from "../../pages/Reports/ReportsService";
 import {Link} from "react-router-dom";
 import {ButtonAction} from "../../utilities/Buttons";
+import GradesService from "../../pages/Grades/GradesService";
 
 export default class PractiseDataForStudents extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ export default class PractiseDataForStudents extends Component {
             leaders: [],
             lecturers: [],
             isReportExist: false,
+            grade: false,
         }
         this.renderGradeData = this.renderGradeData.bind(this);
         this.renderMainData = this.renderMainData.bind(this);
@@ -21,6 +23,7 @@ export default class PractiseDataForStudents extends Component {
         this.renderLeader = this.renderLeader.bind(this);
         this.renderLecturer = this.renderLecturer.bind(this);
         this.checkIfReportExist = this.checkIfReportExist.bind(this);
+        this.checkIfGradeExist = this.checkIfGradeExist.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +31,6 @@ export default class PractiseDataForStudents extends Component {
     }
 
     getPractiseData() {
-        //todo: userid do zmiany
         let userid = localStorage.getItem("current_userid");
 
         PractisesService.getPractiseByStudent(userid).then(function (response) {
@@ -39,10 +41,24 @@ export default class PractiseDataForStudents extends Component {
                         leaders: response.data.leaders,
                         lecturers: response.data.lecturers
                     })
-                    this.checkIfReportExist()
+                    this.checkIfReportExist();
+                    this.checkIfGradeExist();
                 }
             }
         }.bind(this))
+    }
+
+    checkIfGradeExist(){
+        if(this.state.practises){
+
+            let practiseid = this.state.practises[0].practise_id;
+
+            GradesService.getGradesByPractise(practiseid).then(function (response) {
+                if(response.data){
+                    this.setState({grade: response.data});
+                }
+            }.bind(this))
+        }
     }
 
     checkIfReportExist() {
@@ -208,8 +224,42 @@ export default class PractiseDataForStudents extends Component {
                         <i className="fa fa-lg fa-star-half-o"></i>
                         Ocena za praktyki
                     </h4>
-                    <p>
-                        tu ocena
+                    <p> <If isTrue={this.state.grade}>
+                        <div>
+                            <div>
+                            <label>
+                                Ocena:
+                            </label>
+                            <span>
+                                {
+                                    (this.state.grade)?
+                                        this.state.grade.grade
+                                        :
+                                        ''
+                                }
+                            </span>
+                            </div>
+                            <div>
+                            <label>
+                                Wystawiono:
+                            </label>
+                            <span>
+                                {
+                                    (this.state.grade)?
+                                        this.state.grade.grade_date
+                                        :
+                                        ''
+                                }
+                            </span>
+                            </div>
+                        </div>
+                        </If>
+                        <If isTrue={!this.state.grade}>
+                            <div className="application_error_text_alert">
+                                <i className="fa fa-exclamation-circle"></i>
+                                <span>Ocena nie została jeszcze wystawiona</span>
+                            </div>
+                        </If>
                     </p>
                     <h4>
                         <i className="fa fa-lg fa-file-text-o"></i>
@@ -226,7 +276,10 @@ export default class PractiseDataForStudents extends Component {
                             </span>
                         </If>
                         <If isTrue={!this.state.isReportExist}>
-                            <span>Raport nie został jeszcze dodany.</span>
+                            <div className="application_error_text_alert">
+                                <i className="fa fa-exclamation-circle"></i>
+                                <span>Raport nie został jeszcze dodany</span>
+                            </div>
                         </If>
                     </p>
                 </Col>
