@@ -7,7 +7,7 @@ import NotesService from "../../pages/Notes/NotesService";
 import CalendarTop from "./CalendarTop";
 import If from "../../utilities/If";
 import CalendarCurrentEvent from "./CalendarCurrentEvent";
-
+import ReactNotify from 'react-notify';
 
 moment.locale();
 BigCalendar.momentLocalizer(moment);
@@ -31,6 +31,7 @@ export default class CalendarItem extends Component {
         this.changeViewOption = this.changeViewOption.bind(this);
         this.closeCurrentEvent = this.closeCurrentEvent.bind(this);
         this.handleEditPost = this.handleEditPost.bind(this);
+        this.addNewNote = this.addNewNote.bind(this);
         this.renderEventView = this.renderEventView.bind(this);
         this.renderDayEventView = this.renderDayEventView.bind(this);
         this.renderAgendaEventView = this.renderAgendaEventView.bind(this);
@@ -104,6 +105,21 @@ export default class CalendarItem extends Component {
         console.log(this.state.current_event)
     }
 
+    addNewNote(data){
+        console.log(data)
+        NotesService.addNewNote(data).then(function (response) {
+            if(response.status == 200){
+                this.refs.notificator.success("Pomyślnie dodano uwagę", "", 3000);
+                this.getStudentNotes();
+                this.getStudentsPosts();
+                this.closeCurrentEvent();
+            }
+            else{
+                this.refs.notificator.error("Błąd dodawania uwagi", "Wystąpił błąd po stronie bazy danych", 3000);
+            }
+        }.bind(this))
+    }
+
     renderEventView({event}) {
         return (
             <div title={event.desc}>
@@ -174,6 +190,7 @@ export default class CalendarItem extends Component {
 
         return (
             <div>
+                <ReactNotify ref='notificator'/>
                 <div>
                     <If isTrue={this.state.events.length < 1}>
                         <div className="application_error_text_alert">
@@ -195,6 +212,7 @@ export default class CalendarItem extends Component {
                             editableMode={this.props.editableMode}
                             handleCloseClick={this.closeCurrentEvent}
                             handleEditClick={this.handleEditPost}
+                            handleAddNewNoteEvent={this.addNewNote}
                         />
                     </If>
                 </div>

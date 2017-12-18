@@ -107,7 +107,6 @@ export default class PostsContainer extends Component {
     }
 
     handleClickDeletePost(id) {
-        console.log('delete post');
         PostsService.deletePost(id).then(function (response) {
             if(response.status == 200){
                 this.refs.notificator.success("Pomyślnie usunięto wpis", "", 3000)
@@ -116,8 +115,8 @@ export default class PostsContainer extends Component {
                 this.refs.notificator.error("Błąd usuwania wpisu.", "Nastąpił błąd po stronie bazy danych", 3000)
             }
 
-            this.getData();
         }.bind(this))
+        this.getData();
     }
 
     render() {
