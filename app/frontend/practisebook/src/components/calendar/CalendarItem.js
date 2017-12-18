@@ -70,8 +70,6 @@ export default class CalendarItem extends Component {
                     }
                 });
 
-                console.log(events)
-
                 this.setState({events: events});
             }
         }.bind(this));

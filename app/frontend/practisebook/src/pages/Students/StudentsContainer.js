@@ -42,14 +42,12 @@ export default class StudentsContainer extends Component {
         if(localStorage.getItem('current_usergroup') == '2'){
             // lecturers
             StudentsService.getStudentsByLecturer(localStorage.getItem("current_userid")).then(function (response) {
-                console.log(response)
                 this.setState({students: response.data});
             }.bind(this))
         }
         else{
             // leaders
             StudentsService.getStudentsByLeader(localStorage.getItem("current_userid")).then(function (response) {
-                console.log(response)
                 this.setState({students: response.data});
             }.bind(this))
         }

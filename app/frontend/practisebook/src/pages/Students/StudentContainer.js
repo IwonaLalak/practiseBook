@@ -5,6 +5,7 @@ import PractisesService from "../Practises/PractisesService";
 import {Tabs, Tab} from "react-bootstrap";
 import InformationTab from "./tabs/InformationTab";
 import CalendarTab from "./tabs/CalendarTab";
+import GradeTab from "./tabs/GradeTab";
 
 export default class StudentContainer extends Component {
     constructor(props) {
@@ -14,8 +15,8 @@ export default class StudentContainer extends Component {
             lecturer:{},
             leader:{},
             practise:{},
-
         };
+        this.renderStudentName = this.renderStudentName.bind(this);
     }
 
     componentDidMount(){
@@ -33,7 +34,6 @@ export default class StudentContainer extends Component {
         // todo: brak zabezpieczeń czy dany id istnieje w bazie jako student
         if(this.isInt(student_id)){
             PractisesService.getPractiseByStudent(student_id).then(function (response) {
-                console.log(response.data)
                 this.setState({
                     student: response.data.students[0],
                     lecturer: response.data.lecturers[0],
@@ -42,26 +42,33 @@ export default class StudentContainer extends Component {
                 })
             }.bind(this))
         }
+    }
 
+    renderStudentName(){
+        if(this.state.student){
+            return this.state.student.firstname+" "+this.state.student.lastname
+        }
+        else return 'Student '+this.props.match.params.id;
     }
 
     render(){
         return (
             <div>
                 <div>
-                    <Header url={[{url: 'studenci', text: 'studenci'}, {url: '', text: 'Student '+this.props.match.params.id}]}/>
+                    <Header url={[{url: 'studenci', text: 'studenci'}, {url: '', text: this.renderStudentName()}]}/>
                 </div>
                 <div id="CURRENT_STUDENT">
-                    <Tabs defaultActiveKey={1} id="student-all-data-tab">
+                    <Tabs defaultActiveKey={3} id="student-all-data-tab">
                         <Tab eventKey={1} title="Informacje">
                             <InformationTab student={this.state.student} lecturer={this.state.lecturer} leader={this.state.leader} practise={this.state.practise}/>
                         </Tab>
                         <Tab eventKey={2} title="Kalendarz studenta">
                             <CalendarTab student_id={this.props.match.params.id}/>
                         </Tab>
-                        <Tab eventKey={3} title="Uwagi leadera">Tab 3 content</Tab>
-                        <Tab eventKey={4} title="Ocena">Tab 4 content</Tab>
-                        <Tab eventKey={5} title="Raport">Tab 5 content</Tab>
+                        <Tab eventKey={3} title="Ocena">
+                            <GradeTab practise_id={this.state.practise.practise_id}/>
+                        </Tab>
+                        <Tab eventKey={4} title="Raport">Tab 5 content</Tab>
                     </Tabs>
                 </div>
             </div>

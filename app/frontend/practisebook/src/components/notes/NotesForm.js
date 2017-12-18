@@ -137,7 +137,7 @@ export default class NotesForm extends Component {
                                             />
                                         </If>
                                         <If isTrue={Boolean(this.state.selectedStudent && !this.state.posts.length>0)}>
-                                            <div id="noStudentPostsInformation">
+                                            <div className="application_error_text_alert">
                                                 <i className="fa fa-exclamation-circle"></i>
                                                 <span>Student nie posiada jeszcze wpisów</span>
                                             </div>
