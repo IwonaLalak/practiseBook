@@ -23,18 +23,23 @@ export default class CalendarItem extends Component {
             stepValue: 15,
             today: new Date(Date.now()),
             current_event: null,
+            current_slot: null,
             current_note: null,
-            not_month_view: false
+            showPostForm:false,
+            not_month_view: false,
+            event_for_edition:null,
         };
         this.getStudentNotes = this.getStudentNotes.bind(this);
         this.getStudentsPosts = this.getStudentsPosts.bind(this);
         this.onSelectSlot = this.onSelectSlot.bind(this);
         this.onSelectEvent = this.onSelectEvent.bind(this);
-        this.onViewChange= this.onViewChange.bind(this);
+        this.onViewChange = this.onViewChange.bind(this);
         this.changeViewOption = this.changeViewOption.bind(this);
         this.closeCurrentEvent = this.closeCurrentEvent.bind(this);
         this.handleEditPost = this.handleEditPost.bind(this);
         this.addNewNote = this.addNewNote.bind(this);
+        this.savePost = this.savePost.bind(this);
+        this.closePostForm = this.closePostForm.bind(this);
         this.renderEventView = this.renderEventView.bind(this);
         this.renderDayEventView = this.renderDayEventView.bind(this);
         this.renderAgendaEventView = this.renderAgendaEventView.bind(this);
@@ -80,7 +85,10 @@ export default class CalendarItem extends Component {
     }
 
     onSelectSlot(slot) {
-        console.log(slot)
+        this.setState({
+            current_slot: slot,
+            showPostForm: true,
+        })
     }
 
     onSelectEvent(event) {
@@ -90,11 +98,11 @@ export default class CalendarItem extends Component {
         this.setState({current_event: event})
     }
 
-    onViewChange(view){
-        if(view == 'month'){
+    onViewChange(view) {
+        if (view == 'month') {
             this.setState({not_month_view: false})
         }
-        else{
+        else {
             this.setState({not_month_view: true})
         }
     }
@@ -114,22 +122,44 @@ export default class CalendarItem extends Component {
     }
 
     handleEditPost() {
-        console.log(this.state.current_event)
+        this.setState({
+            event_for_edition: this.state.current_event,
+            showPostForm:true
+        })
+        this.closeCurrentEvent();
     }
 
-    addNewNote(data){
+    addNewNote(data) {
         console.log(data)
         NotesService.addNewNote(data).then(function (response) {
-            if(response.status == 200){
+            if (response.status == 200) {
                 this.refs.notificator.success("Pomyślnie dodano uwagę", "", 3000);
                 this.getStudentNotes();
                 this.getStudentsPosts();
                 this.closeCurrentEvent();
             }
-            else{
+            else {
                 this.refs.notificator.error("Błąd dodawania uwagi", "Wystąpił błąd po stronie bazy danych", 3000);
             }
         }.bind(this))
+    }
+
+    closePostForm(){
+        this.setState({
+            showPostForm: false,
+            current_slot: null,
+            event_for_edition:null,
+        })
+    }
+
+    savePost(data, isEdition){
+        console.log(data);
+        if(isEdition){
+            console.log('edit')
+        }
+        else{
+            console.log('add')
+        }
     }
 
     renderEventView({event}) {
@@ -217,7 +247,14 @@ export default class CalendarItem extends Component {
                     </If>
                 </div>
                 <div style={{clear: 'both'}}>
-                    <CalendarEventForm/>
+                    <If isTrue={Boolean(this.state.showPostForm)}>
+                        <CalendarEventForm student_id={this.props.student_id}
+                                           slot={this.state.current_slot}
+                                           editedEvent={this.state.event_for_edition}
+                                           handleSavingPost={this.savePost}
+                                           handleCancelSavingPost={this.closePostForm}
+                        />
+                    </If>
                 </div>
                 <div style={{clear: 'both'}}>
                     <If isTrue={Boolean(this.state.current_event)}>
@@ -243,7 +280,9 @@ export default class CalendarItem extends Component {
                         selectable={(this.props.editableMode && this.state.not_month_view)}
                         onSelectSlot={(slot) => this.onSelectSlot(slot)}
                         onSelectEvent={(event) => this.onSelectEvent(event)}
-                        onView={(view)=>{this.onViewChange(view)}}
+                        onView={(view) => {
+                            this.onViewChange(view)
+                        }}
                         min={new Date(this.state.today.getFullYear(), this.state.today.getMonth(), this.state.today.getDate(), 7)}
                         max={new Date(this.state.today.getFullYear(), this.state.today.getMonth(), this.state.today.getDate(), 20)}
                         components={{

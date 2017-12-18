@@ -65,8 +65,6 @@ export default class PostsForm extends Component {
     componentDidMount() {
         if (this.props.editedPost) {
 
-            console.log(this.props.editedPost)
-
             this.setState({
                 date: this.props.editedPost.post_date_start.substr(0,10),
                 time_start: this.props.editedPost.post_date_start.substr(11,5),
