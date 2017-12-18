@@ -3,15 +3,16 @@ import {Col, Row} from 'react-bootstrap';
 import {ButtonAction} from "../../utilities/Buttons";
 import UsersService from "../../pages/Users/UsersService";
 import CompanyService from "../../pages/Companies/CompanyService";
+import If from "../../utilities/If";
 
 
 export default class ReportView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            report: {},
-            users:[],
-            companies:[]
+            report: (this.props.report) ? this.props.report : {},
+            users: [],
+            companies: []
         };
         this.getUsers = this.getUsers.bind(this);
         this.getCompanies = this.getCompanies.bind(this);
@@ -21,44 +22,44 @@ export default class ReportView extends Component {
         this.renderCompany = this.renderCompany.bind(this);
     }
 
-    renderRadioboxTypeYesNo(value){
+    renderRadioboxTypeYesNo(value) {
         return (
             <span>
-                <span className={(value == 1)? 'checked_answer' : 'unchecked_answer'}>TAK</span>
+                <span className={(value == 1) ? 'checked_answer' : 'unchecked_answer'}>TAK</span>
                 <span className={'slash_between_answers'}>/</span>
-                <span className={(value == 0)? 'checked_answer' : 'unchecked_answer'}>NIE</span>
+                <span className={(value == 0) ? 'checked_answer' : 'unchecked_answer'}>NIE</span>
             </span>
         )
     }
 
-    renderRadiobox3Types(value){
+    renderRadiobox3Types(value) {
         return (
             <span>
-                <span className={(value == 1)? 'checked_answer' : 'unchecked_answer'}>Dostateczny</span>
+                <span className={(value == 1) ? 'checked_answer' : 'unchecked_answer'}>Dostateczny</span>
                 <span className={'slash_between_answers'}>/</span>
-                <span className={(value == 2)? 'checked_answer' : 'unchecked_answer'}>Dobry</span>
+                <span className={(value == 2) ? 'checked_answer' : 'unchecked_answer'}>Dobry</span>
                 <span className={'slash_between_answers'}>/</span>
-                <span className={(value == 3)? 'checked_answer' : 'unchecked_answer'}>Bardzo dobry</span>
+                <span className={(value == 3) ? 'checked_answer' : 'unchecked_answer'}>Bardzo dobry</span>
             </span>
         )
     }
 
-    renderUserData(userid){
-        let user = this.state.users.find(user=> user.user_id == userid);
-        if(user){
-            return(
+    renderUserData(userid) {
+        let user = this.state.users.find(user => user.user_id == userid);
+        if (user) {
+            return (
                 <span>
-                    {user.firstname+' '+user.lastname}
+                    {user.firstname + ' ' + user.lastname}
                 </span>
             )
         }
         else return userid;
     }
 
-    renderCompany(companyid){
-        let company = this.state.companies.find(company=> company.company_id == companyid);
-        if(company){
-            return(
+    renderCompany(companyid) {
+        let company = this.state.companies.find(company => company.company_id == companyid);
+        if (company) {
+            return (
                 <span>{company.name}</span>
             )
         }
@@ -69,20 +70,20 @@ export default class ReportView extends Component {
         this.setState({report: nextprops.report})
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getUsers();
         this.getCompanies();
     }
 
-    getUsers(){
+    getUsers() {
         UsersService.getAllUsers().then(function (response) {
-            this.setState({users:response.data})
+            this.setState({users: response.data})
         }.bind(this))
     }
 
-    getCompanies(){
+    getCompanies() {
         CompanyService.getAllCompanies().then(function (response) {
-            this.setState({companies:response.data})
+            this.setState({companies: response.data})
         }.bind(this))
     }
 
@@ -117,7 +118,7 @@ export default class ReportView extends Component {
                                             <p>
                                                 <span>Praktykant: </span>
                                                 <label>
-                                                {this.renderUserData(this.state.report.student_id)}
+                                                    {this.renderUserData(this.state.report.student_id)}
                                                 </label>
                                             </p>
 
@@ -126,8 +127,8 @@ export default class ReportView extends Component {
                                             <p>
                                                 <span>Czas praktyki: </span>
                                                 <label>
-                                                {this.state.report.date_start} - {this.state.report.date_end}, {this.state.report.total_time}h
-                                            </label>
+                                                    {this.state.report.date_start} - {this.state.report.date_end}, {this.state.report.total_time}h
+                                                </label>
                                             </p>
                                             <p>
                                                 <span>Zakład pracy: </span>
@@ -246,11 +247,13 @@ export default class ReportView extends Component {
                             </div>
                         </Col>
                         <Col xs={12} md={10} lg={8}>
-                            <div className={'pull-right'} style={{marginTop: '15px'}}>
-                                <ButtonAction onClick={() => {
-                                    window.history.back();
-                                }} btnText={'Powrót'} iconType={'fa fa-angle-double-left'}/>
-                            </div>
+                            <If isTrue={!this.props.hideBackButton}>
+                                <div className={'pull-right'} style={{marginTop: '15px'}}>
+                                    <ButtonAction onClick={() => {
+                                        window.history.back();
+                                    }} btnText={'Powrót'} iconType={'fa fa-angle-double-left'}/>
+                                </div>
+                            </If>
                         </Col>
                     </Row>
                 </div>

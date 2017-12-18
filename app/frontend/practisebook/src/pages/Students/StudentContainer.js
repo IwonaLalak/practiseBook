@@ -6,6 +6,7 @@ import {Tabs, Tab} from "react-bootstrap";
 import InformationTab from "./tabs/InformationTab";
 import CalendarTab from "./tabs/CalendarTab";
 import GradeTab from "./tabs/GradeTab";
+import ReportTab from "./tabs/ReportTab";
 
 export default class StudentContainer extends Component {
     constructor(props) {
@@ -58,7 +59,7 @@ export default class StudentContainer extends Component {
                     <Header url={[{url: 'studenci', text: 'studenci'}, {url: '', text: this.renderStudentName()}]}/>
                 </div>
                 <div id="CURRENT_STUDENT">
-                    <Tabs defaultActiveKey={3} id="student-all-data-tab">
+                    <Tabs defaultActiveKey={4} id="student-all-data-tab">
                         <Tab eventKey={1} title="Informacje">
                             <InformationTab student={this.state.student} lecturer={this.state.lecturer} leader={this.state.leader} practise={this.state.practise}/>
                         </Tab>
@@ -68,7 +69,9 @@ export default class StudentContainer extends Component {
                         <Tab eventKey={3} title="Ocena">
                             <GradeTab practise_id={this.state.practise.practise_id}/>
                         </Tab>
-                        <Tab eventKey={4} title="Raport">Tab 5 content</Tab>
+                        <Tab eventKey={4} title="Raport">
+                            <ReportTab practise_id={this.state.practise.practise_id}/>
+                        </Tab>
                     </Tabs>
                 </div>
             </div>

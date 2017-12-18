@@ -98,6 +98,9 @@ export default class ReportsForm extends Component {
                 practise_id: this.props.report.practise_id
             })
         }
+        if(this.props.practise_id){
+            this.setState({practise_id: this.props.practise_id});
+        }
     }
 
     turnOnEditionMode() {
@@ -158,7 +161,7 @@ export default class ReportsForm extends Component {
                         <div id="REPORT_FORM">
                             <div id="report-form-corner"></div>
                             <Form horizontal>
-                                <If isTrue={!this.props.report}>
+                                <If isTrue={!this.props.report && !this.props.practise_id}>
                                     <Row>
                                         <Col xs={12}>
                                             <h5>Wybór ocenianego studenta</h5>

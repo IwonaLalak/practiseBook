@@ -54,12 +54,6 @@ export default class ForTestsContainer extends Component {
         return (
             <div>
                 <h3 style={{background: '#D11E48', cursor: 'pointer', padding: '15px', margin: 0, fontSize: '14px', color: '#fff', fontWeight: 'bold', textTransform:'uppercase'}} onClick={this.toggleVisibility}>
-                    {
-                        (this.state.dataVisibility) ?
-                            'Hide '
-                            :
-                            'Show '
-                    }
                     users data
                 </h3>
                 <div style={{padding: '15px'}}>
