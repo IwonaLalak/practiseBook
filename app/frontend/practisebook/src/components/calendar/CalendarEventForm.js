@@ -8,6 +8,7 @@ import FormGroup from "react-bootstrap/es/FormGroup";
 import ControlLabel from "react-bootstrap/es/ControlLabel";
 import {ButtonCancel, ButtonSave} from "../../utilities/Buttons";
 import DateUtilities from "../../utilities/DateUtilities";
+import If from "../../utilities/If";
 
 
 export default class CalendarEventForm extends Component {
@@ -20,6 +21,7 @@ export default class CalendarEventForm extends Component {
             time_end: null,
             description: '',
             addBtnClicked: false,
+            working_time: 0,
         };
         this.getPractiseID = this.getPractiseID.bind(this);
         this.cancelSaving = this.cancelSaving.bind(this);
@@ -45,16 +47,18 @@ export default class CalendarEventForm extends Component {
             this.setState({
                 date: DateUtilities.getDateFromObject(this.props.slot.start),
                 time_start: DateUtilities.getTimeFromObject(this.props.slot.start),
-                time_end: DateUtilities.getTimeFromObject(this.props.slot.end)
+                time_end: DateUtilities.getTimeFromObject(this.props.slot.end),
+                working_time: DateUtilities.countWorkingTime(DateUtilities.getTimeFromObject(this.props.slot.start), DateUtilities.getTimeFromObject(this.props.slot.end))
             })
         }
 
-        if(this.props.editedEvent){
+        if (this.props.editedEvent) {
             this.setState({
-                date: this.props.editedEvent.post_date_start.substr(0,10),
-                time_start: this.props.editedEvent.post_date_start.substr(11,5),
-                time_end: this.props.editedEvent.post_date_end.substr(11,5),
-                description: this.props.editedEvent.post_description
+                date: this.props.editedEvent.post_date_start.substr(0, 10),
+                time_start: this.props.editedEvent.post_date_start.substr(11, 5),
+                time_end: this.props.editedEvent.post_date_end.substr(11, 5),
+                description: this.props.editedEvent.post_description,
+                working_time: DateUtilities.countWorkingTime(this.props.editedEvent.post_date_start.substr(11, 5), this.props.editedEvent.post_date_end.substr(11, 5))
             })
         }
 
@@ -67,7 +71,10 @@ export default class CalendarEventForm extends Component {
     savePost() {
         this.setState({addBtnClicked: true});
 
-        if (this.state.description.length > 0 && (new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_end)) > new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_start)))) {
+        if (this.state.description.length > 0
+                && DateUtilities.validateSelectedTime(this.state.date_start)
+                && DateUtilities.validateSelectedTime(this.state.date_end)
+            && (new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_end)) > new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_start)))) {
             let data = {
                 practise_id: this.state.practise_id,
                 student_id: localStorage.getItem("current_userid"),
@@ -76,9 +83,9 @@ export default class CalendarEventForm extends Component {
                 post_description: this.state.description
             };
 
-            this.props.handleSavingPost(data,Boolean(this.props.editedEvent));
+            this.props.handleSavingPost(data, Boolean(this.props.editedEvent));
         }
-        else{
+        else {
             this.refs.notificator.error("Błąd dodawania wpisu", "Nie uzupełniono poprawnie danych", 3000);
         }
     }
@@ -92,10 +99,12 @@ export default class CalendarEventForm extends Component {
 
     onChangeTimeStart(e) {
         this.setState({time_start: e.target.value})
+        this.setState({working_time: DateUtilities.countWorkingTime(e.target.value, this.state.time_end)});
     }
 
     onChangeTimeEnd(e) {
         this.setState({time_end: e.target.value})
+        this.setState({working_time: DateUtilities.countWorkingTime(this.state.time_start, e.target.value)});
     }
 
     onChangeDescription(e) {
@@ -111,7 +120,7 @@ export default class CalendarEventForm extends Component {
                         <div className='application_legend_container'>
                             <div className='application_legend_title'>
                                 {
-                                    (Boolean(this.props.editedEvent))?
+                                    (Boolean(this.props.editedEvent)) ?
                                         'Edycja wpisu'
                                         :
                                         'Nowy wpis'
@@ -129,7 +138,7 @@ export default class CalendarEventForm extends Component {
                                                              className={(this.state.addBtnClicked && !this.state.date) ? 'has-error' : ''}>
                                                             <ControlLabel>Data wpisu</ControlLabel>
                                                             <FormControl type="date" onChange={this.onChangeDate}
-                                                                         defaultValue={(this.props.slot) ? DateUtilities.getDateFromObject(this.props.slot.start) : (this.props.editedEvent)? this.props.editedEvent.post_date_start.substr(0,10):null}/>
+                                                                         defaultValue={(this.props.slot) ? DateUtilities.getDateFromObject(this.props.slot.start) : (this.props.editedEvent) ? this.props.editedEvent.post_date_start.substr(0, 10) : null}/>
                                                         </Col>
                                                         <Col md={6} lg={4}>
                                                             <Row>
@@ -137,15 +146,36 @@ export default class CalendarEventForm extends Component {
                                                                      className={(this.state.addBtnClicked && (!this.state.time_start || this.state.time_end <= this.state.time_start)) ? 'has-error' : ''}>
                                                                     <ControlLabel>Czas rozpoczęcia</ControlLabel>
                                                                     <FormControl type="time" onChange={this.onChangeTimeStart}
-                                                                                 defaultValue={(this.props.slot) ? DateUtilities.getTimeFromObject(this.props.slot.start) : (this.props.editedEvent)? this.props.editedEvent.post_date_start.substr(11,5):null}/>
+                                                                                 defaultValue={(this.props.slot) ? DateUtilities.getTimeFromObject(this.props.slot.start) : (this.props.editedEvent) ? this.props.editedEvent.post_date_start.substr(11, 5) : null}/>
+                                                                    <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_start)}>
+                                                                        <span className="small_application_text_alert">
+                                                                            <i className="fa fa-exclamation-circle"></i>
+                                                                            <span>
+                                                                            Najwcześniejsza godz: 7:00
+                                                                            </span>
+                                                                        </span>
+                                                                    </If>
                                                                 </Col>
                                                                 <Col xs={12} sm={6}
                                                                      className={(this.state.addBtnClicked && (!this.state.time_end || this.state.time_end <= this.state.time_start)) ? 'has-error' : ''}>
                                                                     <ControlLabel>Czas zakończenia</ControlLabel>
                                                                     <FormControl type="time" onChange={this.onChangeTimeEnd}
-                                                                                 defaultValue={(this.props.slot) ? DateUtilities.getTimeFromObject(this.props.slot.end) : (this.props.editedEvent)? this.props.editedEvent.post_date_end.substr(11,5):null}/>
+                                                                                 defaultValue={(this.props.slot) ? DateUtilities.getTimeFromObject(this.props.slot.end) : (this.props.editedEvent) ? this.props.editedEvent.post_date_end.substr(11, 5) : null}/>
+                                                                    <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_end)}>
+                                                                        <span className="small_application_text_alert">
+                                                                            <i className="fa fa-exclamation-circle"></i>
+                                                                            <span>
+                                                                            Najpóżniejsza godz: 19:00
+                                                                            </span>
+                                                                        </span>
+                                                                    </If>
                                                                 </Col>
                                                             </Row>
+                                                        </Col>
+                                                        <Col md={6} lg={4}>
+                                                            <p style={{marginTop: '32px', fontStyle: 'italic'}}>
+                                                                Przepracowano: {this.state.working_time} minut
+                                                            </p>
                                                         </Col>
                                                     </Row>
                                                 </FormGroup>
@@ -156,7 +186,7 @@ export default class CalendarEventForm extends Component {
                                                              className={(this.state.addBtnClicked && !this.state.description.length > 0) ? 'has-error' : ''}>
                                                             <ControlLabel>Notatka</ControlLabel>
                                                             <textarea className="form-control" onChange={this.onChangeDescription}
-                                                                      defaultValue={(this.props.editedEvent)? this.props.editedEvent.post_description:''}></textarea>
+                                                                      defaultValue={(this.props.editedEvent) ? this.props.editedEvent.post_description : ''}></textarea>
                                                         </Col>
                                                     </Row>
                                                 </FormGroup>

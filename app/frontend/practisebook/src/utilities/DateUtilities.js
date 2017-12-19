@@ -26,5 +26,27 @@ export default{
         }
 
         return h+':'+m;
+    },
+
+    countWorkingTime(start,end){
+        let date_start = new Date(Date.now());
+        date_start.setHours(start.substr(0,2));
+        date_start.setMinutes(start.substr(3,5));
+
+        let date_end = new Date(Date.now());
+        date_end.setHours(end.substr(0,2));
+        date_end.setMinutes(end.substr(3,5));
+
+        let time = (date_end - date_start) / (1000*60);
+        // time in minutes
+        return time
+    },
+
+    validateSelectedTime(time){
+        let eariest = '07:00';
+        let lastest = '19:00';
+
+        return (eariest <= time && time <= lastest)
+
     }
 }

@@ -11,8 +11,6 @@ class Sidebar extends Component {
         super(props);
     }
 
-    // TODO: linki w zależności od usera
-
     render() {
         return (
             <nav>

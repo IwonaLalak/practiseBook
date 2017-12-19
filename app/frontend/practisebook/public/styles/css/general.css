@@ -9,6 +9,13 @@
 .application_error_text_alert span {
   margin-left: 7px;
 }
+.small_application_text_alert {
+  color: firebrick;
+  font-size: 12px;
+}
+.small_application_text_alert span {
+  margin-left: 2px;
+}
 .application_legend_container {
   border: 1px solid #78cbdf;
   padding: 15px;
