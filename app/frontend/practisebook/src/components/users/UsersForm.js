@@ -102,7 +102,7 @@ export default class UsersForm extends Component {
                 phone: this.state.phone,
                 email: this.state.email,
                 login: this.state.login,
-                password: this.state.password,
+                password: window.btoa(this.state.password),
                 group_id: this.state.groupId,
                 company_id: (this.state.company)? this.state.company.company_id : null,
                 study: this.state.study,
