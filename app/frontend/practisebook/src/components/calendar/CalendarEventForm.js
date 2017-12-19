@@ -58,7 +58,6 @@ export default class CalendarEventForm extends Component {
             })
         }
 
-        console.log(this.props.editedEvent)
     }
 
     cancelSaving() {
@@ -68,14 +67,9 @@ export default class CalendarEventForm extends Component {
     savePost() {
         this.setState({addBtnClicked: true});
 
-        console.log(this.state.time_start);
-        console.log(this.state.time_end);
-        console.log(this.state.date);
-        console.log(this.state.description);
-
         if (this.state.description.length > 0 && (new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_end)) > new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_start)))) {
             let data = {
-                practise_id: this.props.practise_id,
+                practise_id: this.state.practise_id,
                 student_id: localStorage.getItem("current_userid"),
                 post_date_start: DateUtilities.formatDateForInsert(this.state.date, this.state.time_start),
                 post_date_end: DateUtilities.formatDateForInsert(this.state.date, this.state.time_end),

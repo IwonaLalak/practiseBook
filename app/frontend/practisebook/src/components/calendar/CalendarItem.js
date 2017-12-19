@@ -130,7 +130,6 @@ export default class CalendarItem extends Component {
     }
 
     addNewNote(data) {
-        console.log(data)
         NotesService.addNewNote(data).then(function (response) {
             if (response.status == 200) {
                 this.refs.notificator.success("Pomyślnie dodano uwagę", "", 3000);
@@ -153,13 +152,32 @@ export default class CalendarItem extends Component {
     }
 
     savePost(data, isEdition){
-        console.log(data);
         if(isEdition){
-            console.log('edit')
+            PostsService.editPost(this.state.event_for_edition.post_id,data).then(function (response) {
+                if(response.status){
+                    this.refs.notificator.success("Pomyślnie edytowano wpis", "", 3000);
+                    this.getStudentNotes();
+                    this.getStudentsPosts();
+                }
+                else{
+                    this.refs.notificator.error("Błąd edycji wpisu", "Wystąpił błąd po stronie bazy danych", 3000);
+                }
+            }.bind(this))
         }
         else{
-            console.log('add')
+            PostsService.addNewPost(data).then(function (response) {
+                if(response.status){
+                    this.refs.notificator.success("Pomyślnie edytowano wpis", "", 3000);
+                    this.getStudentNotes();
+                    this.getStudentsPosts();
+                }
+                else{
+                    this.refs.notificator.error("Błąd edycji wpisu", "Wystąpił błąd po stronie bazy danych", 3000);
+                }
+            }.bind(this))
         }
+
+        this.closePostForm();
     }
 
     renderEventView({event}) {
@@ -184,7 +202,7 @@ export default class CalendarItem extends Component {
                         <i className={'fa fa-comments'} title={'Leader dodał uwagę do tego wpisu'}></i>
                     </div>
                 </If>
-                <div style={{color: '#c6e5ff', clear: 'both', textAlign: 'justify'}}>
+                <div style={{color: '#c6e5ff', clear: 'both'}}>
                     {event.desc}
                 </div>
             </div>
