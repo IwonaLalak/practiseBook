@@ -1,3 +1,5 @@
+import SettingsService from "../pages/Settings/SettingsService";
+
 export default{
 
     // todo add validation functions
@@ -42,11 +44,16 @@ export default{
         return time
     },
 
-    validateSelectedTime(time){
-        let eariest = '07:00';
-        let lastest = '19:00';
+    validateSelectedTime(time,validation_time_pattern){
 
-        return (eariest <= time && time <= lastest)
+        if(validation_time_pattern){
+            return (validation_time_pattern.min_hour <= time && time <= validation_time_pattern.max_hour)
+        }
+        else{
 
-    }
+            let eariest = '07:00';
+            let lastest = '19:00';
+            return (eariest <= time && time <= lastest)
+        }
+    },
 }

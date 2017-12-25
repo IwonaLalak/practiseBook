@@ -4,6 +4,7 @@ import {ButtonCancel, ButtonSave} from "../../utilities/Buttons";
 import ReactNotify from 'react-notify';
 import DateUtilities from "../../utilities/DateUtilities";
 import If from "../../utilities/If";
+import SettingsService from "../../pages/Settings/SettingsService";
 
 
 export default class PostsForm extends Component {
@@ -16,6 +17,8 @@ export default class PostsForm extends Component {
             time_end: null,
             addBtnClicked: false,
         };
+        this.getValidationTime = this.getValidationTime.bind(this);
+
         this.onAddBtnClick = this.onAddBtnClick.bind(this);
         this.onCancelBtnClick = this.onCancelBtnClick.bind(this);
 
@@ -26,13 +29,21 @@ export default class PostsForm extends Component {
     }
 
 
+    getValidationTime(){
+        SettingsService.getSettings().then(function (response) {
+            if (response.data) {
+                this.setState({validation_time: response.data})
+            }
+        }.bind(this))
+    }
+
     onAddBtnClick() {
 
         this.setState({addBtnClicked: true})
 
         if (this.state.description.length > 0
-            && DateUtilities.validateSelectedTime(this.state.date_start)
-            && DateUtilities.validateSelectedTime(this.state.date_end)
+            && DateUtilities.validateSelectedTime(this.state.time_start, this.state.validation_time)
+            && DateUtilities.validateSelectedTime(this.state.time_end, this.state.validation_time)
             && (new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_end)) > new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_start)))) {
 
             let data = {
@@ -63,6 +74,9 @@ export default class PostsForm extends Component {
     }
 
     componentDidMount() {
+
+        this.getValidationTime();
+
         if (this.props.editedPost) {
 
             this.setState({
@@ -117,11 +131,11 @@ export default class PostsForm extends Component {
                                                 <ControlLabel>Czas rozpoczęcia</ControlLabel>
                                                 <FormControl type="time" onChange={this.onChangeTimeStart}
                                                              defaultValue={(this.props.editedPost) ? this.props.editedPost.post_date_start.substr(11, 5) : null}/>
-                                                <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_start)}>
+                                                <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_start, this.state.validation_time)}>
                                                                         <span className="small_application_text_alert">
                                                                             <i className="fa fa-exclamation-circle"></i>
                                                                             <span>
-                                                                            Najwcześniejsza godz: 07:00
+                                                                            Najwcześniejsza godz: {(this.state.validation_time)? this.state.validation_time.min_hour : '07:00'}
                                                                             </span>
                                                                         </span>
                                                 </If>
@@ -131,11 +145,11 @@ export default class PostsForm extends Component {
                                                 <ControlLabel>Czas zakończenia</ControlLabel>
                                                 <FormControl type="time" onChange={this.onChangeTimeEnd}
                                                              defaultValue={(this.props.editedPost) ? this.props.editedPost.post_date_end.substr(11, 5) : null}/>
-                                                <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_end)}>
+                                                <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_end, this.state.validation_time)}>
                                                                         <span className="small_application_text_alert">
                                                                             <i className="fa fa-exclamation-circle"></i>
                                                                             <span>
-                                                                            Najpóżniejsza godz: 19:00
+                                                                            Najpóżniejsza godz: {(this.state.validation_time)? this.state.validation_time.max_hour : '19:00'}
                                                                             </span>
                                                                         </span>
                                                 </If>

@@ -9,6 +9,7 @@ import ControlLabel from "react-bootstrap/es/ControlLabel";
 import {ButtonCancel, ButtonSave} from "../../utilities/Buttons";
 import DateUtilities from "../../utilities/DateUtilities";
 import If from "../../utilities/If";
+import SettingsService from "../../pages/Settings/SettingsService";
 
 
 export default class CalendarEventForm extends Component {
@@ -22,8 +23,10 @@ export default class CalendarEventForm extends Component {
             description: '',
             addBtnClicked: false,
             working_time: 0,
+            validation_time: []
         };
         this.getPractiseID = this.getPractiseID.bind(this);
+        this.getValidationTime = this.getValidationTime.bind(this);
         this.cancelSaving = this.cancelSaving.bind(this);
         this.savePost = this.savePost.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
@@ -40,8 +43,17 @@ export default class CalendarEventForm extends Component {
         }.bind(this))
     }
 
+    getValidationTime(){
+        SettingsService.getSettings().then(function (response) {
+            if (response.data) {
+                this.setState({validation_time: response.data})
+            }
+        }.bind(this))
+    }
+
     componentDidMount() {
         this.getPractiseID();
+        this.getValidationTime();
 
         if (this.props.slot) {
             this.setState({
@@ -72,8 +84,8 @@ export default class CalendarEventForm extends Component {
         this.setState({addBtnClicked: true});
 
         if (this.state.description.length > 0
-                && DateUtilities.validateSelectedTime(this.state.date_start)
-                && DateUtilities.validateSelectedTime(this.state.date_end)
+                && DateUtilities.validateSelectedTime(this.state.time_start, this.state.validation_time)
+                && DateUtilities.validateSelectedTime(this.state.time_end, this.state.validation_time)
             && (new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_end)) > new Date(DateUtilities.formatDateForInsert(this.state.date, this.state.time_start)))) {
             let data = {
                 practise_id: this.state.practise_id,
@@ -147,11 +159,11 @@ export default class CalendarEventForm extends Component {
                                                                     <ControlLabel>Czas rozpoczęcia</ControlLabel>
                                                                     <FormControl type="time" onChange={this.onChangeTimeStart}
                                                                                  defaultValue={(this.props.slot) ? DateUtilities.getTimeFromObject(this.props.slot.start) : (this.props.editedEvent) ? this.props.editedEvent.post_date_start.substr(11, 5) : null}/>
-                                                                    <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_start)}>
+                                                                    <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_start,this.state.validation_time)}>
                                                                         <span className="small_application_text_alert">
                                                                             <i className="fa fa-exclamation-circle"></i>
                                                                             <span>
-                                                                            Najwcześniejsza godz: 7:00
+                                                                            Najwcześniejsza godz: {(this.state.validation_time)? this.state.validation_time.min_hour : '07:00'}
                                                                             </span>
                                                                         </span>
                                                                     </If>
@@ -161,11 +173,11 @@ export default class CalendarEventForm extends Component {
                                                                     <ControlLabel>Czas zakończenia</ControlLabel>
                                                                     <FormControl type="time" onChange={this.onChangeTimeEnd}
                                                                                  defaultValue={(this.props.slot) ? DateUtilities.getTimeFromObject(this.props.slot.end) : (this.props.editedEvent) ? this.props.editedEvent.post_date_end.substr(11, 5) : null}/>
-                                                                    <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_end)}>
+                                                                    <If isTrue={!DateUtilities.validateSelectedTime(this.state.time_end,this.state.validation_time)}>
                                                                         <span className="small_application_text_alert">
                                                                             <i className="fa fa-exclamation-circle"></i>
                                                                             <span>
-                                                                            Najpóżniejsza godz: 19:00
+                                                                            Najpóżniejsza godz: {(this.state.validation_time)? this.state.validation_time.max_hour : '19:00'}
                                                                             </span>
                                                                         </span>
                                                                     </If>
