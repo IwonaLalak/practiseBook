@@ -9,3 +9,10 @@ form h5 {
   color: #666;
   font-style: italic;
 }
+input,
+textarea,
+select,
+.form-control,
+.Select-control {
+  border-radius: 0;
+}

@@ -7,14 +7,14 @@
     align-content: flex-start;
     position: absolute;
     /*top: 50px;*/
-    right: 0;
+    right: 5px;
     bottom: 5px;
-    z-index: 9999;
+    z-index: 999999;
 }
 
 .notify-item {
-    width: 300px;
-    margin: 5px 10px;
+    width: 400px;
+    margin: 10px 20px;
     color: #FFF;
     border-radius: 1px;
 }
@@ -27,19 +27,19 @@
 .notify-item > p {
     font-family: 'Lora', serif;
     margin: 10px;
-    opacity: .8;
+    /*opacity: .8;*/
 }
 
 .notify-item.success {
-    background-color: rgba(81, 163, 81, 0.4);
+    background-color: rgba(45, 134, 45, 0.9);
 }
 
 .notify-item.error {
-    background-color: rgba(203, 100, 94, 0.9);
+    background-color: rgba(255, 26, 26, 0.9);
 }
 
 .notify-item.info {
-    background-color: rgba(33, 150, 243, 0.8);
+    background-color: rgba(33, 150, 243, 0.9);
 }
 
 .notify-title {

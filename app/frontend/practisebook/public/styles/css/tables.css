@@ -5,6 +5,9 @@
   margin: 0;
   float: right;
 }
+.react-bs-table-container .react-bs-table-pagination .pagination li a {
+  border-radius: 0;
+}
 .react-bs-table-container .react-bs-table-pagination ul.dropdown-menu {
   min-width: 15px;
 }
