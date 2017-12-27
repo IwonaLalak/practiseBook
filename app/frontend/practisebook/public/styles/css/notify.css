@@ -13,7 +13,7 @@
 }
 
 .notify-item {
-    width: 400px;
+    width: 450px;
     margin: 10px 20px;
     color: #FFF;
     border-radius: 1px;
@@ -25,8 +25,9 @@
 }
 
 .notify-item > p {
-    font-family: 'Lora', serif;
+    font-family: sans-serif;
     margin: 10px;
+    font-size: 16px;
     /*opacity: .8;*/
 }
 
