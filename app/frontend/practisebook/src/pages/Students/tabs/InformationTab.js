@@ -16,10 +16,10 @@ export default class InformationTab extends Component {
                 <p data-tip='' data-for={'company_data' + this.props.practise.company_id} data-place="bottom">{this.props.practise.name} <i
                     className="fa fa-info-circle" style={{color: '#999', marginLeft: '5px'}}></i></p>
                 <ReactTooltip id={'company_data' + this.props.practise.company_id}>
-                    <p>{this.props.practise.brand}</p>
-                    <p>{this.props.practise.phone}</p>
-                    <p>{this.props.practise.email}</p>
-                    <p>{this.props.practise.city}, {this.props.practise.street} {this.props.practise.place}</p>
+                    <p><i className='fa fa-edit' style={{marginRight: '5px'}}></i> {this.props.practise.brand}</p>
+                    <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {this.props.practise.phone}</p>
+                    <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {this.props.practise.email}</p>
+                    <p><i className='fa fa-map-marker' style={{marginRight: '5px'}}></i> {this.props.practise.city}, {this.props.practise.street} {this.props.practise.place}</p>
                 </ReactTooltip>
             </div>
         )

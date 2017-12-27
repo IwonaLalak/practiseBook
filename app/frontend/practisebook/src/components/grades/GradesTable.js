@@ -35,11 +35,11 @@ export default class GradesTable extends Component {
     renderStudent(cell,row){
         return (
             <div>
-                <p data-tip='' data-for={'student_data' + cell} data-place="bottom">{row.firstname} {row.lastname}</p>
+                <p data-tip='' data-for={'student_data' + cell} data-place="bottom" className='tooltip_here'>{row.firstname} {row.lastname}</p>
                 <ReactTooltip id={'student_data' + cell}>
-                    <p>{row.phone}</p>
-                    <p>{row.email}</p>
-                    <p>{row.study}, {row.semester}</p>
+                    <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {row.phone}</p>
+                    <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {row.email}</p>
+                    <p><i className='fa fa-graduation-cap' style={{marginRight: '5px'}}></i> {row.study}, {row.semester}</p>
                 </ReactTooltip>
             </div>
         )    }

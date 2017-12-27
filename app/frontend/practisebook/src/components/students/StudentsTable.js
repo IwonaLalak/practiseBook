@@ -39,12 +39,12 @@ export default class StudentsTable extends Component {
         return (
             <div>
                 <Link to={'student/' + row.user_id}>
-                    <p data-tip='' data-for={'student_data' + cell} data-place="bottom">{row.firstname} {row.lastname}</p>
+                    <p data-tip='' data-for={'student_data' + cell} data-place="bottom" className='tooltip_here'>{row.firstname} {row.lastname}</p>
                 </Link>
                 <ReactTooltip id={'student_data' + cell}>
-                    <p>{row.phone}</p>
-                    <p>{row.email}</p>
-                    <p>{row.study}, {row.semester}</p>
+                    <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {row.phone}</p>
+                    <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {row.email}</p>
+                    <p><i className='fa fa-graduation-cap' style={{marginRight: '5px'}}></i> {row.study}, {row.semester}</p>
                 </ReactTooltip>
             </div>
         )
@@ -55,10 +55,10 @@ export default class StudentsTable extends Component {
         if (user) {
             return (
                 <div>
-                    <p data-tip='' data-for={'user_data' + cell} data-place="bottom">{user.firstname} {user.lastname}</p>
+                    <p data-tip='' data-for={'user_data' + cell} data-place="bottom" className='tooltip_here'>{user.firstname} {user.lastname}</p>
                     <ReactTooltip id={'user_data' + cell}>
-                        <p>{user.phone}</p>
-                        <p>{user.email}</p>
+                        <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {user.phone}</p>
+                        <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {user.email}</p>
                     </ReactTooltip>
                 </div>
             )
@@ -72,12 +72,12 @@ export default class StudentsTable extends Component {
         if (company) {
             return (
                 <div>
-                    <p data-tip='' data-for={'company_data' + cell} data-place="bottom">{company.name}</p>
+                    <p data-tip='' data-for={'company_data' + cell} data-place="bottom" className='tooltip_here'>{company.name}</p>
                     <ReactTooltip id={'company_data' + cell}>
-                        <p>{company.brand}</p>
-                        <p>{company.phone}</p>
-                        <p>{company.email}</p>
-                        <p>{company.city}, {company.street} {company.place}</p>
+                        <p><i className='fa fa-edit' style={{marginRight: '5px'}}></i> {company.brand}</p>
+                        <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {company.phone}</p>
+                        <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {company.email}</p>
+                        <p><i className='fa fa-map-marker' style={{marginRight: '5px'}}></i> {company.city}, {company.street} {company.place}</p>
                     </ReactTooltip>
                 </div>
             )

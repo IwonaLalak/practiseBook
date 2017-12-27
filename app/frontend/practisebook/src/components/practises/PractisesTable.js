@@ -44,11 +44,11 @@ export default class PractisesTable extends Component {
         if (student) {
             return (
                 <div>
-                    <p data-tip='' data-for={'student_data' + cell} data-place="bottom">{student.firstname} {student.lastname}</p>
+                    <p data-tip='' data-for={'student_data' + cell} data-place="bottom" className='tooltip_here'>{student.firstname} {student.lastname}</p>
                     <ReactTooltip id={'student_data' + cell}>
-                        <p>{student.phone}</p>
-                        <p>{student.email}</p>
-                        <p>{student.study}, {student.semester}</p>
+                        <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {student.phone}</p>
+                        <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {student.email}</p>
+                        <p><i className='fa fa-graduation-cap' style={{marginRight: '5px'}}></i> {student.study}, {student.semester}</p>
                     </ReactTooltip>
                 </div>
             )
@@ -60,10 +60,10 @@ export default class PractisesTable extends Component {
         if (lecturer) {
             return (
                 <div>
-                    <p data-tip='' data-for={'lecturer_data' + cell} data-place="bottom">{lecturer.firstname} {lecturer.lastname}</p>
+                    <p data-tip='' data-for={'lecturer_data' + cell} data-place="bottom" className='tooltip_here'>{lecturer.firstname} {lecturer.lastname}</p>
                     <ReactTooltip id={'lecturer_data' + cell}>
-                        <p>{lecturer.phone}</p>
-                        <p>{lecturer.email}</p>
+                        <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {lecturer.phone}</p>
+                        <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {lecturer.email}</p>
                     </ReactTooltip>
                 </div>
             )
@@ -75,10 +75,10 @@ export default class PractisesTable extends Component {
         if (leader) {
             return (
                 <div>
-                    <p data-tip='' data-for={'leader_data' + cell} data-place="bottom">{leader.firstname} {leader.lastname}</p>
+                    <p data-tip='' data-for={'leader_data' + cell} data-place="bottom" className='tooltip_here'>{leader.firstname} {leader.lastname}</p>
                     <ReactTooltip id={'leader_data' + cell}>
-                        <p>{leader.phone}</p>
-                        <p>{leader.email}</p>
+                        <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {leader.phone}</p>
+                        <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {leader.email}</p>
                     </ReactTooltip>
                 </div>
             )
@@ -89,11 +89,11 @@ export default class PractisesTable extends Component {
 
         return (
             <div>
-                <p data-tip='' data-for={'company_data' + row.company_id} data-place="bottom">{cell}</p>
+                <p data-tip='' data-for={'company_data' + row.company_id} data-place="bottom" className='tooltip_here'>{cell}</p>
                 <ReactTooltip id={'company_data' + row.company_id}>
-                    <p>{row.street} {row.place}, {row.city}</p>
-                    <p>{row.phone}</p>
-                    <p>{row.email}</p>
+                    <p><i className='fa fa-map-marker' style={{marginRight: '5px'}}></i> {row.street} {row.place}, {row.city}</p>
+                    <p><i className='fa fa-phone' style={{marginRight: '5px'}}></i> {row.phone}</p>
+                    <p><i className='fa fa-envelope-o' style={{marginRight: '5px'}}></i> {row.email}</p>
                 </ReactTooltip>
             </div>
         )

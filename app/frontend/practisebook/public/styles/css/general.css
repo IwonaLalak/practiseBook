@@ -39,6 +39,11 @@
   color: #666;
   font-style: italic;
 }
+.tooltip_here {
+  cursor: pointer;
+  color: #1b325f;
+  text-decoration: underline;
+}
 .left3 {
   margin-left: 3px;
 }
