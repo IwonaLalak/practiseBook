@@ -38,17 +38,17 @@ export default class ReportTab extends Component {
         this.setState({showReportForm: true});
     }
 
-    handleCancelSave(){
+    handleCancelSave() {
         this.setState({showReportForm: false})
     }
 
-    handleSaveData(data){
+    handleSaveData(data) {
         ReportsService.addNewReport(data).then(function (response) {
-            if(response.status == 200){
+            if (response.status == 200) {
                 this.refs.notificator.success("Pomyślnie wystawiono raport", "", 3000);
                 this.getReportData(this.props.practise_id);
             }
-            else{
+            else {
                 this.refs.notificator.error("Błąd zapisu raportu.", "Wystąpił błąd po stronie bazy danych", 3000);
             }
         }.bind(this))
@@ -56,32 +56,49 @@ export default class ReportTab extends Component {
 
     render() {
         return (
-            <div>
+            <div className={'top15'}>
                 <ReactNotify ref='notificator'/>
                 <Row>
-                    <Col xs={12} md={10} lg={12}>
-                        <If isTrue={this.state.report}>
-                            <div className={'top15'}>
-                            <ReportView report={this.state.report} hideBackButton={true}/>
+                    <If isTrue={this.state.report}>
+                        <Col xs={12} md={12} lg={12}>
+                            <div>
+                                <ReportView report={this.state.report} hideBackButton={true}/>
                             </div>
-                        </If>
-                        <If isTrue={!this.state.report}>
-                            <div className="application_error_text_alert">
-                                <i className="fa fa-exclamation-circle"></i>
-                                <span>Student nie posiada jeszcze wystawionego raportu</span>
+                        </Col>
+                    </If>
+
+                    <If isTrue={!this.state.report}>
+                        <Col xs={12} md={10} lg={6}>
+                            <div className="application_legend_container">
+                                <div className="application_legend_title">
+                                    <i className="fa fa-file-text-o" style={{marginRight: '5px'}}></i>
+                                    Raport oceny praktyk
+                                </div>
+                                <Row>
+                                    <Col xs={12} md={8}>
+                                        <div className="application_error_text_alert">
+                                            <i className="fa fa-exclamation-circle"></i>
+                                            <span>Student nie posiada jeszcze wystawionego raportu</span>
+                                        </div>
+                                    </Col>
+                                    <Col xs={12} md={4}>
+                                        <If isTrue={localStorage.getItem('current_usergroup') == 3 && !this.state.showReportForm}>
+                                            <ButtonAction onClick={this.onClickAddReport} btnText={'Wystaw raport'} iconType={'fa fa-plus'}/>
+                                        </If>
+                                    </Col>
+                                </Row>
                             </div>
-                            <If isTrue={localStorage.getItem('current_usergroup') == 3 && !this.state.showReportForm}>
-                                <ButtonAction onClick={this.onClickAddReport} btnText={'Wystaw raport'} iconType={'fa fa-plus'}/>
-                            </If>
+                        </Col>
+                        <Col xs={12}>
                             <If isTrue={localStorage.getItem('current_usergroup') == 3 && this.state.showReportForm}>
                                 <div>
                                     <ReportsForm handleCancelClick={this.handleCancelSave} handleSaveClick={this.handleSaveData}
-                                            editionMode={true} report={this.state.report} practise_id={this.props.practise_id}
+                                                 editionMode={true} report={this.state.report} practise_id={this.props.practise_id}
                                     />
                                 </div>
                             </If>
-                        </If>
-                    </Col>
+                        </Col>
+                    </If>
                 </Row>
             </div>
         )

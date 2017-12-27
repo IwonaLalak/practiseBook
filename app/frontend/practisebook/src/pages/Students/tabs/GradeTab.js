@@ -12,7 +12,7 @@ export default class InformationTab extends Component {
         super(props);
         this.state = {
             grade: null,
-            selectedGrade:null,
+            selectedGrade: null,
             showGradeForm: false
         };
         this.getGrade = this.getGrade.bind(this);
@@ -22,7 +22,7 @@ export default class InformationTab extends Component {
         this.onChangeGrade = this.onChangeGrade.bind(this);
     }
 
-    getGrade(id){
+    getGrade(id) {
         GradesService.getGradesByPractise(id).then(function (response) {
             this.setState({
                 grade: response.data
@@ -30,41 +30,41 @@ export default class InformationTab extends Component {
         }.bind(this))
     }
 
-    componentWillReceiveProps(nextprops){
+    componentWillReceiveProps(nextprops) {
         this.getGrade(nextprops.practise_id);
     }
 
-    onClickAddGrade(){
+    onClickAddGrade() {
         this.setState({showGradeForm: true});
     }
 
-    onCancelClick(){
+    onCancelClick() {
         this.setState({showGradeForm: false})
     }
 
-    saveData(){
-        if(this.state.selectedGrade){
+    saveData() {
+        if (this.state.selectedGrade) {
 
-            let data={
+            let data = {
                 practise_id: this.props.practise_id,
                 lecturer_id: localStorage.getItem("current_userid"),
                 grade: this.state.selectedGrade.value
             };
 
             GradesService.addNewGrade(data).then(function (response) {
-                if(response.status == 200){
+                if (response.status == 200) {
                     this.refs.notificator.success("Pomyślnie wystawiono ocenę", "", 3000);
                     this.getGrade(this.props.practise_id);
                 }
             }.bind(this))
         }
-        else{
+        else {
             this.refs.notificator.error("Błąd wystawiania oceny.", "Nie uzupełniono poprawnie oceny", 3000);
         }
 
     }
 
-    onChangeGrade(e){
+    onChangeGrade(e) {
         this.setState({selectedGrade: e})
     }
 
@@ -80,76 +80,95 @@ export default class InformationTab extends Component {
         ];
 
         return (
-            <div>
+            <div className='top15'>
                 <ReactNotify ref='notificator'/>
                 <Row>
-                    <Col xs={12} md={10} lg={7}>
+                    <Col xs={12} md={10} lg={5}>
                         <If isTrue={Boolean(this.state.grade)}>
-                            <div>
-                            <p>
-                                <span>
-                                    Ocena studenta:
-                                </span>
-                                <label>
-                                    {
-                                        (Boolean(this.state.grade))?
-                                            this.state.grade.grade
-                                            :
-                                            ''
-                                    }
-                                </label>
-                            </p>
-                            <p>
-                                <span>
-                                    Data wystawienia:
-                                </span>
-                                <label>
-                                    {
-                                        (Boolean(this.state.grade))?
-                                            this.state.grade.grade_date
-                                            :
-                                            ''
-                                    }
-                                </label>
-                            </p>
+                            <div className="application_legend_container">
+                                <div className="application_legend_title">
+                                    <i className="fa fa-star-half-o" style={{marginRight: '5px'}}></i>
+                                    Ocena praktyk
+                                </div>
+                                <Row>
+                                    <Col xs={12} md={6}>
+                                        <span className='right3'>
+                                            Ocena studenta:
+                                        </span>
+                                        <label>
+                                            {
+                                                (Boolean(this.state.grade)) ?
+                                                    this.state.grade.grade
+                                                    :
+                                                    ''
+                                            }
+                                        </label>
+                                    </Col>
+                                    <Col xs={12} md={6}>
+                                        <span className='right3'>
+                                            Data wystawienia:
+                                        </span>
+                                        <label>
+                                            {
+                                                (Boolean(this.state.grade)) ?
+                                                    this.state.grade.grade_date
+                                                    :
+                                                    ''
+                                            }
+                                        </label>
+                                    </Col>
+                                </Row>
                             </div>
                         </If>
                         <If isTrue={Boolean(!this.state.grade)}>
-                            <div className="application_error_text_alert">
-                                <i className="fa fa-exclamation-circle"></i>
-                                <span>Student nie posiada jeszcze wystawionej oceny</span>
-                            </div>
-                            <div>
-                                <If isTrue={localStorage.getItem('current_usergroup')==2 && !this.state.showGradeForm}>
-                                    <ButtonAction onClick={this.onClickAddGrade} btnText={'Wystaw ocenę'} iconType={'fa fa-plus'}/>
-                                </If>
-                                <If isTrue={localStorage.getItem('current_usergroup')==2 && this.state.showGradeForm}>
-                                    <FormGroup>
-                                        <Row>
-                                            <Col xs={12} md={6} lg={3} className={(this.state.addBtnClicked && !this.state.selectedGrade) ? 'has-error' : ''}>
-                                                <ControlLabel>Wybierz ocenę</ControlLabel>
-                                                <Select
-                                                    options={grades}
-                                                    value={this.state.selectedGrade}
-                                                    name="StudentSelect"
-                                                    onChange={this.onChangeGrade}
-                                                    clearable={false}
-                                                    labelKey="label"
-                                                    valueKey="id"
-                                                    placeholder="Wybierz ocenę"
-                                                />
-                                            </Col>
-                                            <Col xs={12} md={12} lg={5}>
-                                                <div style={{marginTop: '32px'}}>
-                                                    <ButtonToolbar>
-                                                        <ButtonCancel onClick={this.onCancelClick}/>
-                                                        <ButtonSave onClick={this.saveData}/>
-                                                    </ButtonToolbar>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </FormGroup>
-                                </If>
+                            <div className="application_legend_container">
+                                <div className="application_legend_title">
+                                    <i className="fa fa-star-half-o" style={{marginRight: '5px'}}></i>
+                                    Ocena praktyk
+                                </div>
+                                <Row>
+                                    <Col xs={12} md={8}>
+                                        <div className="application_error_text_alert">
+                                            <i className="fa fa-exclamation-circle"></i>
+                                            <span>Student nie posiada jeszcze wystawionej oceny</span>
+                                        </div>
+                                    </Col>
+                                    <Col xs={12} md={4}>
+                                        <If isTrue={localStorage.getItem('current_usergroup') == 2 && !this.state.showGradeForm}>
+                                            <ButtonAction onClick={this.onClickAddGrade} btnText={'Wystaw ocenę'} iconType={'fa fa-plus'}/>
+                                        </If>
+                                    </Col>
+                                    <Col xs={12}>
+                                        <If isTrue={localStorage.getItem('current_usergroup') == 2 && this.state.showGradeForm}>
+                                            <FormGroup>
+                                                <Row>
+                                                    <Col xs={12} md={6} lg={3}
+                                                         className={(this.state.addBtnClicked && !this.state.selectedGrade) ? 'has-error' : ''}>
+                                                        <ControlLabel>Wybierz ocenę</ControlLabel>
+                                                        <Select
+                                                            options={grades}
+                                                            value={this.state.selectedGrade}
+                                                            name="StudentSelect"
+                                                            onChange={this.onChangeGrade}
+                                                            clearable={false}
+                                                            labelKey="label"
+                                                            valueKey="id"
+                                                            placeholder="Wybierz ocenę"
+                                                        />
+                                                    </Col>
+                                                    <Col xs={12} md={12} lg={5}>
+                                                        <div style={{marginTop: '32px'}}>
+                                                            <ButtonToolbar>
+                                                                <ButtonCancel onClick={this.onCancelClick}/>
+                                                                <ButtonSave onClick={this.saveData}/>
+                                                            </ButtonToolbar>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                            </FormGroup>
+                                        </If>
+                                    </Col>
+                                </Row>
                             </div>
                         </If>
                     </Col>
