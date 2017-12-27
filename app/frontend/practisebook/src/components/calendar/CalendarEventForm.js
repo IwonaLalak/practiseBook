@@ -133,9 +133,15 @@ export default class CalendarEventForm extends Component {
                             <div className='application_legend_title'>
                                 {
                                     (Boolean(this.props.editedEvent)) ?
-                                        'Edycja wpisu'
+                                        <span>
+                                            <i className="fa fa-pencil" style={{marginRight: '5px'}}></i>
+                                            Edycja wpisu
+                                        </span>
                                         :
-                                        'Nowy wpis'
+                                        <span>
+                                            <i className="fa fa-plus" style={{marginRight: '5px'}}></i>
+                                            Nowy wpis
+                                        </span>
                                 }
                             </div>
                             <Row>

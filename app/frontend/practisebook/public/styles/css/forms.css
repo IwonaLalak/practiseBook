@@ -5,3 +5,7 @@
 .has-error label.control-label {
   color: #b22222;
 }
+form h5 {
+  color: #666;
+  font-style: italic;
+}

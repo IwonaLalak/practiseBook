@@ -69,12 +69,13 @@ export default class CalendarCurrentEvent extends Component {
                     <Col xs={12}>
                         <div className='application_legend_container'>
                             <div className='application_legend_title'>
+                                <i className="fa fa-bars" style={{marginRight: '5px'}}></i>
                                 Podgląd danego wpisu
                             </div>
                             <Row>
                                 <Col xs={12} md={6} lg={2}>
                                     <div>
-                                        <h5>Ramy czasowe</h5>
+                                        <h5 className='subtitle'>Ramy czasowe</h5>
                                         <div>
                                             <label>Początek: </label> <span>{this.props.event.post_date_start}</span>
                                         </div>
@@ -85,7 +86,7 @@ export default class CalendarCurrentEvent extends Component {
                                 </Col>
                                 <Col xs={12} md={6} lg={2}>
                                     <div>
-                                        <h5>Informacje o czasie dodania</h5>
+                                        <h5 className='subtitle'>Informacje o czasie dodania</h5>
                                         <div>
                                             <label>Dodano: </label> <span>{this.props.event.post_date_add}</span>
                                         </div>
@@ -98,16 +99,16 @@ export default class CalendarCurrentEvent extends Component {
                                 </Col>
                                 <Col xs={12} md={12} lg={8}>
                                     <div>
-                                        <h5>Notatki i uwagi</h5>
+                                        <h5 className='subtitle'>Notatki i uwagi</h5>
                                         <p>
-                                            <label>Notatka studenta:</label>
+                                            <label className='right3'>Notatka studenta:</label>
                                             <span>
                                              {this.props.event.post_description}
                                          </span>
                                         </p>
                                         <If isTrue={Boolean(this.props.note)}>
                                             <p>
-                                                <label>Uwaga leadera:</label>
+                                                <label className='right3'>Uwaga leadera:</label>
                                                 <span>
                                                  {
                                                      Boolean(this.props.note) ?
@@ -129,7 +130,7 @@ export default class CalendarCurrentEvent extends Component {
                                 </Col>
                                 <If isTrue={this.state.showNoteForm}>
                                     <Col xs={12}>
-                                        <h5>Treść uwagi dotyczącej tego wpisu</h5>
+                                        <h5 className='subtitle'>Treść uwagi dotyczącej tego wpisu</h5>
                                         <Row>
                                             <Col xs={12} md={12} lg={10} className={(this.state.new_note_content.length<1 && this.state.addBtnClicked)? 'has-error':''}>
                                                 <FormControl type="text" onChange={this.onChangeNoteContent}/>

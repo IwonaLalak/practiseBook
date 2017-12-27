@@ -28,9 +28,9 @@ export default class ChangePasswordForm extends Component {
         return (
             <div id="changePasswordForm">
                 <Form horizontal={true}>
-                    <h4>
+                    <div className='application_title'>
                         Podaj nowe hasło:
-                    </h4>
+                    </div>
                     <FormGroup
                         className={(this.state.buttonClicked && this.state.password.length <=0) ? 'has-error' : ''}>
                         <Col xs={12}>

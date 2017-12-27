@@ -19,7 +19,7 @@ export default class AccountContainer extends Component {
         return (
             <div>
                 <Row>
-                    <Col xs={12} md={10} lg={7}>
+                    <Col xs={12} md={10} lg={5}>
                         <UserData/>
                     </Col>
                 </Row>
